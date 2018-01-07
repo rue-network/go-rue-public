@@ -1,18 +1,18 @@
-// Copyright 2015 The go-rueereum Authors
-// This file is part of the go-rueereum library.
+// Copyright 2015 The go-ruereum Authors
+// This file is part of the go-ruereum library.
 //
-// The go-rueereum library is free software: you can redistribute it and/or modify
+// The go-ruereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-rueereum library is distributed in the hope that it will be useful,
+// The go-ruereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package rpc
 
@@ -128,7 +128,7 @@ func (hc *httpConn) doRequest(ctx context.Context, msg interface{}) (io.ReadClos
 	return resp.Body, nil
 }
 
-// httpReadWriteNopCloser wraps a io.Reader and io.Writer with a NOP Close mrueod.
+// httpReadWriteNopCloser wraps a io.Reader and io.Writer with a NOP Close method.
 type httpReadWriteNopCloser struct {
 	io.Reader
 	io.Writer
@@ -170,7 +170,7 @@ func (srv *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 // request is invalid.
 func validateRequest(r *http.Request) (int, error) {
 	if r.Method == http.MethodPut || r.Method == http.MethodDelete {
-		return http.StatusMethodNotAllowed, errors.New("mrueod not allowed")
+		return http.StatusMethodNotAllowed, errors.New("method not allowed")
 	}
 	if r.ContentLength > maxHTTPRequestContentLength {
 		err := fmt.Errorf("content length too large (%d>%d)", r.ContentLength, maxHTTPRequestContentLength)

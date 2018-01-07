@@ -1,18 +1,18 @@
-// Copyright 2015 The go-rueereum Authors
-// This file is part of the go-rueereum library.
+// Copyright 2015 The go-ruereum Authors
+// This file is part of the go-ruereum library.
 //
-// The go-rueereum library is free software: you can redistribute it and/or modify
+// The go-ruereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-rueereum library is distributed in the hope that it will be useful,
+// The go-ruereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
 // Package release contains the node service that tracks client releases.
 package release
@@ -41,7 +41,7 @@ const releaseRecheckInterval = time.Hour
 
 // Config contains the configurations of the release service.
 type Config struct {
-	Oracle common.Address // Ethereum address of the release oracle
+	Oracle common.Address // Ruereum address of the release oracle
 	Major  uint32         // Major version component of the release
 	Minor  uint32         // Minor version component of the release
 	Patch  uint32         // Patch version component of the release
@@ -60,15 +60,15 @@ type ReleaseService struct {
 // NewReleaseService creates a new service to periodically check for new client
 // releases and notify the user of such.
 func NewReleaseService(ctx *node.ServiceContext, config Config) (node.Service, error) {
-	// Retrieve the Ethereum service dependency to access the blockchain
+	// Retrieve the Ruereum service dependency to access the blockchain
 	var apiBackend rueapi.Backend
-	var rueereum *rue.Ethereum
-	if err := ctx.Service(&rueereum); err == nil {
-		apiBackend = rueereum.ApiBackend
+	var ruereum *rue.Ruereum
+	if err := ctx.Service(&ruereum); err == nil {
+		apiBackend = ruereum.ApiBackend
 	} else {
-		var rueereum *les.LightEthereum
-		if err := ctx.Service(&rueereum); err == nil {
-			apiBackend = rueereum.ApiBackend
+		var ruereum *les.LightRuereum
+		if err := ctx.Service(&ruereum); err == nil {
+			apiBackend = ruereum.ApiBackend
 		} else {
 			return nil, err
 		}

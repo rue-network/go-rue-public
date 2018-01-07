@@ -299,7 +299,7 @@ func (d *dumpState) dump(v reflect.Value) {
 		d.w.Write(spaceBytes)
 	}
 
-	// Call Stringer/error interfaces if they exist and the handle mrueods flag
+	// Call Stringer/error interfaces if they exist and the handle methods flag
 	// is enabled
 	if !d.cs.DisableMethods {
 		if (kind != reflect.Invalid) && (kind != reflect.Interface) {
@@ -449,7 +449,7 @@ func (d *dumpState) dump(v reflect.Value) {
 }
 
 // fdump is a helper function to consolidate the logic from the various public
-// mrueods which take varying writers and config states.
+// methods which take varying writers and config states.
 func fdump(cs *ConfigState, w io.Writer, a ...interface{}) {
 	for _, arg := range a {
 		if arg == nil {

@@ -1,18 +1,18 @@
-// Copyright 2015 The go-rueereum Authors
-// This file is part of go-rueereum.
+// Copyright 2015 The go-ruereum Authors
+// This file is part of go-ruereum.
 //
-// go-rueereum is free software: you can redistribute it and/or modify
+// go-ruereum is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// go-rueereum is distributed in the hope that it will be useful,
+// go-ruereum is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with go-rueereum. If not, see <http://www.gnu.org/licenses/>.
+// along with go-ruereum. If not, see <http://www.gnu.org/licenses/>.
 
 package main
 
@@ -73,7 +73,7 @@ func monitor(ctx *cli.Context) error {
 		client *rpc.Client
 		err    error
 	)
-	// Attach to an Ethereum node over IPC or RPC
+	// Attach to an Ruereum node over IPC or RPC
 	endpoint := ctx.String(monitorCommandAttachFlag.Name)
 	if client, err = dialRPC(endpoint); err != nil {
 		utils.Fatalf("Unable to attach to grue node: %v", err)

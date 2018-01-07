@@ -1,18 +1,18 @@
-// Copyright 2015 The go-rueereum Authors
-// This file is part of the go-rueereum library.
+// Copyright 2015 The go-ruereum Authors
+// This file is part of the go-ruereum library.
 //
-// The go-rueereum library is free software: you can redistribute it and/or modify
+// The go-ruereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-rueereum library is distributed in the hope that it will be useful,
+// The go-ruereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
 // Package downloader contains the manual full chain synchronisation.
 package downloader
@@ -27,7 +27,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	rueereum "github.com/Rue-Foundation/go-rue"
+	ruereum "github.com/Rue-Foundation/go-rue"
 	"github.com/Rue-Foundation/go-rue/common"
 	"github.com/Rue-Foundation/go-rue/core/types"
 	"github.com/Rue-Foundation/go-rue/ruedb"
@@ -240,7 +240,7 @@ func New(mode SyncMode, stateDb ruedb.Database, mux *event.TypeMux, chain BlockC
 // In addition, during the state download phase of fast synchronisation the number
 // of processed and the total number of known states are also returned. Otherwise
 // these are zero.
-func (d *Downloader) Progress() rueereum.SyncProgress {
+func (d *Downloader) Progress() ruereum.SyncProgress {
 	// Lock the current stats and return the progress
 	d.syncStatsLock.RLock()
 	defer d.syncStatsLock.RUnlock()
@@ -254,7 +254,7 @@ func (d *Downloader) Progress() rueereum.SyncProgress {
 	case LightSync:
 		current = d.lightchain.CurrentHeader().Number.Uint64()
 	}
-	return rueereum.SyncProgress{
+	return ruereum.SyncProgress{
 		StartingBlock: d.syncStatsChainOrigin,
 		CurrentBlock:  current,
 		HighestBlock:  d.syncStatsChainHeight,

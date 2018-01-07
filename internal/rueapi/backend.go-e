@@ -1,20 +1,20 @@
-// Copyright 2015 The go-rueereum Authors
-// This file is part of the go-rueereum library.
+// Copyright 2015 The go-ruereum Authors
+// This file is part of the go-ruereum library.
 //
-// The go-rueereum library is free software: you can redistribute it and/or modify
+// The go-ruereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-rueereum library is distributed in the hope that it will be useful,
+// The go-ruereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
-// Package rueapi implements the general Ethereum API functions.
+// Package rueapi implements the general Ruereum API functions.
 package rueapi
 
 import (
@@ -37,7 +37,7 @@ import (
 // Backend interface provides the common API services (that are provided by
 // both full and light clients) with access to necessary functions.
 type Backend interface {
-	// general Ethereum API
+	// general Ruereum API
 	Downloader() *downloader.Downloader
 	ProtocolVersion() int
 	SuggestPrice(ctx context.Context) (*big.Int, error)
@@ -76,7 +76,7 @@ func GetAPIs(apiBackend Backend) []rpc.API {
 		{
 			Namespace: "rue",
 			Version:   "1.0",
-			Service:   NewPublicEthereumAPI(apiBackend),
+			Service:   NewPublicRuereumAPI(apiBackend),
 			Public:    true,
 		}, {
 			Namespace: "rue",

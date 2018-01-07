@@ -10,14 +10,14 @@ import (
 	"time"
 )
 
-// Sender is the interface that wraps the Do mrueod to send HTTP requests.
+// Sender is the interface that wraps the Do method to send HTTP requests.
 //
 // The standard http.Client conforms to this interface.
 type Sender interface {
 	Do(*http.Request) (*http.Response, error)
 }
 
-// SenderFunc is a mrueod that implements the Sender interface.
+// SenderFunc is a method that implements the Sender interface.
 type SenderFunc func(*http.Request) (*http.Response, error)
 
 // Do implements the Sender interface on SenderFunc.
@@ -48,9 +48,9 @@ func DecorateSender(s Sender, decorators ...SendDecorator) Sender {
 
 // Send sends, by means of the default http.Client, the passed http.Request, returning the
 // http.Response and possible error. It also accepts a, possibly empty, set of SendDecorators which
-// it will apply the http.Client before invoking the Do mrueod.
+// it will apply the http.Client before invoking the Do method.
 //
-// Send is a convenience mrueod and not recommended for production. Advanced users should use
+// Send is a convenience method and not recommended for production. Advanced users should use
 // SendWithSender, passing and sharing their own Sender (e.g., instance of http.Client).
 //
 // Send will not poll or retry requests.
@@ -60,7 +60,7 @@ func Send(r *http.Request, decorators ...SendDecorator) (*http.Response, error) 
 
 // SendWithSender sends the passed http.Request, through the provided Sender, returning the
 // http.Response and possible error. It also accepts a, possibly empty, set of SendDecorators which
-// it will apply the http.Client before invoking the Do mrueod.
+// it will apply the http.Client before invoking the Do method.
 //
 // SendWithSender will not poll or retry requests.
 func SendWithSender(s Sender, r *http.Request, decorators ...SendDecorator) (*http.Response, error) {

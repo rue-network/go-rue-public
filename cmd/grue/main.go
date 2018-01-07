@@ -1,20 +1,20 @@
-// Copyright 2014 The go-rueereum Authors
-// This file is part of go-rueereum.
+// Copyright 2014 The go-ruereum Authors
+// This file is part of go-ruereum.
 //
-// go-rueereum is free software: you can redistribute it and/or modify
+// go-ruereum is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// go-rueereum is distributed in the hope that it will be useful,
+// go-ruereum is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with go-rueereum. If not, see <http://www.gnu.org/licenses/>.
+// along with go-ruereum. If not, see <http://www.gnu.org/licenses/>.
 
-// grue is the official command-line client for Ethereum.
+// grue is the official command-line client for Ruereum.
 package main
 
 import (
@@ -46,10 +46,10 @@ const (
 var (
 	// Git SHA1 commit hash of the release (set via linker flags)
 	gitCommit = ""
-	// Ethereum address of the Grue release oracle.
+	// Ruereum address of the Grue release oracle.
 	relOracle = common.HexToAddress("0xfa7b9770ca4cb04296cac84f37736d4041251cdf")
 	// The app that holds all commands and flags.
-	app = utils.NewApp(gitCommit, "the go-rueereum command line interface")
+	app = utils.NewApp(gitCommit, "the go-ruereum command line interface")
 	// flags that configure the node
 	nodeFlags = []cli.Flag{
 		utils.IdentityFlag,
@@ -93,7 +93,7 @@ var (
 		utils.ListenPortFlag,
 		utils.MaxPeersFlag,
 		utils.MaxPendingPeersFlag,
-		utils.EtherbaseFlag,
+		utils.RuebaseFlag,
 		utils.GasPriceFlag,
 		utils.MinerThreadsFlag,
 		utils.MiningEnabledFlag,
@@ -111,7 +111,7 @@ var (
 		utils.VMEnableDebugFlag,
 		utils.NetworkIdFlag,
 		utils.RPCCORSDomainFlag,
-		utils.EthStatsURLFlag,
+		utils.RueStatsURLFlag,
 		utils.MetricsEnabledFlag,
 		utils.FakePoWFlag,
 		utils.NoCompactionFlag,
@@ -146,7 +146,7 @@ func init() {
 	// Initialize the CLI app and start Grue
 	app.Action = grue
 	app.HideVersion = true // we have a command to print the version
-	app.Copyright = "Copyright 2013-2017 The go-rueereum Authors"
+	app.Copyright = "Copyright 2013-2017 The go-ruereum Authors"
 	app.Commands = []cli.Command{
 		// See chaincmd.go:
 		initCommand,
@@ -277,23 +277,23 @@ func startNode(ctx *cli.Context, stack *node.Node) {
 	}()
 	// Start auxiliary services if enabled
 	if ctx.GlobalBool(utils.MiningEnabledFlag.Name) || ctx.GlobalBool(utils.DeveloperFlag.Name) {
-		// Mining only makes sense if a full Ethereum node is running
-		var rueereum *rue.Ethereum
-		if err := stack.Service(&rueereum); err != nil {
-			utils.Fatalf("rueereum service not running: %v", err)
+		// Mining only makes sense if a full Ruereum node is running
+		var ruereum *rue.Ruereum
+		if err := stack.Service(&ruereum); err != nil {
+			utils.Fatalf("ruereum service not running: %v", err)
 		}
 		// Use a reduced number of threads if requested
 		if threads := ctx.GlobalInt(utils.MinerThreadsFlag.Name); threads > 0 {
 			type threaded interface {
 				SetThreads(threads int)
 			}
-			if th, ok := rueereum.Engine().(threaded); ok {
+			if th, ok := ruereum.Engine().(threaded); ok {
 				th.SetThreads(threads)
 			}
 		}
 		// Set the gas price to the limits from the CLI and start mining
-		rueereum.TxPool().SetGasPrice(utils.GlobalBig(ctx, utils.GasPriceFlag.Name))
-		if err := rueereum.StartMining(true); err != nil {
+		ruereum.TxPool().SetGasPrice(utils.GlobalBig(ctx, utils.GasPriceFlag.Name))
+		if err := ruereum.StartMining(true); err != nil {
 			utils.Fatalf("Failed to start mining: %v", err)
 		}
 	}

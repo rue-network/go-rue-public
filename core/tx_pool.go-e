@@ -1,18 +1,18 @@
-// Copyright 2014 The go-rueereum Authors
-// This file is part of the go-rueereum library.
+// Copyright 2014 The go-ruereum Authors
+// This file is part of the go-ruereum library.
 //
-// The go-rueereum library is free software: you can redistribute it and/or modify
+// The go-ruereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-rueereum library is distributed in the hope that it will be useful,
+// The go-ruereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package core
 
@@ -340,7 +340,7 @@ func (pool *TxPool) loop() {
 }
 
 // lockedReset is a wrapper around reset to allow calling it in a thread safe
-// manner. This mrueod is only ever used in the tester!
+// manner. This method is only ever used in the tester!
 func (pool *TxPool) lockedReset(oldHead, newHead *types.Header) {
 	pool.mu.Lock()
 	defer pool.mu.Unlock()
@@ -673,7 +673,7 @@ func (pool *TxPool) add(tx *types.Transaction, local bool) (bool, error) {
 
 // enqueueTx inserts a new transaction into the non-executable transaction queue.
 //
-// Note, this mrueod assumes the pool lock is held!
+// Note, this method assumes the pool lock is held!
 func (pool *TxPool) enqueueTx(hash common.Hash, tx *types.Transaction) (bool, error) {
 	// Try to insert the transaction into the future queue
 	from, _ := types.Sender(pool.signer, tx) // already validated
@@ -711,7 +711,7 @@ func (pool *TxPool) journalTx(from common.Address, tx *types.Transaction) {
 
 // promoteTx adds a transaction to the pending (processable) list of transactions.
 //
-// Note, this mrueod assumes the pool lock is held!
+// Note, this method assumes the pool lock is held!
 func (pool *TxPool) promoteTx(addr common.Address, hash common.Hash, tx *types.Transaction) {
 	// Try to insert the transaction into the pending queue
 	if pool.pending[addr] == nil {
@@ -1147,7 +1147,7 @@ func (as *accountSet) contains(addr common.Address) bool {
 }
 
 // containsTx checks if the sender of a given tx is within the set. If the sender
-// cannot be derived, this mrueod returns false.
+// cannot be derived, this method returns false.
 func (as *accountSet) containsTx(tx *types.Transaction) bool {
 	if addr, err := types.Sender(as.signer, tx); err == nil {
 		return as.contains(addr)

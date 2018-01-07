@@ -1,18 +1,18 @@
-// Copyright 2015 The go-rueereum Authors
-// This file is part of the go-rueereum library.
+// Copyright 2015 The go-ruereum Authors
+// This file is part of the go-ruereum library.
 //
-// The go-rueereum library is free software: you can redistribute it and/or modify
+// The go-ruereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-rueereum library is distributed in the hope that it will be useful,
+// The go-ruereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package abi
 
@@ -79,20 +79,20 @@ func TestReader(t *testing.T) {
 	for name, expM := range exp.Methods {
 		gotM, exist := abi.Methods[name]
 		if !exist {
-			t.Errorf("Missing expected mrueod %v", name)
+			t.Errorf("Missing expected method %v", name)
 		}
 		if !reflect.DeepEqual(gotM, expM) {
-			t.Errorf("\nGot abi mrueod: \n%v\ndoes not match expected mrueod\n%v", gotM, expM)
+			t.Errorf("\nGot abi method: \n%v\ndoes not match expected method\n%v", gotM, expM)
 		}
 	}
 
 	for name, gotM := range abi.Methods {
 		expM, exist := exp.Methods[name]
 		if !exist {
-			t.Errorf("Found extra mrueod %v", name)
+			t.Errorf("Found extra method %v", name)
 		}
 		if !reflect.DeepEqual(gotM, expM) {
-			t.Errorf("\nGot abi mrueod: \n%v\ndoes not match expected mrueod\n%v", gotM, expM)
+			t.Errorf("\nGot abi method: \n%v\ndoes not match expected method\n%v", gotM, expM)
 		}
 	}
 }

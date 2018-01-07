@@ -1,18 +1,18 @@
-// Copyright 2017 The go-rueereum Authors
-// This file is part of go-rueereum.
+// Copyright 2017 The go-ruereum Authors
+// This file is part of go-ruereum.
 //
-// go-rueereum is free software: you can redistribute it and/or modify
+// go-ruereum is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// go-rueereum is distributed in the hope that it will be useful,
+// go-ruereum is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with go-rueereum. If not, see <http://www.gnu.org/licenses/>.
+// along with go-ruereum. If not, see <http://www.gnu.org/licenses/>.
 
 package main
 
@@ -30,9 +30,9 @@ import (
 	"github.com/Rue-Foundation/go-rue/log"
 )
 
-// nodeDockerfile is the Dockerfile required to run an Ethereum node.
+// nodeDockerfile is the Dockerfile required to run an Ruereum node.
 var nodeDockerfile = `
-FROM rueereum/client-go:latest
+FROM ruereum/client-go:latest
 
 ADD genesis.json /genesis.json
 {{if .Unlock}}
@@ -41,14 +41,14 @@ ADD genesis.json /genesis.json
 {{end}}
 RUN \
   echo 'grue --cache 512 init /genesis.json' > grue.sh && \{{if .Unlock}}
-	echo 'mkdir -p /root/.rueereum/keystore/ && cp /signer.json /root/.rueereum/keystore/' >> grue.sh && \{{end}}
-	echo $'grue --networkid {{.NetworkID}} --cache 512 --port {{.Port}} --maxpeers {{.Peers}} {{.LightFlag}} --ruestats \'{{.Ruestats}}\' {{if .BootV4}}--bootnodesv4 {{.BootV4}}{{end}} {{if .BootV5}}--bootnodesv5 {{.BootV5}}{{end}} {{if .Etherbase}}--rueerbase {{.Etherbase}} --mine --minerthreads 1{{end}} {{if .Unlock}}--unlock 0 --password /signer.pass --mine{{end}} --targetgaslimit {{.GasTarget}} --gasprice {{.GasPrice}}' >> grue.sh
+	echo 'mkdir -p /root/.ruereum/keystore/ && cp /signer.json /root/.ruereum/keystore/' >> grue.sh && \{{end}}
+	echo $'grue --networkid {{.NetworkID}} --cache 512 --port {{.Port}} --maxpeers {{.Peers}} {{.LightFlag}} --ruestats \'{{.Ruestats}}\' {{if .BootV4}}--bootnodesv4 {{.BootV4}}{{end}} {{if .BootV5}}--bootnodesv5 {{.BootV5}}{{end}} {{if .Ruebase}}--ruebase {{.Ruebase}} --mine --minerthreads 1{{end}} {{if .Unlock}}--unlock 0 --password /signer.pass --mine{{end}} --targetgaslimit {{.GasTarget}} --gasprice {{.GasPrice}}' >> grue.sh
 
 ENTRYPOINT ["/bin/sh", "grue.sh"]
 `
 
 // nodeComposefile is the docker-compose.yml file required to deploy and maintain
-// an Ethereum node (bootnode or miner for now).
+// an Ruereum node (bootnode or miner for now).
 var nodeComposefile = `
 version: '2'
 services:
@@ -60,7 +60,7 @@ services:
       - "{{.FullPort}}:{{.FullPort}}/udp"{{if .Light}}
       - "{{.LightPort}}:{{.LightPort}}/udp"{{end}}
     volumes:
-      - {{.Datadir}}:/root/.rueereum{{if .Ruehashdir}}
+      - {{.Datadir}}:/root/.ruereum{{if .Ruehashdir}}
       - {{.Ruehashdir}}:/root/.ruehash{{end}}
     environment:
       - FULL_PORT={{.FullPort}}/tcp
@@ -68,7 +68,7 @@ services:
       - TOTAL_PEERS={{.TotalPeers}}
       - LIGHT_PEERS={{.LightPeers}}
       - STATS_NAME={{.Ruestats}}
-      - MINER_NAME={{.Etherbase}}
+      - MINER_NAME={{.Ruebase}}
       - GAS_TARGET={{.GasTarget}}
       - GAS_PRICE={{.GasPrice}}
     logging:
@@ -79,12 +79,12 @@ services:
     restart: always
 `
 
-// deployNode deploys a new Ethereum node container to a remote machine via SSH,
+// deployNode deploys a new Ruereum node container to a remote machine via SSH,
 // docker and docker-compose. If an instance with the specified network name
 // already exists there, it will be overwritten!
 func deployNode(client *sshClient, network string, bootv4, bootv5 []string, config *nodeInfos, nocache bool) ([]byte, error) {
 	kind := "sealnode"
-	if config.keyJSON == "" && config.rueerbase == "" {
+	if config.keyJSON == "" && config.ruebase == "" {
 		kind = "bootnode"
 		bootv4 = make([]string, 0)
 		bootv5 = make([]string, 0)
@@ -106,7 +106,7 @@ func deployNode(client *sshClient, network string, bootv4, bootv5 []string, conf
 		"BootV4":    strings.Join(bootv4, ","),
 		"BootV5":    strings.Join(bootv5, ","),
 		"Ruestats":  config.ruestats,
-		"Etherbase": config.rueerbase,
+		"Ruebase": config.ruebase,
 		"GasTarget": uint64(1000000 * config.gasTarget),
 		"GasPrice":  uint64(1000000000 * config.gasPrice),
 		"Unlock":    config.keyJSON != "",
@@ -125,7 +125,7 @@ func deployNode(client *sshClient, network string, bootv4, bootv5 []string, conf
 		"LightPort":  config.portFull + 1,
 		"LightPeers": config.peersLight,
 		"Ruestats":   config.ruestats[:strings.Index(config.ruestats, ":")],
-		"Etherbase":  config.rueerbase,
+		"Ruebase":  config.ruebase,
 		"GasTarget":  config.gasTarget,
 		"GasPrice":   config.gasPrice,
 	})
@@ -163,7 +163,7 @@ type nodeInfos struct {
 	enodeLight string
 	peersTotal int
 	peersLight int
-	rueerbase  string
+	ruebase  string
 	keyJSON    string
 	keyPass    string
 	gasTarget  float64
@@ -189,10 +189,10 @@ func (info *nodeInfos) Report() map[string]string {
 		report["Gas limit (baseline target)"] = fmt.Sprintf("%0.3f MGas", info.gasTarget)
 		report["Gas price (minimum accepted)"] = fmt.Sprintf("%0.3f GWei", info.gasPrice)
 
-		if info.rueerbase != "" {
+		if info.ruebase != "" {
 			// Ruehash proof-of-work miner
 			report["Ruehash directory"] = info.ruehashdir
-			report["Miner account"] = info.rueerbase
+			report["Miner account"] = info.ruebase
 		}
 		if info.keyJSON != "" {
 			// Clique proof-of-authority signer
@@ -257,14 +257,14 @@ func checkNode(client *sshClient, network string, boot bool) (*nodeInfos, error)
 	// Assemble and return the useful infos
 	stats := &nodeInfos{
 		genesis:    genesis,
-		datadir:    infos.volumes["/root/.rueereum"],
+		datadir:    infos.volumes["/root/.ruereum"],
 		ruehashdir:  infos.volumes["/root/.ruehash"],
 		portFull:   infos.portmap[infos.envvars["FULL_PORT"]],
 		portLight:  infos.portmap[infos.envvars["LIGHT_PORT"]],
 		peersTotal: totalPeers,
 		peersLight: lightPeers,
 		ruestats:   infos.envvars["STATS_NAME"],
-		rueerbase:  infos.envvars["MINER_NAME"],
+		ruebase:  infos.envvars["MINER_NAME"],
 		keyJSON:    keyJSON,
 		keyPass:    keyPass,
 		gasTarget:  gasTarget,

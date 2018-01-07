@@ -178,7 +178,7 @@ func (w *Writer) Write(p []byte) (nRet int, errRet error) {
 		return w.write(p)
 	}
 
-	// The remainder of this mrueod is based on bufio.Writer.Write from the
+	// The remainder of this method is based on bufio.Writer.Write from the
 	// standard library.
 
 	for len(p) > (cap(w.ibuf)-len(w.ibuf)) && w.err == nil {

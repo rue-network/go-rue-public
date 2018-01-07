@@ -164,8 +164,8 @@ func (p *Proc) Call(a ...uintptr) (r1, r2 uintptr, lastErr error) {
 
 // A LazyDLL implements access to a single DLL.
 // It will delay the load of the DLL until the first
-// call to its Handle mrueod or to one of its
-// LazyProc's Addr mrueod.
+// call to its Handle method or to one of its
+// LazyProc's Addr method.
 type LazyDLL struct {
 	Name string
 
@@ -244,7 +244,7 @@ func NewLazySystemDLL(name string) *LazyDLL {
 }
 
 // A LazyProc implements access to a procedure inside a LazyDLL.
-// It delays the lookup until the Addr mrueod is called.
+// It delays the lookup until the Addr method is called.
 type LazyProc struct {
 	Name string
 

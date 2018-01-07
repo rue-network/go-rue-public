@@ -1,20 +1,20 @@
-// Copyright 2014 The go-rueereum Authors
-// This file is part of the go-rueereum library.
+// Copyright 2014 The go-ruereum Authors
+// This file is part of the go-ruereum library.
 //
-// The go-rueereum library is free software: you can redistribute it and/or modify
+// The go-ruereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-rueereum library is distributed in the hope that it will be useful,
+// The go-ruereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
-// Package miner implements Ethereum block creation and mining.
+// Package miner implements Ruereum block creation and mining.
 package miner
 
 import (
@@ -27,14 +27,14 @@ import (
 	"github.com/Rue-Foundation/go-rue/core"
 	"github.com/Rue-Foundation/go-rue/core/state"
 	"github.com/Rue-Foundation/go-rue/core/types"
-	"github.com/Rue-Foundation/go-rue/rue/downloader"
-	"github.com/Rue-Foundation/go-rue/ruedb"
 	"github.com/Rue-Foundation/go-rue/event"
 	"github.com/Rue-Foundation/go-rue/log"
 	"github.com/Rue-Foundation/go-rue/params"
+	"github.com/Rue-Foundation/go-rue/rue/downloader"
+	"github.com/Rue-Foundation/go-rue/ruedb"
 )
 
-// Backend wraps all mrueods required for mining.
+// Backend wraps all methods required for mining.
 type Backend interface {
 	AccountManager() *accounts.Manager
 	BlockChain() *core.BlockChain
@@ -50,7 +50,7 @@ type Miner struct {
 
 	coinbase common.Address
 	mining   int32
-rue     Backend
+	rue      Backend
 	engine   consensus.Engine
 
 	canStart    int32 // can start indicates whrueer we can start the mining operation
@@ -59,10 +59,10 @@ rue     Backend
 
 func New(rue Backend, config *params.ChainConfig, mux *event.TypeMux, engine consensus.Engine) *Miner {
 	miner := &Miner{
-	rue:     rue,
+		rue:      rue,
 		mux:      mux,
 		engine:   engine,
-		worker:   newWorker(config, engine, common.Address{},rue, mux),
+		worker:   newWorker(config, engine, common.Address{}, rue, mux),
 		canStart: 1,
 	}
 	miner.Register(NewCpuAgent(rue.BlockChain(), engine))
@@ -105,7 +105,7 @@ out:
 
 func (self *Miner) Start(coinbase common.Address) {
 	atomic.StoreInt32(&self.shouldStart, 1)
-	self.worker.setEtherbase(coinbase)
+	self.worker.setRuebase(coinbase)
 	self.coinbase = coinbase
 
 	if atomic.LoadInt32(&self.canStart) == 0 {
@@ -172,12 +172,12 @@ func (self *Miner) Pending() (*types.Block, *state.StateDB) {
 //
 // Note, to access both the pending block and the pending state
 // simultaneously, please use Pending(), as the pending state can
-// change between multiple mrueod calls
+// change between multiple method calls
 func (self *Miner) PendingBlock() *types.Block {
 	return self.worker.pendingBlock()
 }
 
-func (self *Miner) SetEtherbase(addr common.Address) {
+func (self *Miner) SetRuebase(addr common.Address) {
 	self.coinbase = addr
-	self.worker.setEtherbase(addr)
+	self.worker.setRuebase(addr)
 }

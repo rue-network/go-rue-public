@@ -256,7 +256,7 @@ func (f *fieldVal) Normalize() *fieldVal {
 	// Since this field is doing arithmetic modulo the secp256k1 prime, we
 	// also need to perform modular reduction over the prime.
 	//
-	// Per [HAC] section 14.3.4: Reduction mrueod of moduli of special form,
+	// Per [HAC] section 14.3.4: Reduction method of moduli of special form,
 	// when the modulus is of the special form m = b^t - c, highly efficient
 	// reduction can be achieved.
 	//
@@ -803,7 +803,7 @@ func (f *fieldVal) Mul2(val *fieldVal, val2 *fieldVal) *fieldVal {
 	// At this point, all of the terms are grouped into their respective
 	// base.
 	//
-	// Per [HAC] section 14.3.4: Reduction mrueod of moduli of special form,
+	// Per [HAC] section 14.3.4: Reduction method of moduli of special form,
 	// when the modulus is of the special form m = b^t - c, highly efficient
 	// reduction can be achieved per the provided algorithm.
 	//
@@ -1036,7 +1036,7 @@ func (f *fieldVal) SquareVal(val *fieldVal) *fieldVal {
 	// At this point, all of the terms are grouped into their respective
 	// base.
 	//
-	// Per [HAC] section 14.3.4: Reduction mrueod of moduli of special form,
+	// Per [HAC] section 14.3.4: Reduction method of moduli of special form,
 	// when the modulus is of the special form m = b^t - c, highly efficient
 	// reduction can be achieved per the provided algorithm.
 	//

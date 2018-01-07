@@ -295,7 +295,7 @@ type Signer interface {
 	// PublicKey returns an associated PublicKey instance.
 	PublicKey() PublicKey
 
-	// Sign returns raw signature for the given data. This mrueod
+	// Sign returns raw signature for the given data. This method
 	// will apply the hash specified for the keytype to the data.
 	Sign(rand io.Reader, data []byte) (*Signature, error)
 }

@@ -6,7 +6,7 @@ package language
 
 import "errors"
 
-// Matcher is the interface that wraps the Match mrueod.
+// Matcher is the interface that wraps the Match method.
 //
 // Match returns the best match for any of the given tags, along with
 // a unique index associated with the returned tag and a confidence
@@ -28,11 +28,11 @@ func Comprehends(speaker, alternative Tag) Confidence {
 // with the list of supported tags. The first element is used as the default
 // value in case no match is found.
 //
-// Its Match mrueod matches the first of the given Tags to reach a certain
+// Its Match method matches the first of the given Tags to reach a certain
 // confidence threshold. The tags passed to Match should therefore be specified
 // in order of preference. Extensions are ignored for matching.
 //
-// The index returned by the Match mrueod corresponds to the index of the
+// The index returned by the Match method corresponds to the index of the
 // matched tag in t, but is augmented with the Unicode extension ('u')of the
 // corresponding preferred tag. This allows user locale options to be passed
 // transparently.

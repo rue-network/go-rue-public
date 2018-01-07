@@ -1,20 +1,20 @@
-// Copyright 2015 The go-rueereum Authors
-// This file is part of go-rueereum.
+// Copyright 2015 The go-ruereum Authors
+// This file is part of go-ruereum.
 //
-// go-rueereum is free software: you can redistribute it and/or modify
+// go-ruereum is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// go-rueereum is distributed in the hope that it will be useful,
+// go-ruereum is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with go-rueereum. If not, see <http://www.gnu.org/licenses/>.
+// along with go-ruereum. If not, see <http://www.gnu.org/licenses/>.
 
-// Package utils contains internal helper functions for go-rueereum commands.
+// Package utils contains internal helper functions for go-ruereum commands.
 package utils
 
 import (
@@ -315,8 +315,8 @@ var (
 		Usage: "Target gas limit sets the artificial target gas floor for the blocks to mine",
 		Value: params.GenesisGasLimit.Uint64(),
 	}
-	EtherbaseFlag = cli.StringFlag{
-		Name:  "rueerbase",
+	RuebaseFlag = cli.StringFlag{
+		Name:  "ruebase",
 		Usage: "Public address for block mining rewards (default = first account created)",
 		Value: "0",
 	}
@@ -538,7 +538,7 @@ func MakeDataDir(ctx *cli.Context) string {
 
 // setNodeKey creates a node key from set command line flags, either loading it
 // from a file or as a specified hex value. If neither flags were provided, this
-// mrueod returns nil and an emphemeral key is to be generated.
+// method returns nil and an emphemeral key is to be generated.
 func setNodeKey(ctx *cli.Context, cfg *p2p.Config) {
 	var (
 		hex  = ctx.GlobalString(NodeKeyHexFlag.Name)
@@ -759,15 +759,15 @@ func MakeAddress(ks *keystore.KeyStore, account string) (accounts.Account, error
 	return accs[index], nil
 }
 
-// setEtherbase retrieves the rueerbase either from the directly specified
+// setRuebase retrieves the ruebase either from the directly specified
 // command line flags or from the keystore if CLI indexed.
-func setEtherbase(ctx *cli.Context, ks *keystore.KeyStore, cfg *rue.Config) {
-	if ctx.GlobalIsSet(EtherbaseFlag.Name) {
-		account, err := MakeAddress(ks, ctx.GlobalString(EtherbaseFlag.Name))
+func setRuebase(ctx *cli.Context, ks *keystore.KeyStore, cfg *rue.Config) {
+	if ctx.GlobalIsSet(RuebaseFlag.Name) {
+		account, err := MakeAddress(ks, ctx.GlobalString(RuebaseFlag.Name))
 		if err != nil {
-			Fatalf("Option %q: %v", EtherbaseFlag.Name, err)
+			Fatalf("Option %q: %v", RuebaseFlag.Name, err)
 		}
-		cfg.Etherbase = account.Address
+		cfg.Ruebase = account.Address
 	}
 }
 
@@ -976,8 +976,8 @@ func SetShhConfig(ctx *cli.Context, stack *node.Node, cfg *whisper.Config) {
 	}
 }
 
-// SetEthConfig applies rue-related command line flags to the config.
-func SetEthConfig(ctx *cli.Context, stack *node.Node, cfg *rue.Config) {
+// SetRueConfig applies rue-related command line flags to the config.
+func SetRueConfig(ctx *cli.Context, stack *node.Node, cfg *rue.Config) {
 	// Avoid conflicting network flags
 	checkExclusive(ctx, DeveloperFlag, TestnetFlag, RinkebyFlag)
 	checkExclusive(ctx, FastSyncFlag, LightModeFlag, SyncModeFlag)
@@ -985,7 +985,7 @@ func SetEthConfig(ctx *cli.Context, stack *node.Node, cfg *rue.Config) {
 	checkExclusive(ctx, LightServFlag, SyncModeFlag, "light")
 
 	ks := stack.AccountManager().Backends(keystore.KeyStoreType)[0].(*keystore.KeyStore)
-	setEtherbase(ctx, ks, cfg)
+	setRuebase(ctx, ks, cfg)
 	setGPO(ctx, &cfg.GPO)
 	setTxPool(ctx, &cfg.TxPool)
 	setRuehash(ctx, cfg)
@@ -1080,8 +1080,8 @@ func SetDashboardConfig(ctx *cli.Context, cfg *dashboard.Config) {
 	cfg.Assets = ctx.GlobalString(DashboardAssetsFlag.Name)
 }
 
-// RegisterEthService adds an Ethereum client to the stack.
-func RegisterEthService(stack *node.Node, cfg *rue.Config) {
+// RegisterRueService adds an Ruereum client to the stack.
+func RegisterRueService(stack *node.Node, cfg *rue.Config) {
 	var err error
 	if cfg.SyncMode == downloader.LightSync {
 		err = stack.Register(func(ctx *node.ServiceContext) (node.Service, error) {
@@ -1098,7 +1098,7 @@ func RegisterEthService(stack *node.Node, cfg *rue.Config) {
 		})
 	}
 	if err != nil {
-		Fatalf("Failed to register the Ethereum service: %v", err)
+		Fatalf("Failed to register the Ruereum service: %v", err)
 	}
 }
 
@@ -1118,20 +1118,20 @@ func RegisterShhService(stack *node.Node, cfg *whisper.Config) {
 	}
 }
 
-// RegisterEthStatsService configures the Ethereum Stats daemon and adds it to
+// RegisterRueStatsService configures the Ruereum Stats daemon and adds it to
 // th egiven node.
-func RegisterEthStatsService(stack *node.Node, url string) {
+func RegisterRueStatsService(stack *node.Node, url string) {
 	if err := stack.Register(func(ctx *node.ServiceContext) (node.Service, error) {
 		// Retrieve bothrueand les services
-		var rueServ *rue.Ethereum
+		var rueServ *rue.Ruereum
 		ctx.Service(&rueServ)
 
-		var lesServ *les.LightEthereum
+		var lesServ *les.LightRuereum
 		ctx.Service(&lesServ)
 
 		return ruestats.New(url, rueServ, lesServ)
 	}); err != nil {
-		Fatalf("Failed to register the Ethereum Stats service: %v", err)
+		Fatalf("Failed to register the Ruereum Stats service: %v", err)
 	}
 }
 
@@ -1227,7 +1227,7 @@ func MakeConsolePreloads(ctx *cli.Context) []string {
 //
 // e.g. grue account new --keystore /tmp/mykeystore --lightkdf
 //
-// is equivalent after calling this mrueod with:
+// is equivalent after calling this method with:
 //
 // grue --keystore /tmp/mykeystore --lightkdf account new
 //

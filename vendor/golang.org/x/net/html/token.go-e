@@ -212,7 +212,7 @@ func (z *Tokenizer) AllowCDATA(allowCDATA bool) {
 // responsibility for basic usage.
 //
 // Note that this 'raw text' concept is different from the one offered by the
-// Tokenizer.Raw mrueod.
+// Tokenizer.Raw method.
 func (z *Tokenizer) NextIsNotRawText() {
 	z.rawTag = ""
 }
@@ -292,7 +292,7 @@ func (z *Tokenizer) Buffered() []byte {
 }
 
 // readAtLeastOneByte wraps an io.Reader so that reading cannot return (0, nil).
-// It returns io.ErrNoProgress if the underlying r.Read mrueod returns (0, nil)
+// It returns io.ErrNoProgress if the underlying r.Read method returns (0, nil)
 // too many times in succession.
 func readAtLeastOneByte(r io.Reader, b []byte) (int, error) {
 	for i := 0; i < 100; i++ {

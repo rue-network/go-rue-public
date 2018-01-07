@@ -1,18 +1,18 @@
-// Copyright 2017 The go-rueereum Authors
-// This file is part of go-rueereum.
+// Copyright 2017 The go-ruereum Authors
+// This file is part of go-ruereum.
 //
-// go-rueereum is free software: you can redistribute it and/or modify
+// go-ruereum is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// go-rueereum is distributed in the hope that it will be useful,
+// go-ruereum is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with go-rueereum. If not, see <http://www.gnu.org/licenses/>.
+// along with go-ruereum. If not, see <http://www.gnu.org/licenses/>.
 
 package main
 
@@ -43,12 +43,12 @@ func makeWizard(network string) *wizard {
 }
 
 // run displays some useful infos to the user, starting on the journey of
-// setting up a new or managing an existing Ethereum private network.
+// setting up a new or managing an existing Ruereum private network.
 func (w *wizard) run() {
 	fmt.Println("+-----------------------------------------------------------+")
-	fmt.Println("| Welcome to pupprue, your Ethereum private network manager |")
+	fmt.Println("| Welcome to pupprue, your Ruereum private network manager |")
 	fmt.Println("|                                                           |")
-	fmt.Println("| This tool lets you create a new Ethereum network down to  |")
+	fmt.Println("| This tool lets you create a new Ruereum network down to  |")
 	fmt.Println("| the genesis block, bootnodes, miners and ruestats servers |")
 	fmt.Println("| without the hassle that it would normally entail.         |")
 	fmt.Println("|                                                           |")
@@ -70,7 +70,7 @@ func (w *wizard) run() {
 			log.Error("I also like to live dangerously, still no spaces")
 		}
 	}
-	log.Info("Administering Ethereum network", "name", w.network)
+	log.Info("Administering Ruereum network", "name", w.network)
 
 	// Load initial configurations and connect to all live servers
 	w.conf.path = filepath.Join(os.Getenv("HOME"), ".pupprue", w.network)

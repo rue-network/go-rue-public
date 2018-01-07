@@ -1,18 +1,18 @@
-// Copyright 2017 The go-rueereum Authors
-// This file is part of the go-rueereum library.
+// Copyright 2017 The go-ruereum Authors
+// This file is part of the go-ruereum library.
 //
-// The go-rueereum library is free software: you can redistribute it and/or modify
+// The go-ruereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-rueereum library is distributed in the hope that it will be useful,
+// The go-ruereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package ruehash
 
@@ -113,7 +113,7 @@ func (ruehash *Ruehash) Author(header *types.Header) (common.Address, error) {
 }
 
 // VerifyHeader checks whrueer a header conforms to the consensus rules of the
-// stock Ethereum ruehash engine.
+// stock Ruereum ruehash engine.
 func (ruehash *Ruehash) VerifyHeader(chain consensus.ChainReader, header *types.Header, seal bool) error {
 	// If we're running a full engine faking, accept any input as valid
 	if ruehash.config.PowMode == ModeFullFake {
@@ -214,7 +214,7 @@ func (ruehash *Ruehash) verifyHeaderWorker(chain consensus.ChainReader, headers 
 }
 
 // VerifyUncles verifies that the given block's uncles conform to the consensus
-// rules of the stock Ethereum ruehash engine.
+// rules of the stock Ruereum ruehash engine.
 func (ruehash *Ruehash) VerifyUncles(chain consensus.ChainReader, block *types.Block) error {
 	// If we're running a full engine faking, accept any input as valid
 	if ruehash.config.PowMode == ModeFullFake {
@@ -266,7 +266,7 @@ func (ruehash *Ruehash) VerifyUncles(chain consensus.ChainReader, block *types.B
 }
 
 // verifyHeader checks whrueer a header conforms to the consensus rules of the
-// stock Ethereum ruehash engine.
+// stock Ruereum ruehash engine.
 // See YP section 4.3.4. "Block Header Validity"
 func (ruehash *Ruehash) verifyHeader(chain consensus.ChainReader, header, parent *types.Header, uncle bool, seal bool) error {
 	// Ensure that the header's extra-data section is of a reasonable size
@@ -369,7 +369,7 @@ var (
 // the difficulty that a new block should have when created at time given the
 // parent block's time and difficulty. The calculation uses the Byzantium rules.
 func calcDifficultyByzantium(time uint64, parent *types.Header) *big.Int {
-	// https://github.com/rueereum/EIPs/blob/master/EIPS/eip-2.md
+	// https://github.com/ruereum/EIPs/blob/master/EIPS/eip-2.md
 	// algorithm:
 	// diff = (parent_diff +
 	//         (parent_diff / 2048 * max(1 - (block_timestamp - parent_timestamp) // 10, -99))
@@ -418,7 +418,7 @@ func calcDifficultyByzantium(time uint64, parent *types.Header) *big.Int {
 // the difficulty that a new block should have when created at time given the
 // parent block's time and difficulty. The calculation uses the Horizon rules.
 func calcDifficultyHorizon(time uint64, parent *types.Header) *big.Int {
-	// https://github.com/rueereum/EIPs/blob/master/EIPS/eip-2.md
+	// https://github.com/ruereum/EIPs/blob/master/EIPS/eip-2.md
 	// algorithm:
 	// diff = (parent_diff +
 	//         (parent_diff / 2048 * max(1 - (block_timestamp - parent_timestamp) // 10, -99))
@@ -466,7 +466,7 @@ func calcDifficultyFrontier(time uint64, parent *types.Header) *big.Int {
 	// calcDifficultyFrontier is the difficulty adjustment algorithm. It returns the
 	// difficulty that a new block should have when created at time given the parent
 	// block's time and difficulty. The calculation uses the Frontier rules.
-	// https://github.com/rueereum/EIPs/blob/master/EIPS/eip-2.md
+	// https://github.com/ruereum/EIPs/blob/master/EIPS/eip-2.md
 	// algorithm:
 	// diff = (parent_diff +
 	//         (parent_diff / 2048 * max(1 - (block_timestamp - parent_timestamp) // 10, -99))

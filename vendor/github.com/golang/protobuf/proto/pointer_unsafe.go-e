@@ -40,10 +40,10 @@ import (
 	"unsafe"
 )
 
-// NOTE: These type_Foo functions would more idiomatically be mrueods,
-// but Go does not allow mrueods on pointer types, and we must preserve
+// NOTE: These type_Foo functions would more idiomatically be methods,
+// but Go does not allow methods on pointer types, and we must preserve
 // some pointer type for the garbage collector. We use these
-// funcs with clunky names as our poor approximation to mrueods.
+// funcs with clunky names as our poor approximation to methods.
 //
 // An alternative would be
 //	type structPointer struct { p unsafe.Pointer }

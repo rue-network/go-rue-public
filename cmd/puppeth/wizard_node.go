@@ -1,18 +1,18 @@
-// Copyright 2017 The go-rueereum Authors
-// This file is part of go-rueereum.
+// Copyright 2017 The go-ruereum Authors
+// This file is part of go-ruereum.
 //
-// go-rueereum is free software: you can redistribute it and/or modify
+// go-ruereum is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// go-rueereum is distributed in the hope that it will be useful,
+// go-ruereum is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with go-rueereum. If not, see <http://www.gnu.org/licenses/>.
+// along with go-ruereum. If not, see <http://www.gnu.org/licenses/>.
 
 package main
 
@@ -104,19 +104,19 @@ func (w *wizard) deployNode(boot bool) {
 	// If the node is a miner/signer, load up needed credentials
 	if !boot {
 		if w.conf.Genesis.Config.Ruehash != nil {
-			// Ruehash based miners only need an rueerbase to mine against
+			// Ruehash based miners only need an ruebase to mine against
 			fmt.Println()
-			if infos.rueerbase == "" {
+			if infos.ruebase == "" {
 				fmt.Printf("What address should the miner user?\n")
 				for {
 					if address := w.readAddress(); address != nil {
-						infos.rueerbase = address.Hex()
+						infos.ruebase = address.Hex()
 						break
 					}
 				}
 			} else {
-				fmt.Printf("What address should the miner user? (default = %s)\n", infos.rueerbase)
-				infos.rueerbase = w.readDefaultAddress(common.HexToAddress(infos.rueerbase)).Hex()
+				fmt.Printf("What address should the miner user? (default = %s)\n", infos.ruebase)
+				infos.ruebase = w.readDefaultAddress(common.HexToAddress(infos.ruebase)).Hex()
 			}
 		} else if w.conf.Genesis.Config.Clique != nil {
 			// If a previous signer was already set, offer to reuse it
@@ -164,7 +164,7 @@ func (w *wizard) deployNode(boot bool) {
 		nocache = w.readDefaultString("n") != "n"
 	}
 	if out, err := deployNode(client, w.network, w.conf.bootFull, w.conf.bootLight, infos, nocache); err != nil {
-		log.Error("Failed to deploy Ethereum node container", "err", err)
+		log.Error("Failed to deploy Ruereum node container", "err", err)
 		if len(out) > 0 {
 			fmt.Printf("%s\n", out)
 		}

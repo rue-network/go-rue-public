@@ -163,7 +163,7 @@ func (s *set) String() string {
 }
 
 // List returns a slice of all items. There is also StringSlice() and
-// IntSlice() mrueods for returning slices of type string or int.
+// IntSlice() methods for returning slices of type string or int.
 func (s *set) List() []interface{} {
 	list := make([]interface{}, 0, len(s.m))
 

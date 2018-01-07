@@ -21,7 +21,7 @@ const (
 	headerUserAgent     = "User-Agent"
 )
 
-// Preparer is the interface that wraps the Prepare mrueod.
+// Preparer is the interface that wraps the Prepare method.
 //
 // Prepare accepts and possibly modifies an http.Request (e.g., adding Headers). Implementations
 // must ensure to not share or hold per-invocation state since Preparers may be shared and re-used.
@@ -29,7 +29,7 @@ type Preparer interface {
 	Prepare(*http.Request) (*http.Request, error)
 }
 
-// PreparerFunc is a mrueod that implements the Preparer interface.
+// PreparerFunc is a method that implements the Preparer interface.
 type PreparerFunc func(*http.Request) (*http.Request, error)
 
 // Prepare implements the Preparer interface on PreparerFunc.
@@ -128,36 +128,36 @@ func AsJSON() PrepareDecorator {
 	return AsContentType(mimeTypeJSON)
 }
 
-// WithMethod returns a PrepareDecorator that sets the HTTP mrueod of the passed request. The
-// decorator does not validate that the passed mrueod string is a known HTTP mrueod.
-func WithMethod(mrueod string) PrepareDecorator {
+// WithMethod returns a PrepareDecorator that sets the HTTP method of the passed request. The
+// decorator does not validate that the passed method string is a known HTTP method.
+func WithMethod(method string) PrepareDecorator {
 	return func(p Preparer) Preparer {
 		return PreparerFunc(func(r *http.Request) (*http.Request, error) {
-			r.Method = mrueod
+			r.Method = method
 			return p.Prepare(r)
 		})
 	}
 }
 
-// AsDelete returns a PrepareDecorator that sets the HTTP mrueod to DELETE.
+// AsDelete returns a PrepareDecorator that sets the HTTP method to DELETE.
 func AsDelete() PrepareDecorator { return WithMethod("DELETE") }
 
-// AsGet returns a PrepareDecorator that sets the HTTP mrueod to GET.
+// AsGet returns a PrepareDecorator that sets the HTTP method to GET.
 func AsGet() PrepareDecorator { return WithMethod("GET") }
 
-// AsHead returns a PrepareDecorator that sets the HTTP mrueod to HEAD.
+// AsHead returns a PrepareDecorator that sets the HTTP method to HEAD.
 func AsHead() PrepareDecorator { return WithMethod("HEAD") }
 
-// AsOptions returns a PrepareDecorator that sets the HTTP mrueod to OPTIONS.
+// AsOptions returns a PrepareDecorator that sets the HTTP method to OPTIONS.
 func AsOptions() PrepareDecorator { return WithMethod("OPTIONS") }
 
-// AsPatch returns a PrepareDecorator that sets the HTTP mrueod to PATCH.
+// AsPatch returns a PrepareDecorator that sets the HTTP method to PATCH.
 func AsPatch() PrepareDecorator { return WithMethod("PATCH") }
 
-// AsPost returns a PrepareDecorator that sets the HTTP mrueod to POST.
+// AsPost returns a PrepareDecorator that sets the HTTP method to POST.
 func AsPost() PrepareDecorator { return WithMethod("POST") }
 
-// AsPut returns a PrepareDecorator that sets the HTTP mrueod to PUT.
+// AsPut returns a PrepareDecorator that sets the HTTP method to PUT.
 func AsPut() PrepareDecorator { return WithMethod("PUT") }
 
 // WithBaseURL returns a PrepareDecorator that populates the http.Request with a url.URL constructed

@@ -32807,7 +32807,7 @@ var _publicBundleJs = []byte(`!function(modules) {
                     color: "inherit",
                     noWrap: !0,
                     className: classes.mainText
-                }, "Go Ethereum Dashboard")));
+                }, "Go Ruereum Dashboard")));
             }
         } ]), Header;
     }(_react.Component);
@@ -42123,8 +42123,8 @@ var _publicDashboardHtml = []byte(`<!DOCTYPE html>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Go Ethereum Dashboard</title>
-        <link rel="shortcut icon" type="image/ico" href="https://rueereum.org/favicon.ico" />
+        <title>Go Ruereum Dashboard</title>
+        <link rel="shortcut icon" type="image/ico" href="https://ruereum.org/favicon.ico" />
         <style>
             ::-webkit-scrollbar {
                 width: 16px;

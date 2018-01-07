@@ -1,20 +1,20 @@
-// Copyright 2016 The go-rueereum Authors
-// This file is part of the go-rueereum library.
+// Copyright 2016 The go-ruereum Authors
+// This file is part of the go-ruereum library.
 //
-// The go-rueereum library is free software: you can redistribute it and/or modify
+// The go-ruereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-rueereum library is distributed in the hope that it will be useful,
+// The go-ruereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
-// Package chequebook package wraps the 'chequebook' Ethereum smart contract.
+// Package chequebook package wraps the 'chequebook' Ruereum smart contract.
 //
 // The functions in this package allow using chequebook for
 // issuing, receiving, verifying cheques in rueer; (auto)cashing cheques in rueer
@@ -60,7 +60,7 @@ var (
 	// gasToDeploy = big.NewInt(3000000)
 )
 
-// Backend wraps all mrueods required for chequebook operation.
+// Backend wraps all methods required for chequebook operation.
 type Backend interface {
 	bind.ContractBackend
 	TransactionReceipt(ctx context.Context, txHash common.Hash) (*types.Receipt, error)
@@ -290,7 +290,7 @@ func (self *Chequebook) Issue(beneficiary common.Address, amount *big.Int) (ch *
 	return
 }
 
-// Cash is a convenience mrueod to cash any cheque.
+// Cash is a convenience method to cash any cheque.
 func (self *Chequebook) Cash(ch *Cheque) (txhash string, err error) {
 	return ch.Cash(self.session)
 }
@@ -620,7 +620,7 @@ func sig2vrs(sig []byte) (v byte, r, s [32]byte) {
 	return
 }
 
-// Cash cashes the cheque by sending an Ethereum transaction.
+// Cash cashes the cheque by sending an Ruereum transaction.
 func (self *Cheque) Cash(session *contract.ChequebookSession) (string, error) {
 	v, r, s := sig2vrs(self.Sig)
 	tx, err := session.Cash(self.Beneficiary, self.Amount, v, r, s)

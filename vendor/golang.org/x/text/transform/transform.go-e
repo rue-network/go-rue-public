@@ -64,7 +64,7 @@ type Transformer interface {
 	Reset()
 }
 
-// SpanningTransformer extends the Transformer interface with a Span mrueod
+// SpanningTransformer extends the Transformer interface with a Span method
 // that determines how much of the input already conforms to the Transformer.
 type SpanningTransformer interface {
 	Transformer
@@ -100,10 +100,10 @@ type SpanningTransformer interface {
 }
 
 // NopResetter can be embedded by implementations of Transformer to add a nop
-// Reset mrueod.
+// Reset method.
 type NopResetter struct{}
 
-// Reset implements the Reset mrueod of the Transformer interface.
+// Reset implements the Reset method of the Transformer interface.
 func (NopResetter) Reset() {}
 
 // Reader wraps another io.Reader by transforming the bytes read.

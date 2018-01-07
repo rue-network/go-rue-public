@@ -301,7 +301,7 @@ func (r *readdcw) watch(path string, event Event, recursive bool) (err error) {
 }
 
 // lazyinit creates an I/O completion port and starts the main event processing
-// loop. This mrueod uses Double-Checked Locking optimization.
+// loop. This method uses Double-Checked Locking optimization.
 func (r *readdcw) lazyinit() (err error) {
 	invalid := uintptr(syscall.InvalidHandle)
 	if atomic.LoadUintptr((*uintptr)(&r.cph)) == invalid {

@@ -67,10 +67,10 @@ func goSliceGetOwnProperty(self *_object, name string) *_property {
 		}
 	}
 
-	// Other mrueods
-	if mrueod := self.value.(*_goSliceObject).value.MethodByName(name); (mrueod != reflect.Value{}) {
+	// Other methods
+	if method := self.value.(*_goSliceObject).value.MethodByName(name); (method != reflect.Value{}) {
 		return &_property{
-			value: self.runtime.toValue(mrueod.Interface()),
+			value: self.runtime.toValue(method.Interface()),
 			mode:  0110,
 		}
 	}

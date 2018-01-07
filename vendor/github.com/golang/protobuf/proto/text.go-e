@@ -443,7 +443,7 @@ func (tm *TextMarshaler) writeStruct(w *textWriter, sv reflect.Value) error {
 			continue
 		}
 
-		// Enums have a String mrueod, so writeAny will work fine.
+		// Enums have a String method, so writeAny will work fine.
 		if err := tm.writeAny(w, fv, props); err != nil {
 			return err
 		}

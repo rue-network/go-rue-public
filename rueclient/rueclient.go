@@ -1,20 +1,20 @@
-// Copyright 2016 The go-rueereum Authors
-// This file is part of the go-rueereum library.
+// Copyright 2016 The go-ruereum Authors
+// This file is part of the go-ruereum library.
 //
-// The go-rueereum library is free software: you can redistribute it and/or modify
+// The go-ruereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-rueereum library is distributed in the hope that it will be useful,
+// The go-ruereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
-// Package rueclient provides a client for the Ethereum RPC API.
+// Package rueclient provides a client for the Ruereum RPC API.
 package rueclient
 
 import (
@@ -32,7 +32,7 @@ import (
 	"github.com/Rue-Foundation/go-rue/rpc"
 )
 
-// Client defines typed wrappers for the Ethereum RPC API.
+// Client defines typed wrappers for the Ruereum RPC API.
 type Client struct {
 	c *rpc.Client
 }
@@ -82,7 +82,7 @@ func (ec *Client) getBlock(ctx context.Context, method string, args ...interface
 	if err != nil {
 		return nil, err
 	} else if len(raw) == 0 {
-		return nil, rueereum.NotFound
+		return nil, ruereum.NotFound
 	}
 	// Decode header and transactions.
 	var head *types.Header
@@ -144,7 +144,7 @@ func (ec *Client) HeaderByHash(ctx context.Context, hash common.Hash) (*types.He
 	var head *types.Header
 	err := ec.c.CallContext(ctx, &head, "rue_getBlockByHash", hash, false)
 	if err == nil && head == nil {
-		err = rueereum.NotFound
+		err = ruereum.NotFound
 	}
 	return head, err
 }
@@ -155,7 +155,7 @@ func (ec *Client) HeaderByNumber(ctx context.Context, number *big.Int) (*types.H
 	var head *types.Header
 	err := ec.c.CallContext(ctx, &head, "rue_getBlockByNumber", toBlockNumArg(number), false)
 	if err == nil && head == nil {
-		err = rueereum.NotFound
+		err = ruereum.NotFound
 	}
 	return head, err
 }
@@ -185,7 +185,7 @@ func (ec *Client) TransactionByHash(ctx context.Context, hash common.Hash) (tx *
 	if err != nil {
 		return nil, false, err
 	} else if json == nil {
-		return nil, false, rueereum.NotFound
+		return nil, false, ruereum.NotFound
 	} else if _, r, _ := json.tx.RawSignatureValues(); r == nil {
 		return nil, false, fmt.Errorf("server returned transaction without signature")
 	}
@@ -231,7 +231,7 @@ func (ec *Client) TransactionInBlock(ctx context.Context, blockHash common.Hash,
 	err := ec.c.CallContext(ctx, &json, "rue_getTransactionByBlockHashAndIndex", blockHash, hexutil.Uint64(index))
 	if err == nil {
 		if json == nil {
-			return nil, rueereum.NotFound
+			return nil, ruereum.NotFound
 		} else if _, r, _ := json.tx.RawSignatureValues(); r == nil {
 			return nil, fmt.Errorf("server returned transaction without signature")
 		}
@@ -247,7 +247,7 @@ func (ec *Client) TransactionReceipt(ctx context.Context, txHash common.Hash) (*
 	err := ec.c.CallContext(ctx, &r, "rue_getTransactionReceipt", txHash)
 	if err == nil {
 		if r == nil {
-			return nil, rueereum.NotFound
+			return nil, ruereum.NotFound
 		}
 	}
 	return r, err
@@ -270,7 +270,7 @@ type rpcProgress struct {
 
 // SyncProgress retrieves the current progress of the sync algorithm. If there's
 // no sync currently running, it returns nil.
-func (ec *Client) SyncProgress(ctx context.Context) (*rueereum.SyncProgress, error) {
+func (ec *Client) SyncProgress(ctx context.Context) (*ruereum.SyncProgress, error) {
 	var raw json.RawMessage
 	if err := ec.c.CallContext(ctx, &raw, "rue_syncing"); err != nil {
 		return nil, err
@@ -284,7 +284,7 @@ func (ec *Client) SyncProgress(ctx context.Context) (*rueereum.SyncProgress, err
 	if err := json.Unmarshal(raw, &progress); err != nil {
 		return nil, err
 	}
-	return &rueereum.SyncProgress{
+	return &ruereum.SyncProgress{
 		StartingBlock: uint64(progress.StartingBlock),
 		CurrentBlock:  uint64(progress.CurrentBlock),
 		HighestBlock:  uint64(progress.HighestBlock),
@@ -295,8 +295,8 @@ func (ec *Client) SyncProgress(ctx context.Context) (*rueereum.SyncProgress, err
 
 // SubscribeNewHead subscribes to notifications about the current blockchain head
 // on the given channel.
-func (ec *Client) SubscribeNewHead(ctx context.Context, ch chan<- *types.Header) (rueereum.Subscription, error) {
-	return ec.c.EthSubscribe(ctx, ch, "newHeads", map[string]struct{}{})
+func (ec *Client) SubscribeNewHead(ctx context.Context, ch chan<- *types.Header) (ruereum.Subscription, error) {
+	return ec.c.RueSubscribe(ctx, ch, "newHeads", map[string]struct{}{})
 }
 
 // State Access
@@ -349,18 +349,18 @@ func (ec *Client) NonceAt(ctx context.Context, account common.Address, blockNumb
 // Filters
 
 // FilterLogs executes a filter query.
-func (ec *Client) FilterLogs(ctx context.Context, q rueereum.FilterQuery) ([]types.Log, error) {
+func (ec *Client) FilterLogs(ctx context.Context, q ruereum.FilterQuery) ([]types.Log, error) {
 	var result []types.Log
 	err := ec.c.CallContext(ctx, &result, "rue_getLogs", toFilterArg(q))
 	return result, err
 }
 
 // SubscribeFilterLogs subscribes to the results of a streaming filter query.
-func (ec *Client) SubscribeFilterLogs(ctx context.Context, q rueereum.FilterQuery, ch chan<- types.Log) (rueereum.Subscription, error) {
-	return ec.c.EthSubscribe(ctx, ch, "logs", toFilterArg(q))
+func (ec *Client) SubscribeFilterLogs(ctx context.Context, q ruereum.FilterQuery, ch chan<- types.Log) (ruereum.Subscription, error) {
+	return ec.c.RueSubscribe(ctx, ch, "logs", toFilterArg(q))
 }
 
-func toFilterArg(q rueereum.FilterQuery) interface{} {
+func toFilterArg(q ruereum.FilterQuery) interface{} {
 	arg := map[string]interface{}{
 		"fromBlock": toBlockNumArg(q.FromBlock),
 		"toBlock":   toBlockNumArg(q.ToBlock),
@@ -421,7 +421,7 @@ func (ec *Client) PendingTransactionCount(ctx context.Context) (uint, error) {
 // blockNumber selects the block height at which the call runs. It can be nil, in which
 // case the code is taken from the latest known block. Note that state from very old
 // blocks might not be available.
-func (ec *Client) CallContract(ctx context.Context, msg rueereum.CallMsg, blockNumber *big.Int) ([]byte, error) {
+func (ec *Client) CallContract(ctx context.Context, msg ruereum.CallMsg, blockNumber *big.Int) ([]byte, error) {
 	var hex hexutil.Bytes
 	err := ec.c.CallContext(ctx, &hex, "rue_call", toCallArg(msg), toBlockNumArg(blockNumber))
 	if err != nil {
@@ -432,7 +432,7 @@ func (ec *Client) CallContract(ctx context.Context, msg rueereum.CallMsg, blockN
 
 // PendingCallContract executes a message call transaction using the EVM.
 // The state seen by the contract call is the pending state.
-func (ec *Client) PendingCallContract(ctx context.Context, msg rueereum.CallMsg) ([]byte, error) {
+func (ec *Client) PendingCallContract(ctx context.Context, msg ruereum.CallMsg) ([]byte, error) {
 	var hex hexutil.Bytes
 	err := ec.c.CallContext(ctx, &hex, "rue_call", toCallArg(msg), "pending")
 	if err != nil {
@@ -455,7 +455,7 @@ func (ec *Client) SuggestGasPrice(ctx context.Context) (*big.Int, error) {
 // the current pending state of the backend blockchain. There is no guarantee that this is
 // the true gas limit requirement as other transactions may be added or removed by miners,
 // but it should provide a basis for setting a reasonable default.
-func (ec *Client) EstimateGas(ctx context.Context, msg rueereum.CallMsg) (*big.Int, error) {
+func (ec *Client) EstimateGas(ctx context.Context, msg ruereum.CallMsg) (*big.Int, error) {
 	var hex hexutil.Big
 	err := ec.c.CallContext(ctx, &hex, "rue_estimateGas", toCallArg(msg))
 	if err != nil {
@@ -476,7 +476,7 @@ func (ec *Client) SendTransaction(ctx context.Context, tx *types.Transaction) er
 	return ec.c.CallContext(ctx, nil, "rue_sendRawTransaction", common.ToHex(data))
 }
 
-func toCallArg(msg rueereum.CallMsg) interface{} {
+func toCallArg(msg ruereum.CallMsg) interface{} {
 	arg := map[string]interface{}{
 		"from": msg.From,
 		"to":   msg.To,

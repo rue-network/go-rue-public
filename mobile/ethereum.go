@@ -1,20 +1,20 @@
-// Copyright 2016 The go-rueereum Authors
-// This file is part of the go-rueereum library.
+// Copyright 2016 The go-ruereum Authors
+// This file is part of the go-ruereum library.
 //
-// The go-rueereum library is free software: you can redistribute it and/or modify
+// The go-ruereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-rueereum library is distributed in the hope that it will be useful,
+// The go-ruereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
-// Contains all the wrappers from the go-rueereum root package.
+// Contains all the wrappers from the go-ruereum root package.
 
 package grue
 
@@ -22,14 +22,14 @@ import (
 	"errors"
 	"math/big"
 
-	rueereum "github.com/Rue-Foundation/go-rue"
+	ruereum "github.com/Rue-Foundation/go-rue"
 	"github.com/Rue-Foundation/go-rue/common"
 )
 
 // Subscription represents an event subscription where events are
 // delivered on a data channel.
 type Subscription struct {
-	sub rueereum.Subscription
+	sub ruereum.Subscription
 }
 
 // Unsubscribe cancels the sending of events to the data channel
@@ -40,7 +40,7 @@ func (s *Subscription) Unsubscribe() {
 
 // CallMsg contains parameters for contract calls.
 type CallMsg struct {
-	msg rueereum.CallMsg
+	msg ruereum.CallMsg
 }
 
 // NewCallMsg creates an empty contract call parameter list.
@@ -73,9 +73,9 @@ func (msg *CallMsg) SetTo(address *Address) {
 }
 
 // SyncProgress gives progress indications when the node is synchronising with
-// the Ethereum network.
+// the Ruereum network.
 type SyncProgress struct {
-	progress rueereum.SyncProgress
+	progress ruereum.SyncProgress
 }
 
 func (p *SyncProgress) GetStartingBlock() int64 { return int64(p.progress.StartingBlock) }
@@ -128,7 +128,7 @@ func (t *Topics) Append(topics *Hashes) {
 
 // FilterQuery contains options for contact log filtering.
 type FilterQuery struct {
-	query rueereum.FilterQuery
+	query ruereum.FilterQuery
 }
 
 // NewFilterQuery creates an empty filter query for contact log filtering.

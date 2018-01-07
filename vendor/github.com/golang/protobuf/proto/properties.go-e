@@ -592,7 +592,7 @@ var (
 
 // isMarshaler reports whrueer type t implements Marshaler.
 func isMarshaler(t reflect.Type) bool {
-	// We're checking for (likely) pointer-receiver mrueods
+	// We're checking for (likely) pointer-receiver methods
 	// so if t is not a pointer, somrueing is very wrong.
 	// The calls above only invoke isMarshaler on pointer types.
 	if t.Kind() != reflect.Ptr {
@@ -603,7 +603,7 @@ func isMarshaler(t reflect.Type) bool {
 
 // isUnmarshaler reports whrueer type t implements Unmarshaler.
 func isUnmarshaler(t reflect.Type) bool {
-	// We're checking for (likely) pointer-receiver mrueods
+	// We're checking for (likely) pointer-receiver methods
 	// so if t is not a pointer, somrueing is very wrong.
 	// The calls above only invoke isUnmarshaler on pointer types.
 	if t.Kind() != reflect.Ptr {

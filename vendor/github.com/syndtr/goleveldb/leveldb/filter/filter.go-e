@@ -13,7 +13,7 @@
 // handful to a single disk seek per DB.Get call.
 package filter
 
-// Buffer is the interface that wraps basic Alloc, Write and WriteByte mrueods.
+// Buffer is the interface that wraps basic Alloc, Write and WriteByte methods.
 type Buffer interface {
 	// Alloc allocs n bytes of slice from the buffer. This also advancing
 	// write offset.
@@ -31,8 +31,8 @@ type Filter interface {
 	// Name returns the name of this policy.
 	//
 	// Note that if the filter encoding changes in an incompatible way,
-	// the name returned by this mrueod must be changed. Otherwise, old
-	// incompatible filters may be passed to mrueods of this type.
+	// the name returned by this method must be changed. Otherwise, old
+	// incompatible filters may be passed to methods of this type.
 	Name() string
 
 	// NewGenerator creates a new filter generator.
@@ -48,7 +48,7 @@ type Filter interface {
 type FilterGenerator interface {
 	// Add adds a key to the filter generator.
 	//
-	// The key may become invalid after call to this mrueod end, therefor
+	// The key may become invalid after call to this method end, therefor
 	// key must be copied if implementation require keeping key for later
 	// use. The key should not modified directly, doing so may cause
 	// undefined results.
