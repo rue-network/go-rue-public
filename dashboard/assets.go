@@ -1622,7 +1622,7 @@ var _publicBundleJs = []byte(`!function(modules) {
     __webpack_exports__.a = _concat;
 }, function(module, __webpack_exports__, __webpack_require__) {
     "use strict";
-    var __WEBPACK_IMPORTED_MODULE_0__internal_checkFormethod__ = __webpack_require__(99), __WEBPACK_IMPORTED_MODULE_1__internal_curry3__ = __webpack_require__(5), slice = Object(__WEBPACK_IMPORTED_MODULE_1__internal_curry3__.a)(Object(__WEBPACK_IMPORTED_MODULE_0__internal_checkFormethod__.a)("slice", function(fromIndex, toIndex, list) {
+    var __WEBPACK_IMPORTED_MODULE_0__internal_checkForMethod__ = __webpack_require__(99), __WEBPACK_IMPORTED_MODULE_1__internal_curry3__ = __webpack_require__(5), slice = Object(__WEBPACK_IMPORTED_MODULE_1__internal_curry3__.a)(Object(__WEBPACK_IMPORTED_MODULE_0__internal_checkForMethod__.a)("slice", function(fromIndex, toIndex, list) {
         return Array.prototype.slice.call(list, fromIndex, toIndex);
     }));
     __webpack_exports__.a = slice;
@@ -4653,7 +4653,7 @@ var _publicBundleJs = []byte(`!function(modules) {
     __webpack_exports__.a = _isString;
 }, function(module, __webpack_exports__, __webpack_require__) {
     "use strict";
-    function _checkFormethod(methodname, fn) {
+    function _checkForMethod(methodname, fn) {
         return function() {
             var length = arguments.length;
             if (0 === length) return fn();
@@ -4661,7 +4661,7 @@ var _publicBundleJs = []byte(`!function(modules) {
             return Object(__WEBPACK_IMPORTED_MODULE_0__isArray__.a)(obj) || "function" != typeof obj[methodname] ? fn.apply(this, arguments) : obj[methodname].apply(obj, Array.prototype.slice.call(arguments, 0, length - 1));
         };
     }
-    __webpack_exports__.a = _checkFormethod;
+    __webpack_exports__.a = _checkForMethod;
     var __WEBPACK_IMPORTED_MODULE_0__isArray__ = __webpack_require__(57);
 }, function(module, __webpack_exports__, __webpack_require__) {
     "use strict";
@@ -6960,7 +6960,7 @@ var _publicBundleJs = []byte(`!function(modules) {
     };
     module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED) {
         $iterCreate(Constructor, NAME, next);
-        var.methods, key, IteratorPrototype, getmethod = function(kind) {
+        var methods, key, IteratorPrototype, getMethod = function(kind) {
             if (!BUGGY && kind in proto) return proto[kind];
             switch (kind) {
               case "keys":
@@ -6972,15 +6972,15 @@ var _publicBundleJs = []byte(`!function(modules) {
             return function() {
                 return new Constructor(this, kind);
             };
-        }, TAG = NAME + " Iterator", DEF_VALUES = "values" == DEFAULT, VALUES_BUG = !1, proto = Base.prototype, $native = proto[ITERATOR] || proto["@@iterator"] || DEFAULT && proto[DEFAULT], $default = !BUGGY && $native || getmethod(DEFAULT), $entries = DEFAULT ? DEF_VALUES ? getmethod("entries") : $default : void 0, $anyNative = "Array" == NAME ? proto.entries || $native : $native;
+        }, TAG = NAME + " Iterator", DEF_VALUES = "values" == DEFAULT, VALUES_BUG = !1, proto = Base.prototype, $native = proto[ITERATOR] || proto["@@iterator"] || DEFAULT && proto[DEFAULT], $default = !BUGGY && $native || getMethod(DEFAULT), $entries = DEFAULT ? DEF_VALUES ? getMethod("entries") : $default : void 0, $anyNative = "Array" == NAME ? proto.entries || $native : $native;
         if ($anyNative && (IteratorPrototype = getPrototypeOf($anyNative.call(new Base()))) !== Object.prototype && IteratorPrototype.next && (setToStringTag(IteratorPrototype, TAG, !0), 
         LIBRARY || has(IteratorPrototype, ITERATOR) || hide(IteratorPrototype, ITERATOR, returnThis)), 
         DEF_VALUES && $native && "values" !== $native.name && (VALUES_BUG = !0, $default = function() {
             return $native.call(this);
         }), LIBRARY && !FORCED || !BUGGY && !VALUES_BUG && proto[ITERATOR] || hide(proto, ITERATOR, $default), 
         Iterators[NAME] = $default, Iterators[TAG] = returnThis, DEFAULT) if (methods = {
-            values: DEF_VALUES ? $default : getmethod("values"),
-            keys: IS_SET ? $default : getmethod("keys"),
+            values: DEF_VALUES ? $default : getMethod("values"),
+            keys: IS_SET ? $default : getMethod("keys"),
             entries: $entries
         }, FORCED) for (key in methods) key in proto || redefine(proto, key, methods[key]); else $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
         return methods;
@@ -7294,7 +7294,7 @@ var _publicBundleJs = []byte(`!function(modules) {
     var __WEBPACK_IMPORTED_MODULE_0__pipe__ = __webpack_require__(313), __WEBPACK_IMPORTED_MODULE_1__reverse__ = __webpack_require__(142);
 }, function(module, __webpack_exports__, __webpack_require__) {
     "use strict";
-    var __WEBPACK_IMPORTED_MODULE_0__internal_checkFormethod__ = __webpack_require__(99), __WEBPACK_IMPORTED_MODULE_1__internal_curry1__ = __webpack_require__(4), __WEBPACK_IMPORTED_MODULE_2__slice__ = __webpack_require__(34), tail = Object(__WEBPACK_IMPORTED_MODULE_1__internal_curry1__.a)(Object(__WEBPACK_IMPORTED_MODULE_0__internal_checkFormethod__.a)("tail", Object(__WEBPACK_IMPORTED_MODULE_2__slice__.a)(1, 1 / 0)));
+    var __WEBPACK_IMPORTED_MODULE_0__internal_checkForMethod__ = __webpack_require__(99), __WEBPACK_IMPORTED_MODULE_1__internal_curry1__ = __webpack_require__(4), __WEBPACK_IMPORTED_MODULE_2__slice__ = __webpack_require__(34), tail = Object(__WEBPACK_IMPORTED_MODULE_1__internal_curry1__.a)(Object(__WEBPACK_IMPORTED_MODULE_0__internal_checkForMethod__.a)("tail", Object(__WEBPACK_IMPORTED_MODULE_2__slice__.a)(1, 1 / 0)));
     __webpack_exports__.a = tail;
 }, function(module, __webpack_exports__, __webpack_require__) {
     "use strict";
@@ -10177,7 +10177,7 @@ var _publicBundleJs = []byte(`!function(modules) {
     };
 }, function(module, exports, __webpack_require__) {
     var classof = __webpack_require__(287), ITERATOR = __webpack_require__(29)("iterator"), Iterators = __webpack_require__(93);
-    module.exports = __webpack_require__(22).getIteratormethod = function(it) {
+    module.exports = __webpack_require__(22).getIteratorMethod = function(it) {
         if (void 0 != it) return it[ITERATOR] || it["@@iterator"] || Iterators[classof(it)];
     };
 }, function(module, exports, __webpack_require__) {
@@ -16097,7 +16097,7 @@ var _publicBundleJs = []byte(`!function(modules) {
             function getDeclarationErrorAddendum() {
                 if (ReactCurrentOwner.current) {
                     var name = getComponentName(ReactCurrentOwner.current);
-                    if (name) return "\n\nCheck the render.method of ` + "`" + `" + name + "` + "`" + `.";
+                    if (name) return "\n\nCheck the render method of ` + "`" + `" + name + "` + "`" + `.";
                 }
                 return "";
             }
@@ -18588,7 +18588,7 @@ var _publicBundleJs = []byte(`!function(modules) {
     function If(a, b, c) {
         var d = wa(b);
         if (d && va(b, c)) {
-            var e = d.mutationmethod;
+            var e = d.mutationMethod;
             e ? e(a, c) : null == c || d.hasBooleanValue && !c || d.hasNumericValue && isNaN(c) || d.hasPositiveNumericValue && 1 > c || d.hasOverloadedBooleanValue && !1 === c ? Jf(a, b) : d.mustUseProperty ? a[d.propertyName] = c : (b = d.attributeName, 
             (e = d.attributeNamespace) ? a.setAttributeNS(e, b, "" + c) : d.hasBooleanValue || d.hasOverloadedBooleanValue && !0 === c ? a.setAttribute(b, "") : a.setAttribute(b, "" + c));
         } else Kf(a, b, va(b, c) ? c : null);
@@ -18598,7 +18598,7 @@ var _publicBundleJs = []byte(`!function(modules) {
     }
     function Jf(a, b) {
         var c = wa(b);
-        c ? (b = c.mutationmethod) ? b(a, void 0) : c.mustUseProperty ? a[c.propertyName] = !c.hasBooleanValue && "" : a.removeAttribute(c.attributeName) : a.removeAttribute(b);
+        c ? (b = c.mutationMethod) ? b(a, void 0) : c.mustUseProperty ? a[c.propertyName] = !c.hasBooleanValue && "" : a.removeAttribute(c.attributeName) : a.removeAttribute(b);
     }
     function Lf(a, b) {
         var c = b.value, d = b.checked;
@@ -19034,7 +19034,7 @@ var _publicBundleJs = []byte(`!function(modules) {
         HAS_STRING_BOOLEAN_VALUE: 64,
         injectDOMPropertyConfig: function(a) {
             var b = ta, c = a.Properties || {}, d = a.DOMAttributeNamespaces || {}, e = a.DOMAttributeNames || {};
-            a = a.DOMMutationmethods || {};
+            a = a.DOMMutationMethods || {};
             for (var f in c) {
                 ua.hasOwnProperty(f) && E("48", f);
                 var g = f.toLowerCase(), h = c[f];
@@ -19042,7 +19042,7 @@ var _publicBundleJs = []byte(`!function(modules) {
                     attributeName: g,
                     attributeNamespace: null,
                     propertyName: f,
-                    mutationmethod: null,
+                    mutationMethod: null,
                     mustUseProperty: pa(h, b.MUST_USE_PROPERTY),
                     hasBooleanValue: pa(h, b.HAS_BOOLEAN_VALUE),
                     hasNumericValue: pa(h, b.HAS_NUMERIC_VALUE),
@@ -19051,7 +19051,7 @@ var _publicBundleJs = []byte(`!function(modules) {
                     hasStringBooleanValue: pa(h, b.HAS_STRING_BOOLEAN_VALUE)
                 }, 1 >= g.hasBooleanValue + g.hasNumericValue + g.hasOverloadedBooleanValue || E("50", f), 
                 e.hasOwnProperty(f) && (g.attributeName = e[f]), d.hasOwnProperty(f) && (g.attributeNamespace = d[f]), 
-                a.hasOwnProperty(f) && (g.mutationmethod = a[f]), ua[f] = g;
+                a.hasOwnProperty(f) && (g.mutationMethod = a[f]), ua[f] = g;
             }
         }
     }, ua = {}, xa = ta, ya = xa.MUST_USE_PROPERTY, K = xa.HAS_BOOLEAN_VALUE, za = xa.HAS_NUMERIC_VALUE, Aa = xa.HAS_POSITIVE_NUMERIC_VALUE, Ba = xa.HAS_OVERLOADED_BOOLEAN_VALUE, Ca = xa.HAS_STRING_BOOLEAN_VALUE, Da = {
@@ -19105,7 +19105,7 @@ var _publicBundleJs = []byte(`!function(modules) {
             htmlFor: "for",
             httpEquiv: "http-equiv"
         },
-        DOMMutationmethods: {
+        DOMMutationMethods: {
             value: function(a, b) {
                 if (null == b) return a.removeAttribute("value");
                 "number" !== a.type || !1 === a.hasAttribute("value") ? a.setAttribute("value", "" + b) : a.validity && !a.validity.badInput && a.ownerDocument.activeElement !== a && a.setAttribute("value", "" + b);
@@ -21426,14 +21426,14 @@ var _publicBundleJs = []byte(`!function(modules) {
             function startCommitLifeCyclesTimer() {
                 if (enableUserTimingAPI) {
                     if (!supportsUserTiming) return;
-                    effectCountInCurrentCommit = 0, beginMark("(Calling Lifecycle methods)");
+                    effectCountInCurrentCommit = 0, beginMark("(Calling Lifecycle Methods)");
                 }
             }
             function stopCommitLifeCyclesTimer() {
                 if (enableUserTimingAPI) {
                     if (!supportsUserTiming) return;
                     var count = effectCountInCurrentCommit;
-                    effectCountInCurrentCommit = 0, endMark("(Calling Lifecycle methods: " + count + " Total)", "(Calling Lifecycle methods)", null);
+                    effectCountInCurrentCommit = 0, endMark("(Calling Lifecycle Methods: " + count + " Total)", "(Calling Lifecycle Methods)", null);
                 }
             }
             function getUnmaskedContext(workInProgress) {
@@ -21570,7 +21570,7 @@ var _publicBundleJs = []byte(`!function(modules) {
                     var info = "";
                     (void 0 === type || "object" == typeof type && null !== type && 0 === Object.keys(type).length) && (info += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.");
                     var ownerName = owner ? getComponentName(owner) : null;
-                    ownerName && (info += "\n\nCheck the render.method of ` + "`" + `" + ownerName + "` + "`" + `."), invariant(!1, "Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", null == type ? type : typeof type, info);
+                    ownerName && (info += "\n\nCheck the render method of ` + "`" + `" + ownerName + "` + "`" + `."), invariant(!1, "Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", null == type ? type : typeof type, info);
                 }
                 return fiber._debugSource = element._source, fiber._debugOwner = element._owner, 
                 fiber.expirationTime = expirationTime, fiber;
@@ -22215,7 +22215,7 @@ var _publicBundleJs = []byte(`!function(modules) {
             function getValueForProperty(node, name, expected) {
                 var propertyInfo = getPropertyInfo(name);
                 if (propertyInfo) {
-                    if (propertyInfo.mutationmethod || propertyInfo.mustUseProperty) return node[propertyInfo.propertyName];
+                    if (propertyInfo.mutationMethod || propertyInfo.mustUseProperty) return node[propertyInfo.propertyName];
                     var attributeName = propertyInfo.attributeName, stringValue = null;
                     if (propertyInfo.hasOverloadedBooleanValue) {
                         if (node.hasAttribute(attributeName)) {
@@ -22240,8 +22240,8 @@ var _publicBundleJs = []byte(`!function(modules) {
             function setValueForProperty(node, name, value) {
                 var propertyInfo = getPropertyInfo(name);
                 if (!propertyInfo || !shouldSetAttribute(name, value)) return void setValueForAttribute(node, name, shouldSetAttribute(name, value) ? value : null);
-                var mutationmethod = propertyInfo.mutationmethod;
-                if (mutationmethod) mutationmethod(node, value); else {
+                var mutationMethod = propertyInfo.mutationMethod;
+                if (mutationMethod) mutationMethod(node, value); else {
                     if (shouldIgnoreValue(propertyInfo, value)) return void deleteValueForProperty(node, name);
                     if (propertyInfo.mustUseProperty) node[propertyInfo.propertyName] = value; else {
                         var attributeName = propertyInfo.attributeName, namespace = propertyInfo.attributeNamespace;
@@ -22258,8 +22258,8 @@ var _publicBundleJs = []byte(`!function(modules) {
             function deleteValueForProperty(node, name) {
                 var propertyInfo = getPropertyInfo(name);
                 if (propertyInfo) {
-                    var mutationmethod = propertyInfo.mutationmethod;
-                    if (mutationmethod) mutationmethod(node, void 0); else if (propertyInfo.mustUseProperty) {
+                    var mutationMethod = propertyInfo.mutationMethod;
+                    if (mutationMethod) mutationMethod(node, void 0); else if (propertyInfo.mustUseProperty) {
                         var propName = propertyInfo.propertyName;
                         propertyInfo.hasBooleanValue ? node[propName] = !1 : node[propName] = "";
                     } else node.removeAttribute(propertyInfo.attributeName);
@@ -22372,7 +22372,7 @@ var _publicBundleJs = []byte(`!function(modules) {
             }
             function getDeclarationErrorAddendum() {
                 var ownerName = getCurrentFiberOwnerName$3();
-                return ownerName ? "\n\nCheck the render.method of ` + "`" + `" + ownerName + "` + "`" + `." : "";
+                return ownerName ? "\n\nCheck the render method of ` + "`" + `" + ownerName + "` + "`" + `." : "";
             }
             function checkSelectPropTypes(props) {
                 ReactControlledValuePropTypes.checkPropTypes("select", props, getCurrentFiberStackAddendum$4);
@@ -22999,14 +22999,14 @@ var _publicBundleJs = []byte(`!function(modules) {
                 HAS_OVERLOADED_BOOLEAN_VALUE: 32,
                 HAS_STRING_BOOLEAN_VALUE: 64,
                 injectDOMPropertyConfig: function(domPropertyConfig) {
-                    var Injection = DOMPropertyInjection, Properties = domPropertyConfig.Properties || {}, DOMAttributeNamespaces = domPropertyConfig.DOMAttributeNamespaces || {}, DOMAttributeNames = domPropertyConfig.DOMAttributeNames || {}, DOMMutationmethods = domPropertyConfig.DOMMutationmethods || {};
+                    var Injection = DOMPropertyInjection, Properties = domPropertyConfig.Properties || {}, DOMAttributeNamespaces = domPropertyConfig.DOMAttributeNamespaces || {}, DOMAttributeNames = domPropertyConfig.DOMAttributeNames || {}, DOMMutationMethods = domPropertyConfig.DOMMutationMethods || {};
                     for (var propName in Properties) {
                         properties.hasOwnProperty(propName) && invariant(!1, "injectDOMPropertyConfig(...): You're trying to inject DOM property '%s' which has already been injected. You may be accidentally injecting the same DOM property config twice, or you may be injecting two configs that have conflicting property names.", propName);
                         var lowerCased = propName.toLowerCase(), propConfig = Properties[propName], propertyInfo = {
                             attributeName: lowerCased,
                             attributeNamespace: null,
                             propertyName: propName,
-                            mutationmethod: null,
+                            mutationMethod: null,
                             mustUseProperty: checkMask(propConfig, Injection.MUST_USE_PROPERTY),
                             hasBooleanValue: checkMask(propConfig, Injection.HAS_BOOLEAN_VALUE),
                             hasNumericValue: checkMask(propConfig, Injection.HAS_NUMERIC_VALUE),
@@ -23020,7 +23020,7 @@ var _publicBundleJs = []byte(`!function(modules) {
                             propertyInfo.attributeName = attributeName;
                         }
                         DOMAttributeNamespaces.hasOwnProperty(propName) && (propertyInfo.attributeNamespace = DOMAttributeNamespaces[propName]), 
-                        DOMMutationmethods.hasOwnProperty(propName) && (propertyInfo.mutationmethod = DOMMutationmethods[propName]), 
+                        DOMMutationMethods.hasOwnProperty(propName) && (propertyInfo.mutationMethod = DOMMutationMethods[propName]), 
                         properties[propName] = propertyInfo;
                     }
                 }
@@ -23075,7 +23075,7 @@ var _publicBundleJs = []byte(`!function(modules) {
                     htmlFor: "for",
                     httpEquiv: "http-equiv"
                 },
-                DOMMutationmethods: {
+                DOMMutationMethods: {
                     value: function(node, value) {
                         if (null == value) return node.removeAttribute("value");
                         "number" !== node.type || !1 === node.hasAttribute("value") ? node.setAttribute("value", "" + value) : node.validity && !node.validity.badInput && node.ownerDocument.activeElement !== node && node.setAttribute("value", "" + value);
@@ -24139,7 +24139,7 @@ var _publicBundleJs = []byte(`!function(modules) {
                     var value, fn = workInProgress.type, props = workInProgress.pendingProps, unmaskedContext = getUnmaskedContext(workInProgress), context = getMaskedContext(workInProgress, unmaskedContext);
                     if (fn.prototype && "function" == typeof fn.prototype.render) {
                         var componentName = getComponentName(workInProgress);
-                        warning(!1, "The <%s /> component appears to have a render.method, but doesn't extend React.Component. This is likely to cause errors. Change %s to extend React.Component instead.", componentName, componentName);
+                        warning(!1, "The <%s /> component appears to have a render method, but doesn't extend React.Component. This is likely to cause errors. Change %s to extend React.Component instead.", componentName, componentName);
                     }
                     if (ReactCurrentOwner.current = workInProgress, value = fn(props, context), workInProgress.effectTag |= PerformedWork, 
                     "object" == typeof value && null !== value && "function" == typeof value.render) {
@@ -24153,7 +24153,7 @@ var _publicBundleJs = []byte(`!function(modules) {
                     if (Component && warning(!Component.childContextTypes, "%s(...): childContextTypes cannot be defined on a functional component.", Component.displayName || Component.name || "Component"), 
                     null !== workInProgress.ref) {
                         var info = "", ownerName = ReactDebugCurrentFiber.getCurrentFiberOwnerName();
-                        ownerName && (info += "\n\nCheck the render.method of ` + "`" + `" + ownerName + "` + "`" + `.");
+                        ownerName && (info += "\n\nCheck the render method of ` + "`" + `" + ownerName + "` + "`" + `.");
                         var warningKey = ownerName || workInProgress._debugID || "", debugSource = workInProgress._debugSource;
                         debugSource && (warningKey = debugSource.fileName + ":" + debugSource.lineNumber), 
                         warnedAboutStatelessRefs[warningKey] || (warnedAboutStatelessRefs[warningKey] = !0, 
@@ -24911,7 +24911,7 @@ var _publicBundleJs = []byte(`!function(modules) {
 
                   case "render":
                     if (didWarnAboutStateTransition) return;
-                    warning(!1, "Cannot update during an existing state transition (such as within ` + "`" + `render` + "`" + ` or another component's constructor). Render.methods should be a pure function of props and state; constructor side-effects are an anti-pattern, but can be moved to ` + "`" + `componentWillMount` + "`" + `."), 
+                    warning(!1, "Cannot update during an existing state transition (such as within ` + "`" + `render` + "`" + ` or another component's constructor). Render methods should be a pure function of props and state; constructor side-effects are an anti-pattern, but can be moved to ` + "`" + `componentWillMount` + "`" + `."), 
                     didWarnAboutStateTransition = !0;
                 }
             }, ReactFiberScheduler = function(config) {
@@ -25360,7 +25360,7 @@ var _publicBundleJs = []byte(`!function(modules) {
             }, didWarnAboutNestedUpdates = !1, ReactFiberReconciler$1 = function(config) {
                 function scheduleTopLevelUpdate(current, element, callback) {
                     "render" !== ReactDebugCurrentFiber.phase || null === ReactDebugCurrentFiber.current || didWarnAboutNestedUpdates || (didWarnAboutNestedUpdates = !0, 
-                    warning(!1, "Render.methods should be a pure function of props and state; triggering nested component updates from render is not allowed. If necessary, trigger nested updates in componentDidUpdate.\n\nCheck the render.method of %s.", getComponentName(ReactDebugCurrentFiber.current) || "Unknown")), 
+                    warning(!1, "Render methods should be a pure function of props and state; triggering nested component updates from render is not allowed. If necessary, trigger nested updates in componentDidUpdate.\n\nCheck the render method of %s.", getComponentName(ReactDebugCurrentFiber.current) || "Unknown")), 
                     callback = void 0 === callback ? null : callback, warning(null === callback || "function" == typeof callback, "render(...): Expected the last optional ` + "`" + `callback` + "`" + ` argument to be a function. Instead received: %s.", callback);
                     var expirationTime = void 0;
                     expirationTime = enableAsyncSubtreeAPI && null != element && null != element.type && null != element.type.prototype && !0 === element.type.prototype.unstable_isAsyncReactComponent ? computeAsyncExpiration() : computeExpirationForFiber(current), 
@@ -25734,7 +25734,7 @@ var _publicBundleJs = []byte(`!function(modules) {
                 enctype: "encType",
                 for: "htmlFor",
                 form: "form",
-                for.method: "for.method",
+                formmethod: "formMethod",
                 formaction: "formAction",
                 formenctype: "formEncType",
                 formnovalidate: "formNoValidate",
@@ -26041,7 +26041,7 @@ var _publicBundleJs = []byte(`!function(modules) {
                 specularconstant: "specularConstant",
                 specularexponent: "specularExponent",
                 speed: "speed",
-                spreadmethod: "spreadmethod",
+                spreadmethod: "spreadMethod",
                 startoffset: "startOffset",
                 stddeviation: "stdDeviation",
                 stemh: "stemh",
@@ -31732,7 +31732,7 @@ var _publicBundleJs = []byte(`!function(modules) {
     __webpack_exports__.a = flatten;
 }, function(module, __webpack_exports__, __webpack_require__) {
     "use strict";
-    var __WEBPACK_IMPORTED_MODULE_0__internal_checkFormethod__ = __webpack_require__(99), __WEBPACK_IMPORTED_MODULE_1__internal_curry2__ = __webpack_require__(0), forEach = Object(__WEBPACK_IMPORTED_MODULE_1__internal_curry2__.a)(Object(__WEBPACK_IMPORTED_MODULE_0__internal_checkFormethod__.a)("forEach", function(fn, list) {
+    var __WEBPACK_IMPORTED_MODULE_0__internal_checkForMethod__ = __webpack_require__(99), __WEBPACK_IMPORTED_MODULE_1__internal_curry2__ = __webpack_require__(0), forEach = Object(__WEBPACK_IMPORTED_MODULE_1__internal_curry2__.a)(Object(__WEBPACK_IMPORTED_MODULE_0__internal_checkForMethod__.a)("forEach", function(fn, list) {
         for (var len = list.length, idx = 0; idx < len; ) fn(list[idx]), idx += 1;
         return list;
     }));
@@ -31757,7 +31757,7 @@ var _publicBundleJs = []byte(`!function(modules) {
     __webpack_exports__.a = fromPairs;
 }, function(module, __webpack_exports__, __webpack_require__) {
     "use strict";
-    var __WEBPACK_IMPORTED_MODULE_0__internal_checkFormethod__ = __webpack_require__(99), __WEBPACK_IMPORTED_MODULE_1__internal_curry2__ = __webpack_require__(0), __WEBPACK_IMPORTED_MODULE_2__reduceBy__ = __webpack_require__(145), groupBy = Object(__WEBPACK_IMPORTED_MODULE_1__internal_curry2__.a)(Object(__WEBPACK_IMPORTED_MODULE_0__internal_checkFormethod__.a)("groupBy", Object(__WEBPACK_IMPORTED_MODULE_2__reduceBy__.a)(function(acc, item) {
+    var __WEBPACK_IMPORTED_MODULE_0__internal_checkForMethod__ = __webpack_require__(99), __WEBPACK_IMPORTED_MODULE_1__internal_curry2__ = __webpack_require__(0), __WEBPACK_IMPORTED_MODULE_2__reduceBy__ = __webpack_require__(145), groupBy = Object(__WEBPACK_IMPORTED_MODULE_1__internal_curry2__.a)(Object(__WEBPACK_IMPORTED_MODULE_0__internal_checkForMethod__.a)("groupBy", Object(__WEBPACK_IMPORTED_MODULE_2__reduceBy__.a)(function(acc, item) {
         return null == acc && (acc = []), acc.push(item), acc;
     }, null)));
     __webpack_exports__.a = groupBy;
@@ -31905,7 +31905,7 @@ var _publicBundleJs = []byte(`!function(modules) {
     __webpack_exports__.a = _Set;
 }, function(module, __webpack_exports__, __webpack_require__) {
     "use strict";
-    var __WEBPACK_IMPORTED_MODULE_0__internal_checkFormethod__ = __webpack_require__(99), __WEBPACK_IMPORTED_MODULE_1__internal_curry2__ = __webpack_require__(0), intersperse = Object(__WEBPACK_IMPORTED_MODULE_1__internal_curry2__.a)(Object(__WEBPACK_IMPORTED_MODULE_0__internal_checkFormethod__.a)("intersperse", function(separator, list) {
+    var __WEBPACK_IMPORTED_MODULE_0__internal_checkForMethod__ = __webpack_require__(99), __WEBPACK_IMPORTED_MODULE_1__internal_curry2__ = __webpack_require__(0), intersperse = Object(__WEBPACK_IMPORTED_MODULE_1__internal_curry2__.a)(Object(__WEBPACK_IMPORTED_MODULE_0__internal_checkForMethod__.a)("intersperse", function(separator, list) {
         for (var out = [], idx = 0, length = list.length; idx < length; ) idx === length - 1 ? out.push(list[idx]) : out.push(list[idx], separator), 
         idx += 1;
         return out;
@@ -32807,7 +32807,7 @@ var _publicBundleJs = []byte(`!function(modules) {
                     color: "inherit",
                     noWrap: !0,
                     className: classes.mainText
-                }, "Go Ruereum Dashboard")));
+                }, "Go Ethereum Dashboard")));
             }
         } ]), Header;
     }(_react.Component);
@@ -42123,8 +42123,8 @@ var _publicDashboardHtml = []byte(`<!DOCTYPE html>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Go Ruereum Dashboard</title>
-        <link rel="shortcut icon" type="image/ico" href="https://ruereum.org/favicon.ico" />
+        <title>Go Ethereum Dashboard</title>
+        <link rel="shortcut icon" type="image/ico" href="https://rueereum.org/favicon.ico" />
         <style>
             ::-webkit-scrollbar {
                 width: 16px;

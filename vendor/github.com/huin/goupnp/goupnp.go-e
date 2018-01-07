@@ -8,10 +8,10 @@
 // http://godoc.org/github.com/huin/goupnp/dcps/internetgateway1#WANPPPConnection1
 //
 // Currently only a couple of schemas have code generated for them from the
-// UPnP example XML specifications. Not all methods will work on these clients,
-// because the generated stubs contain the full set of specified methods from
+// UPnP example XML specifications. Not all mrueods will work on these clients,
+// because the generated stubs contain the full set of specified mrueods from
 // the XML specifications, and the discovered services will likely support a
-// subset of those methods.
+// subset of those mrueods.
 package goupnp
 
 import (

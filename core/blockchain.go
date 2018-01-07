@@ -1,20 +1,20 @@
-// Copyright 2014 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2014 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
-// Package core implements the Ruereum consensus protocol.
+// Package core implements the Ethereum consensus protocol.
 package core
 
 import (
@@ -117,7 +117,7 @@ type BlockChain struct {
 }
 
 // NewBlockChain returns a fully initialised block chain using information
-// available in the database. It initialises the default Ruereum Validator and
+// available in the database. It initialises the default Ethereum Validator and
 // Processor.
 func NewBlockChain(chainDb ruedb.Database, config *params.ChainConfig, engine consensus.Engine, vmConfig vm.Config) (*BlockChain, error) {
 	bodyCache, _ := lru.New(bodyCacheLimit)
@@ -1256,7 +1256,7 @@ Error: %v
 // chain, possibly creating a reorg. If an error is returned, it will return the
 // index number of the failing header as well an error describing what went wrong.
 //
-// The verify parameter can be used to fine tune whruer nonce verification
+// The verify parameter can be used to fine tune whrueer nonce verification
 // should be done or not. The reason behind the optional check is because some
 // of the header retrieval mechanisms already need to verify nonces, as well as
 // because nonces can be verified sparsely, not needing to check each.

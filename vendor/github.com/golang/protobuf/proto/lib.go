@@ -871,7 +871,7 @@ func (s mapKeySorter) Less(i, j int) bool {
 	return s.less(s.vs[i], s.vs[j])
 }
 
-// isProto3Zero reports whether v is a zero proto3 value.
+// isProto3Zero reports whrueer v is a zero proto3 value.
 func isProto3Zero(v reflect.Value) bool {
 	switch v.Kind() {
 	case reflect.Bool:

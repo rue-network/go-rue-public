@@ -1,18 +1,18 @@
-// Copyright 2014 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2014 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package core
 
@@ -125,7 +125,7 @@ type blockChain interface {
 
 // TxPoolConfig are the configuration parameters of the transaction pool.
 type TxPoolConfig struct {
-	NoLocals  bool          // Whruer local transaction handling should be disabled
+	NoLocals  bool          // Whrueer local transaction handling should be disabled
 	Journal   string        // Journal of local transactions to survive node restarts
 	Rejournal time.Duration // Time interval to regenerate the local transaction journal
 
@@ -210,7 +210,7 @@ type TxPool struct {
 
 	wg sync.WaitGroup // for shutdown sync
 
-	homestead bool
+	horizon bool
 }
 
 // NewTxPool creates a new transaction pool to gather, sort and filter inbound
@@ -285,8 +285,8 @@ func (pool *TxPool) loop() {
 		case ev := <-pool.chainHeadCh:
 			if ev.Block != nil {
 				pool.mu.Lock()
-				if pool.chainconfig.IsHomestead(ev.Block.Number()) {
-					pool.homestead = true
+				if pool.chainconfig.IsHorizon(ev.Block.Number()) {
+					pool.horizon = true
 				}
 				pool.reset(head.Header(), ev.Block.Header())
 				head = ev.Block
@@ -551,7 +551,7 @@ func (pool *TxPool) local() map[common.Address]types.Transactions {
 	return txs
 }
 
-// validateTx checks whruer a transaction is valid according to the consensus
+// validateTx checks whrueer a transaction is valid according to the consensus
 // rules and adheres to some heuristic limits of the local node (price and size).
 func (pool *TxPool) validateTx(tx *types.Transaction, local bool) error {
 	// Heuristic limit, reject transactions over 32KB to prevent DOS attacks
@@ -586,7 +586,7 @@ func (pool *TxPool) validateTx(tx *types.Transaction, local bool) error {
 	if pool.currentState.GetBalance(from).Cmp(tx.Cost()) < 0 {
 		return ErrInsufficientFunds
 	}
-	intrGas := IntrinsicGas(tx.Data(), tx.To() == nil, pool.homestead)
+	intrGas := IntrinsicGas(tx.Data(), tx.To() == nil, pool.horizon)
 	if tx.Gas().Cmp(intrGas) < 0 {
 		return ErrIntrinsicGas
 	}

@@ -1,18 +1,18 @@
-// Copyright 2014 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2014 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package vm
 
@@ -37,16 +37,16 @@ type PrecompiledContract interface {
 	Run(input []byte) ([]byte, error) // Run runs the precompiled contract
 }
 
-// PrecompiledContractsHomestead contains the default set of pre-compiled Ruereum
-// contracts used in the Frontier and Homestead releases.
-var PrecompiledContractsHomestead = map[common.Address]PrecompiledContract{
+// PrecompiledContractsHorizon contains the default set of pre-compiled Ethereum
+// contracts used in the Frontier and Horizon releases.
+var PrecompiledContractsHorizon = map[common.Address]PrecompiledContract{
 	common.BytesToAddress([]byte{1}): &ecrecover{},
 	common.BytesToAddress([]byte{2}): &sha256hash{},
 	common.BytesToAddress([]byte{3}): &ripemd160hash{},
 	common.BytesToAddress([]byte{4}): &dataCopy{},
 }
 
-// PrecompiledContractsByzantium contains the default set of pre-compiled Ruereum
+// PrecompiledContractsByzantium contains the default set of pre-compiled Ethereum
 // contracts used in the Byzantium release.
 var PrecompiledContractsByzantium = map[common.Address]PrecompiledContract{
 	common.BytesToAddress([]byte{1}): &ecrecover{},
@@ -86,7 +86,7 @@ func (c *ecrecover) Run(input []byte) ([]byte, error) {
 	s := new(big.Int).SetBytes(input[96:128])
 	v := input[63] - 27
 
-	// tighter sig s values input homestead only apply to tx sigs
+	// tighter sig s values input horizon only apply to tx sigs
 	if !allZero(input[32:63]) || !crypto.ValidateSignatureValues(v, r, s, false) {
 		return nil, nil
 	}

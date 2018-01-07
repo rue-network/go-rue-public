@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2015 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package tests
 
@@ -27,18 +27,18 @@ func TestTransaction(t *testing.T) {
 	t.Parallel()
 
 	txt := new(testMatcher)
-	txt.config(`^Homestead/`, params.ChainConfig{
-		HomesteadBlock: big.NewInt(0),
+	txt.config(`^Horizon/`, params.ChainConfig{
+		HorizonBlock: big.NewInt(0),
 	})
 	txt.config(`^EIP155/`, params.ChainConfig{
-		HomesteadBlock: big.NewInt(0),
+		HorizonBlock: big.NewInt(0),
 		EIP150Block:    big.NewInt(0),
 		EIP155Block:    big.NewInt(0),
 		EIP158Block:    big.NewInt(0),
 		ChainId:        big.NewInt(1),
 	})
 	txt.config(`^Byzantium/`, params.ChainConfig{
-		HomesteadBlock: big.NewInt(0),
+		HorizonBlock: big.NewInt(0),
 		EIP150Block:    big.NewInt(0),
 		EIP155Block:    big.NewInt(0),
 		EIP158Block:    big.NewInt(0),

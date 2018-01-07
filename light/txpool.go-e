@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2016 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package light
 
@@ -66,7 +66,7 @@ type TxPool struct {
 	mined        map[common.Hash][]*types.Transaction // mined transactions by block hash
 	clearIdx     uint64                               // earliest block nr that can contain mined tx info
 
-	homestead bool
+	horizon bool
 }
 
 // TxRelayBackend provides an interface to the mechanism that forwards transacions
@@ -307,7 +307,7 @@ func (pool *TxPool) setNewHead(head *types.Header) {
 	txc, _ := pool.reorgOnNewHead(ctx, head)
 	m, r := txc.getLists()
 	pool.relay.NewHead(pool.head, m, r)
-	pool.homestead = pool.config.IsHomestead(head.Number)
+	pool.horizon = pool.config.IsHorizon(head.Number)
 	pool.signer = types.MakeSigner(pool.config, head.Number)
 }
 
@@ -336,7 +336,7 @@ func (pool *TxPool) Stats() (pending int) {
 	return
 }
 
-// validateTx checks whruer a transaction is valid according to the consensus rules.
+// validateTx checks whrueer a transaction is valid according to the consensus rules.
 func (pool *TxPool) validateTx(ctx context.Context, tx *types.Transaction) error {
 	// Validate sender
 	var (
@@ -376,7 +376,7 @@ func (pool *TxPool) validateTx(ctx context.Context, tx *types.Transaction) error
 	}
 
 	// Should supply enough intrinsic gas
-	if tx.Gas().Cmp(core.IntrinsicGas(tx.Data(), tx.To() == nil, pool.homestead)) < 0 {
+	if tx.Gas().Cmp(core.IntrinsicGas(tx.Data(), tx.To() == nil, pool.horizon)) < 0 {
 		return core.ErrIntrinsicGas
 	}
 

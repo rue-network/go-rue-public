@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2016 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 /*
 A simple http server interface to Swarm
@@ -62,7 +62,7 @@ func StartHttpServer(api *api.Api, config *ServerConfig) {
 	}
 	c := cors.New(cors.Options{
 		AllowedOrigins: allowedOrigins,
-		Allowedmethods: []string{"POST", "GET", "DELETE", "PATCH", "PUT"},
+		AllowedMethods: []string{"POST", "GET", "DELETE", "PATCH", "PUT"},
 		MaxAge:         600,
 		AllowedHeaders: []string{"*"},
 	})
@@ -589,7 +589,7 @@ func (s *Server) HandleGetFile(w http.ResponseWriter, r *Request) {
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	s.logDebug("HTTP %s request URL: '%s', Host: '%s', Path: '%s', Referer: '%s', Accept: '%s'", r.method, r.RequestURI, r.URL.Host, r.URL.Path, r.Referer(), r.Header.Get("Accept"))
+	s.logDebug("HTTP %s request URL: '%s', Host: '%s', Path: '%s', Referer: '%s', Accept: '%s'", r.Method, r.RequestURI, r.URL.Host, r.URL.Path, r.Referer(), r.Header.Get("Accept"))
 
 	uri, err := api.Parse(strings.TrimLeft(r.URL.Path, "/"))
 	req := &Request{Request: *r, uri: uri}
@@ -598,9 +598,9 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		s.BadRequest(w, req, fmt.Sprintf("Invalid URI %q: %s", r.URL.Path, err))
 		return
 	}
-	s.logDebug("%s request received for %s", r.method, uri)
+	s.logDebug("%s request received for %s", r.Method, uri)
 
-	switch r.method {
+	switch r.Method {
 	case "POST":
 		if uri.Raw() || uri.DeprecatedRaw() {
 			s.HandlePostRaw(w, req)
@@ -647,7 +647,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		s.HandleGetFile(w, req)
 
 	default:
-		ShowError(w, r, fmt.Sprintf("method "+r.method+" is not supported.", uri), http.StatusmethodNotAllowed)
+		ShowError(w, r, fmt.Sprintf("Method "+r.Method+" is not supported.", uri), http.StatusMethodNotAllowed)
 
 	}
 }
@@ -679,13 +679,13 @@ func (s *Server) logError(format string, v ...interface{}) {
 }
 
 func (s *Server) BadRequest(w http.ResponseWriter, r *Request, reason string) {
-	ShowError(w, &r.Request, fmt.Sprintf("Bad request %s %s: %s", r.method, r.uri, reason), http.StatusBadRequest)
+	ShowError(w, &r.Request, fmt.Sprintf("Bad request %s %s: %s", r.Method, r.uri, reason), http.StatusBadRequest)
 }
 
 func (s *Server) Error(w http.ResponseWriter, r *Request, err error) {
-	ShowError(w, &r.Request, fmt.Sprintf("Error serving %s %s: %s", r.method, r.uri, err), http.StatusInternalServerError)
+	ShowError(w, &r.Request, fmt.Sprintf("Error serving %s %s: %s", r.Method, r.uri, err), http.StatusInternalServerError)
 }
 
 func (s *Server) NotFound(w http.ResponseWriter, r *Request, err error) {
-	ShowError(w, &r.Request, fmt.Sprintf("NOT FOUND error serving %s %s: %s", r.method, r.uri, err), http.StatusNotFound)
+	ShowError(w, &r.Request, fmt.Sprintf("NOT FOUND error serving %s %s: %s", r.Method, r.uri, err), http.StatusNotFound)
 }

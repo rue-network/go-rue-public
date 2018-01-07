@@ -1,18 +1,18 @@
-// Copyright 2017 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2017 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package bloombits
 
@@ -83,7 +83,7 @@ type Matcher struct {
 	retrievals chan chan *Retrieval // Retriever processes waiting for task allocations
 	deliveries chan *Retrieval      // Retriever processes waiting for task response deliveries
 
-	running uint32 // Atomic flag whruer a session is live or not
+	running uint32 // Atomic flag whrueer a session is live or not
 }
 
 // NewMatcher creates a new pipeline for retrieving bloom bit streams and doing
@@ -256,7 +256,7 @@ func (m *Matcher) run(begin, end uint64, buffer int, session *MatcherSession) ch
 // subMatch creates a sub-matcher that filters for a set of addresses or topics, binary OR-s those matches, then
 // binary AND-s the result to the daisy-chain input (source) and forwards it to the daisy-chain output.
 // The matches of each address/topic are calculated by fetching the given sections of the three bloom bit indexes belonging to
-// that address/topic, and binary AND-ing those vectors togruer.
+// that address/topic, and binary AND-ing those vectors togrueer.
 func (m *Matcher) subMatch(source chan *partialMatches, dist chan *request, bloom []bloomIndexes, session *MatcherSession) chan *partialMatches {
 	// Start the concurrent schedulers for each bit required by the bloom filter
 	sectionSources := make([][3]chan uint64, len(bloom))
@@ -333,7 +333,7 @@ func (m *Matcher) subMatch(source chan *partialMatches, dist chan *request, bloo
 				if !ok {
 					return
 				}
-				// Gather all the sub-results and merge them togruer
+				// Gather all the sub-results and merge them togrueer
 				var orVector []byte
 				for _, bloomSinks := range sectionSinks {
 					var andVector []byte
@@ -392,7 +392,7 @@ func (m *Matcher) distributor(dist chan *request, session *MatcherSession) {
 		shutdown = session.quit // Shutdown request channel, will gracefully wait for pending requests
 	)
 
-	// assign is a helper.method fo try to assign a pending bit an an actively
+	// assign is a helper method fo try to assign a pending bit an an actively
 	// listening servicer, or schedule it up for later when one arrives.
 	assign := func(bit uint) {
 		select {
@@ -600,7 +600,7 @@ func (s *MatcherSession) DeliverSections(bit uint, sections []uint64, bitsets []
 }
 
 // Multiplex polls the matcher session for rerieval tasks and multiplexes it into
-// the reuested retrieval queue to be serviced togruer with other sessions.
+// the reuested retrieval queue to be serviced togrueer with other sessions.
 //
 // This method will block for the lifetime of the session. Even after termination
 // of the session, any request in-flight need to be responded to! Empty responses

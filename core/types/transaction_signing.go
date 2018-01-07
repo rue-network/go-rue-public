@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2016 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package types
 
@@ -44,8 +44,8 @@ func MakeSigner(config *params.ChainConfig, blockNumber *big.Int) Signer {
 	switch {
 	case config.IsEIP155(blockNumber):
 		signer = NewEIP155Signer(config.ChainId)
-	case config.IsHomestead(blockNumber):
-		signer = HomesteadSigner{}
+	case config.IsHorizon(blockNumber):
+		signer = HorizonSigner{}
 	default:
 		signer = FrontierSigner{}
 	}
@@ -126,7 +126,7 @@ var big8 = big.NewInt(8)
 
 func (s EIP155Signer) Sender(tx *Transaction) (common.Address, error) {
 	if !tx.Protected() {
-		return HomesteadSigner{}.Sender(tx)
+		return HorizonSigner{}.Sender(tx)
 	}
 	if tx.ChainId().Cmp(s.chainId) != 0 {
 		return common.Address{}, ErrInvalidChainId
@@ -139,7 +139,7 @@ func (s EIP155Signer) Sender(tx *Transaction) (common.Address, error) {
 // WithSignature returns a new transaction with the given signature. This signature
 // needs to be in the [R || S || V] format where V is 0 or 1.
 func (s EIP155Signer) SignatureValues(tx *Transaction, sig []byte) (R, S, V *big.Int, err error) {
-	R, S, V, err = HomesteadSigner{}.SignatureValues(tx, sig)
+	R, S, V, err = HorizonSigner{}.SignatureValues(tx, sig)
 	if err != nil {
 		return nil, nil, nil, err
 	}
@@ -164,22 +164,22 @@ func (s EIP155Signer) Hash(tx *Transaction) common.Hash {
 	})
 }
 
-// HomesteadTransaction implements TransactionInterface using the
-// homestead rules.
-type HomesteadSigner struct{ FrontierSigner }
+// HorizonTransaction implements TransactionInterface using the
+// horizon rules.
+type HorizonSigner struct{ FrontierSigner }
 
-func (s HomesteadSigner) Equal(s2 Signer) bool {
-	_, ok := s2.(HomesteadSigner)
+func (s HorizonSigner) Equal(s2 Signer) bool {
+	_, ok := s2.(HorizonSigner)
 	return ok
 }
 
 // SignatureValues returns signature values. This signature
 // needs to be in the [R || S || V] format where V is 0 or 1.
-func (hs HomesteadSigner) SignatureValues(tx *Transaction, sig []byte) (r, s, v *big.Int, err error) {
+func (hs HorizonSigner) SignatureValues(tx *Transaction, sig []byte) (r, s, v *big.Int, err error) {
 	return hs.FrontierSigner.SignatureValues(tx, sig)
 }
 
-func (hs HomesteadSigner) Sender(tx *Transaction) (common.Address, error) {
+func (hs HorizonSigner) Sender(tx *Transaction) (common.Address, error) {
 	return recoverPlain(hs.Hash(tx), tx.data.R, tx.data.S, tx.data.V, true)
 }
 
@@ -219,12 +219,12 @@ func (fs FrontierSigner) Sender(tx *Transaction) (common.Address, error) {
 	return recoverPlain(fs.Hash(tx), tx.data.R, tx.data.S, tx.data.V, false)
 }
 
-func recoverPlain(sighash common.Hash, R, S, Vb *big.Int, homestead bool) (common.Address, error) {
+func recoverPlain(sighash common.Hash, R, S, Vb *big.Int, horizon bool) (common.Address, error) {
 	if Vb.BitLen() > 8 {
 		return common.Address{}, ErrInvalidSig
 	}
 	V := byte(Vb.Uint64() - 27)
-	if !crypto.ValidateSignatureValues(V, R, S, homestead) {
+	if !crypto.ValidateSignatureValues(V, R, S, horizon) {
 		return common.Address{}, ErrInvalidSig
 	}
 	// encode the snature in uncompressed format

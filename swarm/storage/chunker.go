@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2016 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package storage
 
@@ -272,7 +272,7 @@ func (self *TreeChunker) hashWorker(jobC chan *hashJob, chunkC chan *Chunk, errC
 	}
 }
 
-// The treeChunkers own Hash hashes togruer
+// The treeChunkers own Hash hashes togrueer
 // - the size (of the subtree encoded in the Chunk)
 // - the Chunk, ie. the contents read from the input reader
 func (self *TreeChunker) hashChunk(hasher SwarmHash, job *hashJob, chunkC chan *Chunk, swg *sync.WaitGroup) {
@@ -452,7 +452,7 @@ func (self *LazyChunkReader) join(b []byte, off int64, eoff int64, depth int, tr
 	} //for
 }
 
-// the helper.method submits chunks for a key to a oueue (DPA) and
+// the helper method submits chunks for a key to a oueue (DPA) and
 // block until they time out or arrive
 // abort if quitC is readable
 func retrieve(key Key, chunkC chan *Chunk, quitC chan bool) *Chunk {

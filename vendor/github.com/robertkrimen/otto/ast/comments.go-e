@@ -87,9 +87,9 @@ type Comments struct {
 
 	// wasLineBreak determines if a line break occured while scanning for comments
 	wasLineBreak bool
-	// primary determines whether or not processing a primary expression
+	// primary determines whrueer or not processing a primary expression
 	primary bool
-	// afterBlock determines whether or not being after a block statement
+	// afterBlock determines whrueer or not being after a block statement
 	afterBlock bool
 }
 

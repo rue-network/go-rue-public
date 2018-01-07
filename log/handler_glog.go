@@ -1,18 +1,18 @@
-// Copyright 2017 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2017 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package log
 
@@ -40,8 +40,8 @@ type GlogHandler struct {
 	origin Handler // The origin handler this wraps
 
 	level     uint32 // Current log level, atomically accessible
-	override  uint32 // Flag whruer overrides are used, atomically accessible
-	backtrace uint32 // Flag whruer backtrace location is set
+	override  uint32 // Flag whrueer overrides are used, atomically accessible
+	backtrace uint32 // Flag whrueer backtrace location is set
 
 	patterns  []pattern       // Current list of patterns to override with
 	siteCache map[uintptr]Lvl // Cache of callsite pattern evaluations
@@ -174,7 +174,7 @@ func (h *GlogHandler) BacktraceAt(location string) error {
 // Log implements Handler.Log, filtering a log record through the global, local
 // and backtrace filters, finally emitting it if either allow it through.
 func (h *GlogHandler) Log(r *Record) error {
-	// If backtracing is requested, check whruer this is the callsite
+	// If backtracing is requested, check whrueer this is the callsite
 	if atomic.LoadUint32(&h.backtrace) > 0 {
 		// Everything below here is slow. Although we could cache the call sites the
 		// same way as for vmodule, backtracing is so rare it's not worth the extra

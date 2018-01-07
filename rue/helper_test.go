@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2015 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 // This file contains some shares testing functionality, common to  multiple
 // different files and modules being tested.
@@ -115,7 +115,7 @@ func (p *testTxPool) Pending() (map[common.Address]types.Transactions, error) {
 
 	batches := make(map[common.Address]types.Transactions)
 	for _, tx := range p.pool {
-		from, _ := types.Sender(types.HomesteadSigner{}, tx)
+		from, _ := types.Sender(types.HorizonSigner{}, tx)
 		batches[from] = append(batches[from], tx)
 	}
 	for _, batch := range batches {
@@ -131,7 +131,7 @@ func (p *testTxPool) SubscribeTxPreEvent(ch chan<- core.TxPreEvent) event.Subscr
 // newTestTransaction create a new dummy transaction.
 func newTestTransaction(from *ecdsa.PrivateKey, nonce uint64, datasize int) *types.Transaction {
 	tx := types.NewTransaction(nonce, common.Address{}, big.NewInt(0), big.NewInt(100000), big.NewInt(0), make([]byte, datasize))
-	tx, _ = types.SignTx(tx, types.HomesteadSigner{}, from)
+	tx, _ = types.SignTx(tx, types.HorizonSigner{}, from)
 	return tx
 }
 

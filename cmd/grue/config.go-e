@@ -1,18 +1,18 @@
-// Copyright 2017 The go-ruereum Authors
-// This file is part of go-ruereum.
+// Copyright 2017 The go-rueereum Authors
+// This file is part of go-rueereum.
 //
-// go-ruereum is free software: you can redistribute it and/or modify
+// go-rueereum is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// go-ruereum is distributed in the hope that it will be useful,
+// go-rueereum is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with go-ruereum. If not, see <http://www.gnu.org/licenses/>.
+// along with go-rueereum. If not, see <http://www.gnu.org/licenses/>.
 
 package main
 
@@ -77,10 +77,10 @@ type ruestatsConfig struct {
 }
 
 type grueConfig struct {
-	Eth       rue.Config
+	Eth      rue.Config
 	Shh       whisper.Config
 	Node      node.Config
-	Ethstats  ruestatsConfig
+	Ruestats  ruestatsConfig
 	Dashboard dashboard.Config
 }
 
@@ -112,7 +112,7 @@ func defaultNodeConfig() node.Config {
 func makeConfigNode(ctx *cli.Context) (*node.Node, grueConfig) {
 	// Load defaults.
 	cfg := grueConfig{
-		Eth:       rue.DefaultConfig,
+		Eth:      rue.DefaultConfig,
 		Shh:       whisper.DefaultConfig,
 		Node:      defaultNodeConfig(),
 		Dashboard: dashboard.DefaultConfig,
@@ -133,7 +133,7 @@ func makeConfigNode(ctx *cli.Context) (*node.Node, grueConfig) {
 	}
 	utils.SetEthConfig(ctx, stack, &cfg.Eth)
 	if ctx.GlobalIsSet(utils.EthStatsURLFlag.Name) {
-		cfg.Ethstats.URL = ctx.GlobalString(utils.EthStatsURLFlag.Name)
+		cfg.Ruestats.URL = ctx.GlobalString(utils.EthStatsURLFlag.Name)
 	}
 
 	utils.SetShhConfig(ctx, stack, &cfg.Shh)
@@ -173,9 +173,9 @@ func makeFullNode(ctx *cli.Context) *node.Node {
 		utils.RegisterShhService(stack, &cfg.Shh)
 	}
 
-	// Add the Ruereum Stats daemon if requested.
-	if cfg.Ethstats.URL != "" {
-		utils.RegisterEthStatsService(stack, cfg.Ethstats.URL)
+	// Add the Ethereum Stats daemon if requested.
+	if cfg.Ruestats.URL != "" {
+		utils.RegisterEthStatsService(stack, cfg.Ruestats.URL)
 	}
 
 	// Add the release oracle service so it boots along with node.

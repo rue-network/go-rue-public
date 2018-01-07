@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2015 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package node
 
@@ -103,7 +103,7 @@ func TestNodeUsedDataDir(t *testing.T) {
 	}
 }
 
-// Tests whruer services can be registered and duplicates caught.
+// Tests whrueer services can be registered and duplicates caught.
 func TestServiceRegistry(t *testing.T) {
 	stack, err := New(testNodeConfig())
 	if err != nil {
@@ -507,8 +507,8 @@ func TestAPIGather(t *testing.T) {
 	}
 	// Register a batch of services with some configured APIs
 	calls := make(chan string, 1)
-	makeAPI := func(result string) *OnemethodApi {
-		return &OnemethodApi{fun: func() { calls <- result }}
+	makeAPI := func(result string) *OneMethodApi {
+		return &OneMethodApi{fun: func() { calls <- result }}
 	}
 	services := map[string]struct {
 		APIs  []rpc.API
@@ -551,16 +551,16 @@ func TestAPIGather(t *testing.T) {
 	defer client.Close()
 
 	tests := []struct {
-		method string
+		Method string
 		Result string
 	}{
-		{"single_theOnemethod", "single.v1"},
-		{"multi_theOnemethod", "multi.v1"},
-		{"multi.v2_theOnemethod", "multi.v2"},
-		{"multi.v2.nested_theOnemethod", "multi.v2.nested"},
+		{"single_theOneMethod", "single.v1"},
+		{"multi_theOneMethod", "multi.v1"},
+		{"multi.v2_theOneMethod", "multi.v2"},
+		{"multi.v2.nested_theOneMethod", "multi.v2.nested"},
 	}
 	for i, test := range tests {
-		if err := client.Call(nil, test.method); err != nil {
+		if err := client.Call(nil, test.Method); err != nil {
 			t.Errorf("test %d: API request failed: %v", i, err)
 		}
 		select {

@@ -1,18 +1,18 @@
-// Copyright 2014 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2014 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package filters
 
@@ -56,7 +56,7 @@ type Filter struct {
 	matcher *bloombits.Matcher
 }
 
-// New creates a new filter which uses a bloom filter on blocks to figure out whruer
+// New creates a new filter which uses a bloom filter on blocks to figure out whrueer
 // a particular block is interesting or not.
 func New(backend Backend, begin, end int64, addresses []common.Address, topics [][]common.Hash) *Filter {
 	// Flatten the address and topic filter clauses into a single bloombits filter

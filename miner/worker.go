@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2015 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package miner
 
@@ -31,11 +31,10 @@ import (
 	"github.com/Rue-Foundation/go-rue/core/state"
 	"github.com/Rue-Foundation/go-rue/core/types"
 	"github.com/Rue-Foundation/go-rue/core/vm"
-	"github.com/Rue-Foundation/go-rue/ruedb"
 	"github.com/Rue-Foundation/go-rue/event"
 	"github.com/Rue-Foundation/go-rue/log"
 	"github.com/Rue-Foundation/go-rue/params"
-	"gopkg.in/fatih/set.v0"
+	"github.com/Rue-Foundation/go-rue/ruedb"
 )
 
 const (
@@ -127,7 +126,7 @@ type worker struct {
 	atWork int32
 }
 
-func newWorker(config *params.ChainConfig, engine consensus.Engine, coinbase common.Address, rue Backend, mux *event.TypeMux) *worker {
+func newWorker(config *params.ChainConfig, engine consensus.Engine, coinbase common.Address, rueBackend, mux *event.TypeMux) *worker {
 	worker := &worker{
 		config:         config,
 		engine:         engine,
@@ -158,7 +157,7 @@ func newWorker(config *params.ChainConfig, engine consensus.Engine, coinbase com
 	return worker
 }
 
-func (self *worker) setRuerbase(addr common.Address) {
+func (self *worker) setEtherbase(addr common.Address) {
 	self.mu.Lock()
 	defer self.mu.Unlock()
 	self.coinbase = addr
@@ -425,12 +424,12 @@ func (self *worker) commitNewWork() {
 		log.Error("Failed to prepare header for mining", "err", err)
 		return
 	}
-	// If we are care about TheDAO hard-fork check whruer to override the extra-data or not
+	// If we are care about TheDAO hard-fork check whrueer to override the extra-data or not
 	if daoBlock := self.config.DAOForkBlock; daoBlock != nil {
-		// Check whruer the block is among the fork extra-override range
+		// Check whrueer the block is among the fork extra-override range
 		limit := new(big.Int).Add(daoBlock, params.DAOForkExtraRange)
 		if header.Number.Cmp(daoBlock) >= 0 && header.Number.Cmp(limit) < 0 {
-			// Depending whruer we support or oppose the fork, override differently
+			// Depending whrueer we support or oppose the fork, override differently
 			if self.config.DAOForkSupport {
 				header.Extra = common.CopyBytes(params.DAOForkBlockExtra)
 			} else if bytes.Equal(header.Extra, params.DAOForkBlockExtra) {
@@ -523,7 +522,7 @@ func (env *Work) commitTransactions(mux *event.TypeMux, txs *types.TransactionsB
 		//
 		// We use the eip155 signer regardless of the current hf.
 		from, _ := types.Sender(env.signer, tx)
-		// Check whruer the tx is replay protected. If we're not in the EIP155 hf
+		// Check whrueer the tx is replay protected. If we're not in the EIP155 hf
 		// phase, start ignoring the sender until we do.
 		if tx.Protected() && !env.config.IsEIP155(env.header.Number) {
 			log.Trace("Ignoring reply protected transaction", "hash", tx.Hash(), "eip155", env.config.EIP155Block)

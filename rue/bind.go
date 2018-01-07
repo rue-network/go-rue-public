@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2015 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package rue
 
@@ -29,24 +29,24 @@ import (
 	"github.com/Rue-Foundation/go-rue/rpc"
 )
 
-// ContractBackend implements bind.ContractBackend with direct calls to Ruereum
-// internals to support operating on contracts within subprotocols like rue and
+// ContractBackend implements bind.ContractBackend with direct calls to Ethereum
+// internals to support operating on contracts within subprotocols likerueand
 // swarm.
 //
-// Internally this backend uses the already exposed API endpoints of the Ruereum
+// Internally this backend uses the already exposed API endpoints of the Ethereum
 // object. These should be rewritten to internal Go method calls when the Go API
 // is refactored to support a clean library use.
 type ContractBackend struct {
-	eapi  *rueapi.PublicRuereumAPI        // Wrapper around the Ruereum object to access metadata
+	eapi  *rueapi.PublicEthereumAPI        // Wrapper around the Ethereum object to access metadata
 	bcapi *rueapi.PublicBlockChainAPI      // Wrapper around the blockchain to access chain data
 	txapi *rueapi.PublicTransactionPoolAPI // Wrapper around the transaction pool to access transaction data
 }
 
 // NewContractBackend creates a new native contract backend using an existing
-// Ruereum object.
+// Ethereum object.
 func NewContractBackend(apiBackend rueapi.Backend) *ContractBackend {
 	return &ContractBackend{
-		eapi:  rueapi.NewPublicRuereumAPI(apiBackend),
+		eapi:  rueapi.NewPublicEthereumAPI(apiBackend),
 		bcapi: rueapi.NewPublicBlockChainAPI(apiBackend),
 		txapi: rueapi.NewPublicTransactionPoolAPI(apiBackend, new(rueapi.AddrLocker)),
 	}
@@ -62,23 +62,23 @@ func (b *ContractBackend) PendingCodeAt(ctx context.Context, contract common.Add
 	return b.bcapi.GetCode(ctx, contract, rpc.PendingBlockNumber)
 }
 
-// ContractCall implements bind.ContractCaller executing an Ruereum contract
+// ContractCall implements bind.ContractCaller executing an Ethereum contract
 // call with the specified data as the input. The pending flag requests execution
 // against the pending block, not the stable head of the chain.
-func (b *ContractBackend) CallContract(ctx context.Context, msg ruereum.CallMsg, blockNum *big.Int) ([]byte, error) {
+func (b *ContractBackend) CallContract(ctx context.Context, msg rueereum.CallMsg, blockNum *big.Int) ([]byte, error) {
 	out, err := b.bcapi.Call(ctx, toCallArgs(msg), toBlockNumber(blockNum))
 	return out, err
 }
 
-// ContractCall implements bind.ContractCaller executing an Ruereum contract
+// ContractCall implements bind.ContractCaller executing an Ethereum contract
 // call with the specified data as the input. The pending flag requests execution
 // against the pending block, not the stable head of the chain.
-func (b *ContractBackend) PendingCallContract(ctx context.Context, msg ruereum.CallMsg) ([]byte, error) {
+func (b *ContractBackend) PendingCallContract(ctx context.Context, msg rueereum.CallMsg) ([]byte, error) {
 	out, err := b.bcapi.Call(ctx, toCallArgs(msg), rpc.PendingBlockNumber)
 	return out, err
 }
 
-func toCallArgs(msg ruereum.CallMsg) rueapi.CallArgs {
+func toCallArgs(msg rueereum.CallMsg) rueapi.CallArgs {
 	args := rueapi.CallArgs{
 		To:   msg.To,
 		From: msg.From,
@@ -124,7 +124,7 @@ func (b *ContractBackend) SuggestGasPrice(ctx context.Context) (*big.Int, error)
 // the backend blockchain. There is no guarantee that this is the true gas limit
 // requirement as other transactions may be added or removed by miners, but it
 // should provide a basis for setting a reasonable default.
-func (b *ContractBackend) EstimateGas(ctx context.Context, msg ruereum.CallMsg) (*big.Int, error) {
+func (b *ContractBackend) EstimateGas(ctx context.Context, msg rueereum.CallMsg) (*big.Int, error) {
 	out, err := b.bcapi.EstimateGas(ctx, toCallArgs(msg))
 	return out.ToInt(), err
 }

@@ -1,20 +1,20 @@
-// Copyright 2017 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2017 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
-// Package consensus implements different Ruereum consensus engines.
+// Package consensus implements different Ethereum consensus engines.
 package consensus
 
 import (
@@ -50,12 +50,12 @@ type ChainReader interface {
 
 // Engine is an algorithm agnostic consensus engine.
 type Engine interface {
-	// Author retrieves the Ruereum address of the account that minted the given
+	// Author retrieves the Ethereum address of the account that minted the given
 	// block, which may be different from the header's coinbase if a consensus
 	// engine is based on signatures.
 	Author(header *types.Header) (common.Address, error)
 
-	// VerifyHeader checks whruer a header conforms to the consensus rules of a
+	// VerifyHeader checks whrueer a header conforms to the consensus rules of a
 	// given engine. Verifying the seal may be done optionally here, or explicitly
 	// via the VerifySeal method.
 	VerifyHeader(chain ChainReader, header *types.Header, seal bool) error
@@ -70,7 +70,7 @@ type Engine interface {
 	// rules of a given engine.
 	VerifyUncles(chain ChainReader, block *types.Block) error
 
-	// VerifySeal checks whruer the crypto seal on a header is valid according to
+	// VerifySeal checks whrueer the crypto seal on a header is valid according to
 	// the consensus rules of the given engine.
 	VerifySeal(chain ChainReader, header *types.Header) error
 

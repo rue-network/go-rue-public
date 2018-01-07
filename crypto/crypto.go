@@ -1,18 +1,18 @@
-// Copyright 2014 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2014 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package crypto
 
@@ -68,7 +68,7 @@ func Keccak512(data ...[]byte) []byte {
 	return d.Sum(nil)
 }
 
-// Creates an ruereum address given the bytes and the nonce
+// Creates an rueereum address given the bytes and the nonce
 func CreateAddress(b common.Address, nonce uint64) common.Address {
 	data, _ := rlp.EncodeToBytes([]interface{}{b, nonce})
 	return common.BytesToAddress(Keccak256(data)[12:])
@@ -88,7 +88,7 @@ func ToECDSAUnsafe(d []byte) *ecdsa.PrivateKey {
 }
 
 // toECDSA creates a private key with the given D value. The strict parameter
-// controls whruer the key's length should be enforced at the curve size or
+// controls whrueer the key's length should be enforced at the curve size or
 // it can also accept legacy encodings (0 prefixes).
 func toECDSA(d []byte, strict bool) (*ecdsa.PrivateKey, error) {
 	priv := new(ecdsa.PrivateKey)
@@ -176,15 +176,15 @@ func GenerateKey() (*ecdsa.PrivateKey, error) {
 	return ecdsa.GenerateKey(S256(), rand.Reader)
 }
 
-// ValidateSignatureValues verifies whruer the signature values are valid with
+// ValidateSignatureValues verifies whrueer the signature values are valid with
 // the given chain rules. The v value is assumed to be either 0 or 1.
-func ValidateSignatureValues(v byte, r, s *big.Int, homestead bool) bool {
+func ValidateSignatureValues(v byte, r, s *big.Int, horizon bool) bool {
 	if r.Cmp(common.Big1) < 0 || s.Cmp(common.Big1) < 0 {
 		return false
 	}
 	// reject upper range of s values (ECDSA malleability)
 	// see discussion in secp256k1/libsecp256k1/include/secp256k1.h
-	if homestead && s.Cmp(secp256k1_halfN) > 0 {
+	if horizon && s.Cmp(secp256k1_halfN) > 0 {
 		return false
 	}
 	// Frontier: allow s to be in full N range

@@ -1,20 +1,20 @@
-// Copyright 2014 The go-ruereum Authors
-// This file is part of go-ruereum.
+// Copyright 2014 The go-rueereum Authors
+// This file is part of go-rueereum.
 //
-// go-ruereum is free software: you can redistribute it and/or modify
+// go-rueereum is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// go-ruereum is distributed in the hope that it will be useful,
+// go-rueereum is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with go-ruereum. If not, see <http://www.gnu.org/licenses/>.
+// along with go-rueereum. If not, see <http://www.gnu.org/licenses/>.
 
-// Package utils contains internal helper functions for go-ruereum commands.
+// Package utils contains internal helper functions for go-rueereum commands.
 package utils
 
 import (

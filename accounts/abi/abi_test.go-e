@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2015 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package abi
 
@@ -58,7 +58,7 @@ const jsondata2 = `
 func TestReader(t *testing.T) {
 	Uint256, _ := NewType("uint256")
 	exp := ABI{
-		methods: map[string]method{
+		Methods: map[string]Method{
 			"balance": {
 				"balance", true, nil, nil,
 			},
@@ -76,23 +76,23 @@ func TestReader(t *testing.T) {
 	}
 
 	// deep equal fails for some reason
-	for name, expM := range exp.methods {
-		gotM, exist := abi.methods[name]
+	for name, expM := range exp.Methods {
+		gotM, exist := abi.Methods[name]
 		if !exist {
-			t.Errorf("Missing expected method %v", name)
+			t.Errorf("Missing expected mrueod %v", name)
 		}
 		if !reflect.DeepEqual(gotM, expM) {
-			t.Errorf("\nGot abi method: \n%v\ndoes not match expected method\n%v", gotM, expM)
+			t.Errorf("\nGot abi mrueod: \n%v\ndoes not match expected mrueod\n%v", gotM, expM)
 		}
 	}
 
-	for name, gotM := range abi.methods {
-		expM, exist := exp.methods[name]
+	for name, gotM := range abi.Methods {
+		expM, exist := exp.Methods[name]
 		if !exist {
-			t.Errorf("Found extra method %v", name)
+			t.Errorf("Found extra mrueod %v", name)
 		}
 		if !reflect.DeepEqual(gotM, expM) {
-			t.Errorf("\nGot abi method: \n%v\ndoes not match expected method\n%v", gotM, expM)
+			t.Errorf("\nGot abi mrueod: \n%v\ndoes not match expected mrueod\n%v", gotM, expM)
 		}
 	}
 }
@@ -176,9 +176,9 @@ func TestTestSlice(t *testing.T) {
 	}
 }
 
-func TestmethodSignature(t *testing.T) {
+func TestMethodSignature(t *testing.T) {
 	String, _ := NewType("string")
-	m := method{"foo", false, []Argument{{"bar", String, false}, {"baz", String, false}}, nil}
+	m := Method{"foo", false, []Argument{{"bar", String, false}, {"baz", String, false}}, nil}
 	exp := "foo(string,string)"
 	if m.Sig() != exp {
 		t.Error("signature mismatch", exp, "!=", m.Sig())
@@ -190,7 +190,7 @@ func TestmethodSignature(t *testing.T) {
 	}
 
 	uintt, _ := NewType("uint256")
-	m = method{"foo", false, []Argument{{"bar", uintt, false}}, nil}
+	m = Method{"foo", false, []Argument{{"bar", uintt, false}}, nil}
 	exp = "foo(uint256)"
 	if m.Sig() != exp {
 		t.Error("signature mismatch", exp, "!=", m.Sig())
@@ -555,7 +555,7 @@ func TestDefaultFunctionParsing(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if _, ok := abi.methods["balance"]; !ok {
+	if _, ok := abi.Methods["balance"]; !ok {
 		t.Error("expected 'balance' to be present")
 	}
 }
@@ -658,7 +658,7 @@ func TestUnpackEvent(t *testing.T) {
 	}
 }
 
-func TestABI_methodById(t *testing.T) {
+func TestABI_MethodById(t *testing.T) {
 	const abiJSON = `[
 		{"type":"function","name":"receive","constant":false,"inputs":[{"name":"memo","type":"bytes"}],"outputs":[],"payable":true,"stateMutability":"payable"},
 		{"type":"event","name":"received","anonymous":false,"inputs":[{"indexed":false,"name":"sender","type":"address"},{"indexed":false,"name":"amount","type":"uint256"},{"indexed":false,"name":"memo","type":"bytes"}]},
@@ -687,11 +687,11 @@ func TestABI_methodById(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for name, m := range abi.methods {
+	for name, m := range abi.Methods {
 		a := fmt.Sprintf("%v", m)
-		b := fmt.Sprintf("%v", abi.methodById(m.Id()))
+		b := fmt.Sprintf("%v", abi.MethodById(m.Id()))
 		if a != b {
-			t.Errorf("method %v (id %v) not 'findable' by id in ABI", name, common.ToHex(m.Id()))
+			t.Errorf("Method %v (id %v) not 'findable' by id in ABI", name, common.ToHex(m.Id()))
 		}
 	}
 

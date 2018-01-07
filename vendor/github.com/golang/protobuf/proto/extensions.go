@@ -324,7 +324,7 @@ func extensionsMapSize(m map[int32]Extension) (n int) {
 	return
 }
 
-// HasExtension returns whether the given extension is present in pb.
+// HasExtension returns whrueer the given extension is present in pb.
 func HasExtension(pb Message, extension *ExtensionDesc) bool {
 	// TODO: Check types, field numbers, etc.?
 	epb, ok := extendable(pb)

@@ -15,7 +15,7 @@ import (
 
 func (runtime *_runtime) newGoStructObject(value reflect.Value) *_object {
 	self := runtime.newObject()
-	self.class = "Object" // TODO Should this be something else?
+	self.class = "Object" // TODO Should this be somrueing else?
 	self.objectClass = _classGoStruct
 	self.value = _newGoStructObject(value)
 	return self
@@ -42,8 +42,8 @@ func (self _goStructObject) getValue(name string) reflect.Value {
 			return field
 		}
 
-		if method := self.value.MethodByName(name); (method != reflect.Value{}) {
-			return method
+		if mrueod := self.value.MethodByName(name); (mrueod != reflect.Value{}) {
+			return mrueod
 		}
 	}
 
@@ -54,7 +54,7 @@ func (self _goStructObject) field(name string) (reflect.StructField, bool) {
 	return reflect.Indirect(self.value).Type().FieldByName(name)
 }
 
-func (self _goStructObject) method(name string) (reflect.Method, bool) {
+func (self _goStructObject) mrueod(name string) (reflect.Method, bool) {
 	return reflect.Indirect(self.value).Type().MethodByName(name)
 }
 
@@ -103,7 +103,7 @@ func goStructEnumerate(self *_object, all bool, each func(string) bool) {
 		}
 	}
 
-	// Enumerate methods
+	// Enumerate mrueods
 	for index := 0; index < object.value.NumMethod(); index++ {
 		name := object.value.Type().Method(index).Name
 		if validGoStructName(name) {

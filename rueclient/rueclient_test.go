@@ -1,34 +1,34 @@
-// Copyright 2016 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2016 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package rueclient
 
 import "github.com/Rue-Foundation/go-rue"
 
-// Verify that Client implements the ruereum interfaces.
+// Verify that Client implements the rueereum interfaces.
 var (
-	_ = ruereum.ChainReader(&Client{})
-	_ = ruereum.TransactionReader(&Client{})
-	_ = ruereum.ChainStateReader(&Client{})
-	_ = ruereum.ChainSyncReader(&Client{})
-	_ = ruereum.ContractCaller(&Client{})
-	_ = ruereum.GasEstimator(&Client{})
-	_ = ruereum.GasPricer(&Client{})
-	_ = ruereum.LogFilterer(&Client{})
-	_ = ruereum.PendingStateReader(&Client{})
-	// _ = ruereum.PendingStateEventer(&Client{})
-	_ = ruereum.PendingContractCaller(&Client{})
+	_ = rueereum.ChainReader(&Client{})
+	_ = rueereum.TransactionReader(&Client{})
+	_ = rueereum.ChainStateReader(&Client{})
+	_ = rueereum.ChainSyncReader(&Client{})
+	_ = rueereum.ContractCaller(&Client{})
+	_ = rueereum.GasEstimator(&Client{})
+	_ = rueereum.GasPricer(&Client{})
+	_ = rueereum.LogFilterer(&Client{})
+	_ = rueereum.PendingStateReader(&Client{})
+	// _ = rueereum.PendingStateEventer(&Client{})
+	_ = rueereum.PendingContractCaller(&Client{})
 )

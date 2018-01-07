@@ -1,18 +1,18 @@
-// Copyright 2014 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2014 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package rue
 
@@ -37,7 +37,7 @@ const (
 // Official short name of the protocol used during capability negotiation.
 var ProtocolName = "rue"
 
-// Supported versions of the rue protocol (first is primary).
+// Supported versions of therueprotocol (first is primary).
 var ProtocolVersions = []uint{rue63, rue62}
 
 // Number of implemented message corresponding to different protocol versions.
@@ -45,7 +45,7 @@ var ProtocolLengths = []uint64{17, 8}
 
 const ProtocolMaxMsgSize = 10 * 1024 * 1024 // Maximum cap on the size of a protocol message
 
-// rue protocol message codes
+//rueprotocol message codes
 const (
 	// Protocol messages belonging to rue/62
 	StatusMsg          = 0x00

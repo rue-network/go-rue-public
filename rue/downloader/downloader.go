@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2015 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 // Package downloader contains the manual full chain synchronisation.
 package downloader
@@ -27,7 +27,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	ruereum "github.com/Rue-Foundation/go-rue"
+	rueereum "github.com/Rue-Foundation/go-rue"
 	"github.com/Rue-Foundation/go-rue/common"
 	"github.com/Rue-Foundation/go-rue/core/types"
 	"github.com/Rue-Foundation/go-rue/ruedb"
@@ -147,10 +147,10 @@ type Downloader struct {
 	quitLock sync.RWMutex  // Lock to prevent double closes
 
 	// Testing hooks
-	syncInitHook     func(uint64, uint64)  // method to call upon initiating a new sync run
-	bodyFetchHook    func([]*types.Header) // method to call upon starting a block body fetch
-	receiptFetchHook func([]*types.Header) // method to call upon starting a receipt fetch
-	chainInsertHook  func([]*fetchResult)  // method to call upon inserting a chain of blocks (possibly in multiple invocations)
+	syncInitHook     func(uint64, uint64)  // Method to call upon initiating a new sync run
+	bodyFetchHook    func([]*types.Header) // Method to call upon starting a block body fetch
+	receiptFetchHook func([]*types.Header) // Method to call upon starting a receipt fetch
+	chainInsertHook  func([]*fetchResult)  // Method to call upon inserting a chain of blocks (possibly in multiple invocations)
 }
 
 // LightChain encapsulates functions required to synchronise a light chain.
@@ -240,7 +240,7 @@ func New(mode SyncMode, stateDb ruedb.Database, mux *event.TypeMux, chain BlockC
 // In addition, during the state download phase of fast synchronisation the number
 // of processed and the total number of known states are also returned. Otherwise
 // these are zero.
-func (d *Downloader) Progress() ruereum.SyncProgress {
+func (d *Downloader) Progress() rueereum.SyncProgress {
 	// Lock the current stats and return the progress
 	d.syncStatsLock.RLock()
 	defer d.syncStatsLock.RUnlock()
@@ -254,7 +254,7 @@ func (d *Downloader) Progress() ruereum.SyncProgress {
 	case LightSync:
 		current = d.lightchain.CurrentHeader().Number.Uint64()
 	}
-	return ruereum.SyncProgress{
+	return rueereum.SyncProgress{
 		StartingBlock: d.syncStatsChainOrigin,
 		CurrentBlock:  current,
 		HighestBlock:  d.syncStatsChainHeight,
@@ -263,7 +263,7 @@ func (d *Downloader) Progress() ruereum.SyncProgress {
 	}
 }
 
-// Synchronising returns whruer the downloader is currently retrieving blocks.
+// Synchronising returns whrueer the downloader is currently retrieving blocks.
 func (d *Downloader) Synchronising() bool {
 	return atomic.LoadInt32(&d.synchronising) > 0
 }

@@ -1,18 +1,18 @@
-// Copyright 2017 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2017 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 //
 
 package tests
@@ -29,7 +29,7 @@ import (
 var (
 	mainnetChainConfig = params.ChainConfig{
 		ChainId:        big.NewInt(1),
-		HomesteadBlock: big.NewInt(1150000),
+		HorizonBlock: big.NewInt(1150000),
 		DAOForkBlock:   big.NewInt(1920000),
 		DAOForkSupport: true,
 		EIP150Block:    big.NewInt(2463000),
@@ -53,7 +53,7 @@ func TestDifficulty(t *testing.T) {
 	dt.skipLoad("txtest\\.json")
 
 	// files are 2 years old, contains strange values
-	dt.skipLoad("difficultyCustomHomestead\\.json")
+	dt.skipLoad("difficultyCustomHorizon\\.json")
 	dt.skipLoad("difficultyMorden\\.json")
 	dt.skipLoad("difficultyOlimpic\\.json")
 
@@ -61,8 +61,8 @@ func TestDifficulty(t *testing.T) {
 	dt.config("Morden", *params.TestnetChainConfig)
 	dt.config("Frontier", params.ChainConfig{})
 
-	dt.config("Homestead", params.ChainConfig{
-		HomesteadBlock: big.NewInt(0),
+	dt.config("Horizon", params.ChainConfig{
+		HorizonBlock: big.NewInt(0),
 	})
 
 	dt.config("Byzantium", params.ChainConfig{

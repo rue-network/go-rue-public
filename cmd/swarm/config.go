@@ -1,18 +1,18 @@
-// Copyright 2017 The go-ruereum Authors
-// This file is part of go-ruereum.
+// Copyright 2017 The go-rueereum Authors
+// This file is part of go-rueereum.
 //
-// go-ruereum is free software: you can redistribute it and/or modify
+// go-rueereum is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// go-ruereum is distributed in the hope that it will be useful,
+// go-rueereum is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with go-ruereum. If not, see <http://www.gnu.org/licenses/>.
+// along with go-rueereum. If not, see <http://www.gnu.org/licenses/>.
 
 package main
 
@@ -69,7 +69,7 @@ const (
 	SWARM_ENV_ENS_ADDR        = "SWARM_ENS_ADDR"
 	SWARM_ENV_CORS            = "SWARM_CORS"
 	SWARM_ENV_BOOTNODES       = "SWARM_BOOTNODES"
-	GETH_ENV_DATADIR          = "GETH_DATADIR"
+	GRUE_ENV_DATADIR          = "GRUE_DATADIR"
 )
 
 // These settings ensure that TOML keys use the same names as Go struct fields.
@@ -233,7 +233,7 @@ func envVarsOverride(currentConfig *bzzapi.Config) (config *bzzapi.Config) {
 		}
 	}
 
-	if datadir := os.Getenv(GETH_ENV_DATADIR); datadir != "" {
+	if datadir := os.Getenv(GRUE_ENV_DATADIR); datadir != "" {
 		currentConfig.Path = datadir
 	}
 
@@ -306,7 +306,7 @@ func dumpConfig(ctx *cli.Context) error {
 //deprecated flags checked here
 func checkDeprecated(ctx *cli.Context) {
 	// exit if the deprecated --rueapi flag is set
-	if ctx.GlobalString(DeprecatedEthAPIFlag.Name) != "" {
+	if ctx.GlobalString(DeprecatedRueAPIFlag.Name) != "" {
 		utils.Fatalf("--rueapi is no longer a valid command line flag, please use --ens-api and/or --swap-api.")
 	}
 }

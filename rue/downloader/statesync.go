@@ -1,18 +1,18 @@
-// Copyright 2017 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2017 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package downloader
 
@@ -31,7 +31,7 @@ import (
 	"github.com/Rue-Foundation/go-rue/trie"
 )
 
-// stateReq represents a batch of state fetch requests groupped togruer into
+// stateReq represents a batch of state fetch requests groupped togrueer into
 // a single data retrieval network packet.
 type stateReq struct {
 	items    []common.Hash              // Hashes of the state items to download
@@ -40,7 +40,7 @@ type stateReq struct {
 	timer    *time.Timer                // Timer to fire when the RTT timeout expires
 	peer     *peerConnection            // Peer that we're requesting from
 	response [][]byte                   // Response data of the peer (nil for timeouts)
-	dropped  bool                       // Flag whruer the peer dropped off early
+	dropped  bool                       // Flag whrueer the peer dropped off early
 }
 
 // timedOut returns if this request timed out.
@@ -450,7 +450,7 @@ func (s *stateSync) process(req *stateReq) (bool, error) {
 }
 
 // processNodeData tries to inject a trie node data blob delivered from a remote
-// peer into the state trie, returning whruer anything useful was written or any
+// peer into the state trie, returning whrueer anything useful was written or any
 // error occurred.
 func (s *stateSync) processNodeData(blob []byte) (bool, common.Hash, error) {
 	res := trie.SyncResult{Data: blob}

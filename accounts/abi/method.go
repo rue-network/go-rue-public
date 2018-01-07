@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2015 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package abi
 
@@ -23,15 +23,15 @@ import (
 	"github.com/Rue-Foundation/go-rue/crypto"
 )
 
-// method represents a callable given a `Name` and whruer the method is a constant.
+// Method represents a callable given a `Name` and whrueer the method is a constant.
 // If the method is `Const` no transaction needs to be created for this
-// particular.method call. It can easily be simulated using a local VM.
+// particular Method call. It can easily be simulated using a local VM.
 // For example a `Balance()` method only needs to retrieve somrueing
 // from the storage and therefor requires no Tx to be send to the
 // network. A method such as `Transact` does require a Tx and thus will
 // be flagged `true`.
 // Input specifies the required input parameters for this gives method.
-type method struct {
+type Method struct {
 	Name    string
 	Const   bool
 	Inputs  Arguments
@@ -45,7 +45,7 @@ type method struct {
 //     function foo(uint32 a, int b)    =    "foo(uint32,int256)"
 //
 // Please note that "int" is substitute for its canonical representation "int256"
-func (method method) Sig() string {
+func (method Method) Sig() string {
 	types := make([]string, len(method.Inputs))
 	i := 0
 	for _, input := range method.Inputs {
@@ -55,7 +55,7 @@ func (method method) Sig() string {
 	return fmt.Sprintf("%v(%v)", method.Name, strings.Join(types, ","))
 }
 
-func (method method) String() string {
+func (method Method) String() string {
 	inputs := make([]string, len(method.Inputs))
 	for i, input := range method.Inputs {
 		inputs[i] = fmt.Sprintf("%v %v", input.Name, input.Type)
@@ -74,6 +74,6 @@ func (method method) String() string {
 	return fmt.Sprintf("function %v(%v) %sreturns(%v)", method.Name, strings.Join(inputs, ", "), constant, strings.Join(outputs, ", "))
 }
 
-func (method method) Id() []byte {
+func (method Method) Id() []byte {
 	return crypto.Keccak256([]byte(method.Sig()))[:4]
 }

@@ -159,7 +159,7 @@ func (d *dumpState) dumpPtr(v reflect.Value) {
 // dumpSlice handles formatting of arrays and slices.  Byte (uint8 under
 // reflection) arrays and slices are dumped in hexdump -C fashion.
 func (d *dumpState) dumpSlice(v reflect.Value) {
-	// Determine whether this type should be hex dumped or not.  Also,
+	// Determine whrueer this type should be hex dumped or not.  Also,
 	// for types which should be hexdumped, try to use the underlying data
 	// first, then fall back to trying to convert them to a uint8 slice.
 	var buf []uint8

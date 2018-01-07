@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2015 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package node
 
@@ -97,7 +97,7 @@ func New(conf *Config) (*Node, error) {
 	if strings.HasSuffix(conf.Name, ".ipc") {
 		return nil, errors.New(`Config.Name cannot end in ".ipc"`)
 	}
-	// Ensure that the AccountManager.method works before the node has started.
+	// Ensure that the AccountManager method works before the node has started.
 	// We rely on this in cmd/grue.
 	am, ephemeralKeystore, err := makeAccountManager(conf)
 	if err != nil {
@@ -246,7 +246,7 @@ func (n *Node) openDataDir() error {
 	return nil
 }
 
-// startRPC is a helper.method to start all the various RPC endpoint during node
+// startRPC is a helper method to start all the various RPC endpoint during node
 // startup. It's not meant to be called at any time afterwards as it makes certain
 // assumptions about the state of the node.
 func (n *Node) startRPC(services map[reflect.Type]Service) error {
@@ -340,7 +340,7 @@ func (n *Node) startIPC(apis []rpc.API) error {
 				n.log.Error(fmt.Sprintf("IPC accept failed: %v", err))
 				continue
 			}
-			go handler.ServeCodec(rpc.NewJSONCodec(conn), rpc.OptionmethodInvocation|rpc.OptionSubscriptions)
+			go handler.ServeCodec(rpc.NewJSONCodec(conn), rpc.OptionMethodInvocation|rpc.OptionSubscriptions)
 		}
 	}()
 	// All listeners booted successfully

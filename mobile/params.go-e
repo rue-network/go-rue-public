@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2016 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 // Contains all the wrappers from the params package.
 
@@ -26,13 +26,13 @@ import (
 	"github.com/Rue-Foundation/go-rue/params"
 )
 
-// MainnetGenesis returns the JSON spec to use for the main Ruereum network. It
+// MainnetGenesis returns the JSON spec to use for the main Ethereum network. It
 // is actually empty since that defaults to the hard coded binary genesis block.
 func MainnetGenesis() string {
 	return ""
 }
 
-// TestnetGenesis returns the JSON spec to use for the Ruereum test network.
+// TestnetGenesis returns the JSON spec to use for the Ethereum test network.
 func TestnetGenesis() string {
 	enc, err := json.Marshal(core.DefaultTestnetGenesisBlock())
 	if err != nil {

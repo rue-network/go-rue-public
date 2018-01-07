@@ -42,9 +42,9 @@ It has these top-level messages:
 	GetPublicKey
 	PublicKey
 	GetAddress
-	RuereumGetAddress
+	EthereumGetAddress
 	Address
-	RuereumAddress
+	EthereumAddress
 	WipeDevice
 	LoadDevice
 	ResetDevice
@@ -69,12 +69,12 @@ It has these top-level messages:
 	SimpleSignTx
 	TxRequest
 	TxAck
-	RuereumSignTx
-	RuereumTxRequest
-	RuereumTxAck
-	RuereumSignMessage
-	RuereumVerifyMessage
-	RuereumMessageSignature
+	EthereumSignTx
+	EthereumTxRequest
+	EthereumTxAck
+	EthereumSignMessage
+	EthereumVerifyMessage
+	EthereumMessageSignature
 	SignIdentity
 	SignedIdentity
 	GetECDHSessionKey

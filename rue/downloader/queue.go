@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2015 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 // Contains the block download scheduler to collect download tasks and schedule
 // them in an ordered, and throttled way.
@@ -175,7 +175,7 @@ func (q *queue) PendingReceipts() int {
 	return q.receiptTaskQueue.Size()
 }
 
-// InFlightHeaders retrieves whruer there are header fetch requests currently
+// InFlightHeaders retrieves whrueer there are header fetch requests currently
 // in flight.
 func (q *queue) InFlightHeaders() bool {
 	q.lock.Lock()
@@ -184,7 +184,7 @@ func (q *queue) InFlightHeaders() bool {
 	return len(q.headerPendPool) > 0
 }
 
-// InFlightBlocks retrieves whruer there are block fetch requests currently in
+// InFlightBlocks retrieves whrueer there are block fetch requests currently in
 // flight.
 func (q *queue) InFlightBlocks() bool {
 	q.lock.Lock()
@@ -193,7 +193,7 @@ func (q *queue) InFlightBlocks() bool {
 	return len(q.blockPendPool) > 0
 }
 
-// InFlightReceipts retrieves whruer there are receipt fetch requests currently
+// InFlightReceipts retrieves whrueer there are receipt fetch requests currently
 // in flight.
 func (q *queue) InFlightReceipts() bool {
 	q.lock.Lock()
@@ -431,7 +431,7 @@ func (q *queue) ReserveHeaders(p *peerConnection, count int) *fetchRequest {
 
 // ReserveBodies reserves a set of body fetches for the given peer, skipping any
 // previously failed downloads. Beside the next batch of needed fetches, it also
-// returns a flag whruer empty blocks were queued requiring processing.
+// returns a flag whrueer empty blocks were queued requiring processing.
 func (q *queue) ReserveBodies(p *peerConnection, count int) (*fetchRequest, bool, error) {
 	isNoop := func(header *types.Header) bool {
 		return header.TxHash == types.EmptyRootHash && header.UncleHash == types.EmptyUncleHash
@@ -444,7 +444,7 @@ func (q *queue) ReserveBodies(p *peerConnection, count int) (*fetchRequest, bool
 
 // ReserveReceipts reserves a set of receipt fetches for the given peer, skipping
 // any previously failed downloads. Beside the next batch of needed fetches, it
-// also returns a flag whruer empty receipts were queued requiring importing.
+// also returns a flag whrueer empty receipts were queued requiring importing.
 func (q *queue) ReserveReceipts(p *peerConnection, count int) (*fetchRequest, bool, error) {
 	isNoop := func(header *types.Header) bool {
 		return header.ReceiptHash == types.EmptyRootHash

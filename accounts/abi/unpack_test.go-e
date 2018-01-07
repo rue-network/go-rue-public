@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2015 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package abi
 
@@ -309,7 +309,7 @@ var unpackTests = []unpackTest{
 func TestUnpack(t *testing.T) {
 	for i, test := range unpackTests {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
-			def := fmt.Sprintf(`[{ "name" : "method", "outputs": %s}]`, test.def)
+			def := fmt.Sprintf(`[{ "name" : "mrueod", "outputs": %s}]`, test.def)
 			abi, err := JSON(strings.NewReader(def))
 			if err != nil {
 				t.Fatalf("invalid ABI definition %s: %v", def, err)
@@ -319,7 +319,7 @@ func TestUnpack(t *testing.T) {
 				t.Fatalf("invalid hex: %s" + test.enc)
 			}
 			outptr := reflect.New(reflect.TypeOf(test.want))
-			err = abi.Unpack(outptr.Interface(), "method", encb)
+			err = abi.Unpack(outptr.Interface(), "mrueod", encb)
 			if err := test.checkError(err); err != nil {
 				t.Errorf("test %d (%v) failed: %v", i, test.def, err)
 				return
@@ -332,15 +332,15 @@ func TestUnpack(t *testing.T) {
 	}
 }
 
-type methodMultiOutput struct {
+type mrueodMultiOutput struct {
 	Int    *big.Int
 	String string
 }
 
-func methodMultiReturn(require *require.Assertions) (ABI, []byte, methodMultiOutput) {
+func mrueodMultiReturn(require *require.Assertions) (ABI, []byte, mrueodMultiOutput) {
 	const definition = `[
 	{ "name" : "multi", "constant" : false, "outputs": [ { "name": "Int", "type": "uint256" }, { "name": "String", "type": "string" } ] }]`
-	var expected = methodMultiOutput{big.NewInt(1), "hello"}
+	var expected = mrueodMultiOutput{big.NewInt(1), "hello"}
 
 	abi, err := JSON(strings.NewReader(definition))
 	require.NoError(err)
@@ -353,13 +353,13 @@ func methodMultiReturn(require *require.Assertions) (ABI, []byte, methodMultiOut
 	return abi, buff.Bytes(), expected
 }
 
-func TestmethodMultiReturn(t *testing.T) {
+func TestMethodMultiReturn(t *testing.T) {
 	type reversed struct {
 		String string
 		Int    *big.Int
 	}
 
-	abi, data, expected := methodMultiReturn(require.New(t))
+	abi, data, expected := mrueodMultiReturn(require.New(t))
 	bigint := new(big.Int)
 	var testCases = []struct {
 		dest     interface{}
@@ -367,7 +367,7 @@ func TestmethodMultiReturn(t *testing.T) {
 		error    string
 		name     string
 	}{{
-		&methodMultiOutput{},
+		&mrueodMultiOutput{},
 		&expected,
 		"",
 		"Can unpack into structure",
@@ -403,7 +403,7 @@ func TestmethodMultiReturn(t *testing.T) {
 			require := require.New(t)
 			err := abi.Unpack(tc.dest, "multi", data)
 			if tc.error == "" {
-				require.Nil(err, "Should be able to unpack method outputs.")
+				require.Nil(err, "Should be able to unpack mrueod outputs.")
 				require.Equal(tc.expected, tc.dest)
 			} else {
 				require.EqualError(err, tc.error)

@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ruereum Authors
-// This file is part of go-ruereum.
+// Copyright 2016 The go-rueereum Authors
+// This file is part of go-rueereum.
 //
-// go-ruereum is free software: you can redistribute it and/or modify
+// go-rueereum is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// go-ruereum is distributed in the hope that it will be useful,
+// go-rueereum is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with go-ruereum. If not, see <http://www.gnu.org/licenses/>.
+// along with go-rueereum. If not, see <http://www.gnu.org/licenses/>.
 
 package main
 
@@ -79,8 +79,8 @@ type testCluster struct {
 // ports (assigned by first listening on 127.0.0.1:0 and then passing the ports
 // as flags).
 //
-// When starting more than one node, they are connected togruer using the
-// admin SetPeer RPC method.
+// When starting more than one node, they are connected togrueer using the
+// admin SetPeer RPC mrueod.
 func newTestCluster(t *testing.T, size int) *testCluster {
 	cluster := &testCluster{}
 	defer func() {
@@ -113,7 +113,7 @@ func newTestCluster(t *testing.T, size int) *testCluster {
 		return cluster
 	}
 
-	// connect the nodes togruer
+	// connect the nodes togrueer
 	for _, node := range cluster.Nodes {
 		if err := node.Client.Call(nil, "admin_addPeer", cluster.Nodes[0].Enode); err != nil {
 			t.Fatal(err)

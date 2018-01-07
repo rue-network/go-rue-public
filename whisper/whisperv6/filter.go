@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2016 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package whisperv6
 
@@ -32,7 +32,7 @@ type Filter struct {
 	KeySym     []byte            // Key associated with the Topic
 	Topics     [][]byte          // Topics to filter messages with
 	PoW        float64           // Proof of work as described in the Whisper spec
-	AllowP2P   bool              // Indicates whruer this filter is interested in direct peer-to-peer messages
+	AllowP2P   bool              // Indicates whrueer this filter is interested in direct peer-to-peer messages
 	SymKeyHash common.Hash       // The Keccak256Hash of the symmetric key, needed for optimization
 
 	Messages map[common.Hash]*ReceivedMessage

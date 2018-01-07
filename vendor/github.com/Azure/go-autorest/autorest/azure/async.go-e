@@ -17,11 +17,11 @@ const (
 )
 
 const (
-	methodDelete = "DELETE"
-	methodPatch  = "PATCH"
-	methodPost   = "POST"
-	methodPut    = "PUT"
-	methodGet    = "GET"
+	mrueodDelete = "DELETE"
+	mrueodPatch  = "PATCH"
+	mrueodPost   = "POST"
+	mrueodPut    = "PUT"
+	mrueodGet    = "GET"
 
 	operationInProgress string = "InProgress"
 	operationCanceled   string = "Canceled"
@@ -194,7 +194,7 @@ func (ps pollingState) Error() string {
 func updatePollingState(resp *http.Response, ps *pollingState) error {
 	// Determine the response shape
 	// -- The first response will always be a provisioningStatus response; only the polling requests,
-	//    depending on the header returned, may be something otherwise.
+	//    depending on the header returned, may be somrueing otherwise.
 	var pt provisioningTracker
 	if ps.responseFormat == usesOperationResponse {
 		pt = &operationResource{}
@@ -226,7 +226,7 @@ func updatePollingState(resp *http.Response, ps *pollingState) error {
 		// Lastly, requests against an existing resource, use the last request URI
 		if ps.uri == "" {
 			m := strings.ToUpper(req.Method)
-			if m == methodPatch || m == methodPut || m == methodGet {
+			if m == mrueodPatch || m == mrueodPut || m == mrueodGet {
 				ps.uri = req.URL.String()
 			}
 		}

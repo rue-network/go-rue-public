@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2016 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package state
 
@@ -188,7 +188,7 @@ func TestSnapshotRandom(t *testing.T) {
 // A new state is created and all actions are applied to it. Several snapshots are taken
 // in between actions. The test then reverts each snapshot. For each snapshot the actions
 // leading up to it are replayed on a fresh, empty state. The behaviour of all public
-// accessor.methods on the reverted state must match the return value of the equivalent
+// accessor methods on the reverted state must match the return value of the equivalent
 // methods on the replayed state.
 type snapshotTest struct {
 	addrs     []common.Address // all account addresses
@@ -374,7 +374,7 @@ func (test *snapshotTest) checkEqual(state, checkstate *StateDB) error {
 			}
 			return true
 		}
-		// Check basic accessor.methods.
+		// Check basic accessor methods.
 		checkeq("Exist", state.Exist(addr), checkstate.Exist(addr))
 		checkeq("HasSuicided", state.HasSuicided(addr), checkstate.HasSuicided(addr))
 		checkeq("GetBalance", state.GetBalance(addr), checkstate.GetBalance(addr))

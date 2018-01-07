@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2015 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package p2p
 
@@ -117,7 +117,7 @@ func (t *rlpx) close(err error) {
 
 // doEncHandshake runs the protocol handshake using authenticated
 // messages. the protocol handshake is the first authenticated message
-// and also verifies whruer the encryption handshake 'worked' and the
+// and also verifies whrueer the encryption handshake 'worked' and the
 // remote side actually provided the right public key.
 func (t *rlpx) doProtoHandshake(our *protoHandshake) (their *protoHandshake, err error) {
 	// Writing our handshake happens concurrently, we prefer
@@ -210,7 +210,7 @@ type secrets struct {
 
 // RLPx v4 handshake auth (defined in EIP-8).
 type authMsgV4 struct {
-	gotPlain bool // whruer read packet had plain format.
+	gotPlain bool // whrueer read packet had plain format.
 
 	Signature       [sigLen]byte
 	InitiatorPubkey [pubLen]byte

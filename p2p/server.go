@@ -1,20 +1,20 @@
-// Copyright 2014 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2014 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
-// Package p2p implements the Ruereum p2p network protocols.
+// Package p2p implements the Ethereum p2p network protocols.
 package p2p
 
 import (
@@ -74,7 +74,7 @@ type Config struct {
 	// Disabling is useful for protocol debugging (manual topology).
 	NoDiscovery bool
 
-	// DiscoveryV5 specifies whruer the the new topic-discovery based V5 discovery
+	// DiscoveryV5 specifies whrueer the the new topic-discovery based V5 discovery
 	// protocol should be started or not.
 	DiscoveryV5 bool `toml:",omitempty"`
 
@@ -453,7 +453,7 @@ func (srv *Server) startListening() error {
 	if !laddr.IP.IsLoopback() && srv.NAT != nil {
 		srv.loopWG.Add(1)
 		go func() {
-			nat.Map(srv.NAT, srv.quit, "tcp", laddr.Port, laddr.Port, "ruereum p2p")
+			nat.Map(srv.NAT, srv.quit, "tcp", laddr.Port, laddr.Port, "rueereum p2p")
 			srv.loopWG.Done()
 		}()
 	}

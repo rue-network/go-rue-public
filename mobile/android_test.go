@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2016 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package grue
 
@@ -40,7 +40,7 @@ import android.test.MoreAsserts;
 import java.math.BigInteger;
 import java.util.Arrays;
 
-import org.ruereum.grue.*;
+import org.rueereum.grue.*;
 
 public class AndroidTest extends InstrumentationTestCase {
 	public AndroidTest() {}
@@ -96,7 +96,7 @@ public class AndroidTest extends InstrumentationTestCase {
 
 		try {
 			// Start up a new inprocess node
-			Node node = new Node(getInstrumentation().getContext().getFilesDir() + "/.ruereum", new NodeConfig());
+			Node node = new Node(getInstrumentation().getContext().getFilesDir() + "/.rueereum", new NodeConfig());
 			node.start();
 
 			// Retrieve some data via function calls (we don't really care about the results)
@@ -106,7 +106,7 @@ public class AndroidTest extends InstrumentationTestCase {
 			info.getProtocols();
 
 			// Retrieve some data via the APIs (we don't really care about the results)
-			RuereumClient ec = node.getRuereumClient();
+			EthereumClient ec = node.getEthereumClient();
 			ec.getBlockByNumber(ctx, -1).getNumber();
 
 			NewHeadHandler handler = new NewHeadHandler() {
@@ -119,8 +119,8 @@ public class AndroidTest extends InstrumentationTestCase {
 		}
 	}
 
-	// Tests that recovering transaction signers works for both Homestead and EIP155
-	// signatures too. Regression test for go-ruereum issue #14599.
+	// Tests that recovering transaction signers works for both Horizon and EIP155
+	// signatures too. Regression test for go-rueereum issue #14599.
 	public void testIssue14599() {
 		try {
 			byte[] preEIP155RLP = new BigInteger("f901fc8032830138808080b901ae60056013565b6101918061001d6000396000f35b3360008190555056006001600060e060020a6000350480630a874df61461003a57806341c0e1b514610058578063a02b161e14610066578063dbbdf0831461007757005b610045600435610149565b80600160a060020a031660005260206000f35b610060610161565b60006000f35b6100716004356100d4565b60006000f35b61008560043560243561008b565b60006000f35b600054600160a060020a031632600160a060020a031614156100ac576100b1565b6100d0565b8060018360005260205260406000208190555081600060005260206000a15b5050565b600054600160a060020a031633600160a060020a031614158015610118575033600160a060020a0316600182600052602052604060002054600160a060020a031614155b61012157610126565b610146565b600060018260005260205260406000208190555080600060005260206000a15b50565b60006001826000526020526040600020549050919050565b600054600160a060020a031633600160a060020a0316146101815761018f565b600054600160a060020a0316ff5b561ca0c5689ed1ad124753d54576dfb4b571465a41900a1dff4058d8adf16f752013d0a01221cbd70ec28c94a3b55ec771bcbc70778d6ee0b51ca7ea9514594c861b1884", 16).toByteArray();
@@ -132,13 +132,13 @@ public class AndroidTest extends InstrumentationTestCase {
 			Transaction preEIP155 =  new Transaction(preEIP155RLP);
 			Transaction postEIP155 = new Transaction(postEIP155RLP);
 
-			preEIP155.getFrom(null);           // Homestead should accept homestead
-			preEIP155.getFrom(new BigInt(4));  // EIP155 should accept homestead (missing chain ID)
+			preEIP155.getFrom(null);           // Horizon should accept horizon
+			preEIP155.getFrom(new BigInt(4));  // EIP155 should accept horizon (missing chain ID)
 			postEIP155.getFrom(new BigInt(4)); // EIP155 should accept EIP 155
 
 			try {
 				postEIP155.getFrom(null);
-				fail("EIP155 transaction accepted by Homestead");
+				fail("EIP155 transaction accepted by Horizon");
 			} catch (Exception e) {}
 		} catch (Exception e) {
 			fail(e.toString());
@@ -155,7 +155,7 @@ public class AndroidTest extends InstrumentationTestCase {
 //
 // This method has been adapted from golang.org/x/mobile/bind/java/seq_test.go/runTest
 func TestAndroid(t *testing.T) {
-	// Skip tests on Windows altogruer
+	// Skip tests on Windows altogrueer
 	if runtime.GOOS == "windows" {
 		t.Skip("cannot test Android bindings on Windows, skipping")
 	}
@@ -195,21 +195,21 @@ func TestAndroid(t *testing.T) {
 	defer os.Chdir(pwd)
 
 	// Create the skeleton of the Android project
-	for _, dir := range []string{"src/main", "src/androidTest/java/org/ruereum/gruetest", "libs"} {
+	for _, dir := range []string{"src/main", "src/androidTest/java/org/rueereum/gruetest", "libs"} {
 		err = os.MkdirAll(dir, os.ModePerm)
 		if err != nil {
 			t.Fatal(err)
 		}
 	}
 	// Generate the mobile bindings for Grue and add the tester class
-	gobind := exec.Command("gomobile", "bind", "-javapkg", "org.ruereum", "github.com/Rue-Foundation/go-rue/mobile")
+	gobind := exec.Command("gomobile", "bind", "-javapkg", "org.rueereum", "github.com/Rue-Foundation/go-rue/mobile")
 	if output, err := gobind.CombinedOutput(); err != nil {
 		t.Logf("%s", output)
 		t.Fatalf("failed to run gomobile bind: %v", err)
 	}
 	build.CopyFile(filepath.Join("libs", "grue.aar"), "grue.aar", os.ModePerm)
 
-	if err = ioutil.WriteFile(filepath.Join("src", "androidTest", "java", "org", "ruereum", "gruetest", "AndroidTest.java"), []byte(androidTestClass), os.ModePerm); err != nil {
+	if err = ioutil.WriteFile(filepath.Join("src", "androidTest", "java", "org", "rueereum", "gruetest", "AndroidTest.java"), []byte(androidTestClass), os.ModePerm); err != nil {
 		t.Fatalf("failed to write Android test class: %v", err)
 	}
 	// Finish creating the project and run the tests via gradle
@@ -227,7 +227,7 @@ func TestAndroid(t *testing.T) {
 
 const androidManifest = `<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="org.ruereum.gruetest"
+          package="org.rueereum.gruetest"
 	  android:versionCode="1"
 	  android:versionName="1.0">
 

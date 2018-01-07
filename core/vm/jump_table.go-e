@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2015 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package vm
 
@@ -42,25 +42,25 @@ type operation struct {
 	// memorySize returns the memory size required for the operation
 	memorySize memorySizeFunc
 
-	halts   bool // indicates whruer the operation should halt further execution
-	jumps   bool // indicates whruer the program counter should not increment
-	writes  bool // determines whruer this a state modifying operation
-	valid   bool // indication whruer the retrieved operation is valid and known
-	reverts bool // determines whruer the operation reverts state (implicitly halts)
-	returns bool // determines whruer the operations sets the return data content
+	halts   bool // indicates whrueer the operation should halt further execution
+	jumps   bool // indicates whrueer the program counter should not increment
+	writes  bool // determines whrueer this a state modifying operation
+	valid   bool // indication whrueer the retrieved operation is valid and known
+	reverts bool // determines whrueer the operation reverts state (implicitly halts)
+	returns bool // determines whrueer the operations sets the return data content
 }
 
 var (
 	frontierInstructionSet  = NewFrontierInstructionSet()
-	homesteadInstructionSet = NewHomesteadInstructionSet()
+	horizonInstructionSet = NewHorizonInstructionSet()
 	byzantiumInstructionSet = NewByzantiumInstructionSet()
 )
 
-// NewByzantiumInstructionSet returns the frontier, homestead and
+// NewByzantiumInstructionSet returns the frontier, horizon and
 // byzantium instructions.
 func NewByzantiumInstructionSet() [256]operation {
-	// instructions that can be executed during the homestead phase.
-	instructionSet := NewHomesteadInstructionSet()
+	// instructions that can be executed during the horizon phase.
+	instructionSet := NewHorizonInstructionSet()
 	instructionSet[STATICCALL] = operation{
 		execute:       opStaticCall,
 		gasCost:       gasStaticCall,
@@ -94,9 +94,9 @@ func NewByzantiumInstructionSet() [256]operation {
 	return instructionSet
 }
 
-// NewHomesteadInstructionSet returns the frontier and homestead
-// instructions that can be executed during the homestead phase.
-func NewHomesteadInstructionSet() [256]operation {
+// NewHorizonInstructionSet returns the frontier and horizon
+// instructions that can be executed during the horizon phase.
+func NewHorizonInstructionSet() [256]operation {
 	instructionSet := NewFrontierInstructionSet()
 	instructionSet[DELEGATECALL] = operation{
 		execute:       opDelegateCall,

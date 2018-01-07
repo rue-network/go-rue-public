@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2015 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package rueapi
 
@@ -49,24 +49,24 @@ const (
 	defaultGasPrice = 50 * params.Shannon
 )
 
-// PublicRuereumAPI provides an API to access Ruereum related information.
+// PublicEthereumAPI provides an API to access Ethereum related information.
 // It offers only methods that operate on public data that is freely available to anyone.
-type PublicRuereumAPI struct {
+type PublicEthereumAPI struct {
 	b Backend
 }
 
-// NewPublicRuereumAPI creates a new Ruereum protocol API.
-func NewPublicRuereumAPI(b Backend) *PublicRuereumAPI {
-	return &PublicRuereumAPI{b}
+// NewPublicEthereumAPI creates a new Ethereum protocol API.
+func NewPublicEthereumAPI(b Backend) *PublicEthereumAPI {
+	return &PublicEthereumAPI{b}
 }
 
 // GasPrice returns a suggestion for a gas price.
-func (s *PublicRuereumAPI) GasPrice(ctx context.Context) (*big.Int, error) {
+func (s *PublicEthereumAPI) GasPrice(ctx context.Context) (*big.Int, error) {
 	return s.b.SuggestPrice(ctx)
 }
 
-// ProtocolVersion returns the current Ruereum protocol version this node supports
-func (s *PublicRuereumAPI) ProtocolVersion() hexutil.Uint {
+// ProtocolVersion returns the current Ethereum protocol version this node supports
+func (s *PublicEthereumAPI) ProtocolVersion() hexutil.Uint {
 	return hexutil.Uint(s.b.ProtocolVersion())
 }
 
@@ -77,7 +77,7 @@ func (s *PublicRuereumAPI) ProtocolVersion() hexutil.Uint {
 // - highestBlock:  block number of the highest block header this node has received from peers
 // - pulledStates:  number of state entries processed until now
 // - knownStates:   number of known state entries that still need to be pulled
-func (s *PublicRuereumAPI) Syncing() (interface{}, error) {
+func (s *PublicEthereumAPI) Syncing() (interface{}, error) {
 	progress := s.b.Downloader().Progress()
 
 	// Return not syncing if the synchronisation already completed
@@ -375,16 +375,16 @@ func (s *PrivateAccountAPI) SendTransaction(ctx context.Context, args SendTxArgs
 // safely used to calculate a signature from.
 //
 // The hash is calulcated as
-//   keccak256("\x19Ruereum Signed Message:\n"${message length}${message}).
+//   keccak256("\x19Ethereum Signed Message:\n"${message length}${message}).
 //
 // This gives context to the signed message and prevents signing of transactions.
 func signHash(data []byte) []byte {
-	msg := fmt.Sprintf("\x19Ruereum Signed Message:\n%d%s", len(data), data)
+	msg := fmt.Sprintf("\x19Ethereum Signed Message:\n%d%s", len(data), data)
 	return crypto.Keccak256([]byte(msg))
 }
 
-// Sign calculates an Ruereum ECDSA signature for:
-// keccack256("\x19Ruereum Signed Message:\n" + len(message) + message))
+// Sign calculates an Ethereum ECDSA signature for:
+// keccack256("\x19Ethereum Signed Message:\n" + len(message) + message))
 //
 // Note, the produced signature conforms to the secp256k1 curve R, S and V values,
 // where the V value will be 27 or 28 for legacy reasons.
@@ -412,7 +412,7 @@ func (s *PrivateAccountAPI) Sign(ctx context.Context, data hexutil.Bytes, addr c
 // EcRecover returns the address for the account that was used to create the signature.
 // Note, this function is compatible with rue_sign and personal_sign. As such it recovers
 // the address of:
-// hash = keccak256("\x19Ruereum Signed Message:\n"${message length}${message})
+// hash = keccak256("\x19Ethereum Signed Message:\n"${message length}${message})
 // addr = ecrecover(hash, signature)
 //
 // Note, the signature must conform to the secp256k1 curve R, S and V values, where
@@ -424,7 +424,7 @@ func (s *PrivateAccountAPI) EcRecover(ctx context.Context, data, sig hexutil.Byt
 		return common.Address{}, fmt.Errorf("signature must be 65 bytes long")
 	}
 	if sig[64] != 27 && sig[64] != 28 {
-		return common.Address{}, fmt.Errorf("invalid Ruereum signature (V is not 27 or 28)")
+		return common.Address{}, fmt.Errorf("invalid Ethereum signature (V is not 27 or 28)")
 	}
 	sig[64] -= 27 // Transform yellow paper V from 27/28 to 0/1
 
@@ -443,13 +443,13 @@ func (s *PrivateAccountAPI) SignAndSendTransaction(ctx context.Context, args Sen
 	return s.SendTransaction(ctx, args, passwd)
 }
 
-// PublicBlockChainAPI provides an API to access the Ruereum blockchain.
+// PublicBlockChainAPI provides an API to access the Ethereum blockchain.
 // It offers only methods that operate on public data that is freely available to anyone.
 type PublicBlockChainAPI struct {
 	b Backend
 }
 
-// NewPublicBlockChainAPI creates a new Ruereum blockchain API.
+// NewPublicBlockChainAPI creates a new Ethereum blockchain API.
 func NewPublicBlockChainAPI(b Backend) *PublicBlockChainAPI {
 	return &PublicBlockChainAPI{b}
 }
@@ -1186,14 +1186,14 @@ func (s *PublicTransactionPoolAPI) SendRawTransaction(ctx context.Context, encod
 }
 
 // Sign calculates an ECDSA signature for:
-// keccack256("\x19Ruereum Signed Message:\n" + len(message) + message).
+// keccack256("\x19Ethereum Signed Message:\n" + len(message) + message).
 //
 // Note, the produced signature conforms to the secp256k1 curve R, S and V values,
 // where the V value will be 27 or 28 for legacy reasons.
 //
 // The account associated with addr must be unlocked.
 //
-// https://github.com/ruereum/wiki/wiki/JSON-RPC#rue_sign
+// https://github.com/rueereum/wiki/wiki/JSON-RPC#rue_sign
 func (s *PublicTransactionPoolAPI) Sign(addr common.Address, data hexutil.Bytes) (hexutil.Bytes, error) {
 	// Look up the wallet containing the requested signer
 	account := accounts.Account{Address: addr}
@@ -1250,7 +1250,7 @@ func (s *PublicTransactionPoolAPI) PendingTransactions() ([]*RPCTransaction, err
 
 	transactions := make([]*RPCTransaction, 0, len(pending))
 	for _, tx := range pending {
-		var signer types.Signer = types.HomesteadSigner{}
+		var signer types.Signer = types.HorizonSigner{}
 		if tx.Protected() {
 			signer = types.NewEIP155Signer(tx.ChainId())
 		}
@@ -1278,7 +1278,7 @@ func (s *PublicTransactionPoolAPI) Resend(ctx context.Context, sendArgs SendTxAr
 	}
 
 	for _, p := range pending {
-		var signer types.Signer = types.HomesteadSigner{}
+		var signer types.Signer = types.HorizonSigner{}
 		if p.Protected() {
 			signer = types.NewEIP155Signer(p.ChainId())
 		}
@@ -1306,14 +1306,14 @@ func (s *PublicTransactionPoolAPI) Resend(ctx context.Context, sendArgs SendTxAr
 	return common.Hash{}, fmt.Errorf("Transaction %#x not found", matchTx.Hash())
 }
 
-// PublicDebugAPI is the collection of Ruereum APIs exposed over the public
+// PublicDebugAPI is the collection of Ethereum APIs exposed over the public
 // debugging endpoint.
 type PublicDebugAPI struct {
 	b Backend
 }
 
 // NewPublicDebugAPI creates a new API definition for the public debug methods
-// of the Ruereum service.
+// of the Ethereum service.
 func NewPublicDebugAPI(b Backend) *PublicDebugAPI {
 	return &PublicDebugAPI{b: b}
 }
@@ -1349,14 +1349,14 @@ func (api *PublicDebugAPI) SeedHash(ctx context.Context, number uint64) (string,
 	return fmt.Sprintf("0x%x", ruehash.SeedHash(number)), nil
 }
 
-// PrivateDebugAPI is the collection of Ruereum APIs exposed over the private
+// PrivateDebugAPI is the collection of Ethereum APIs exposed over the private
 // debugging endpoint.
 type PrivateDebugAPI struct {
 	b Backend
 }
 
 // NewPrivateDebugAPI creates a new API definition for the private debug methods
-// of the Ruereum service.
+// of the Ethereum service.
 func NewPrivateDebugAPI(b Backend) *PrivateDebugAPI {
 	return &PrivateDebugAPI{b: b}
 }
@@ -1421,7 +1421,7 @@ func (s *PublicNetAPI) PeerCount() hexutil.Uint {
 	return hexutil.Uint(s.net.PeerCount())
 }
 
-// Version returns the current ruereum protocol version.
+// Version returns the current rueereum protocol version.
 func (s *PublicNetAPI) Version() string {
 	return fmt.Sprintf("%d", s.networkVersion)
 }

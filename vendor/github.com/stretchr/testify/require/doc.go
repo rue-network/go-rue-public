@@ -9,7 +9,7 @@
 //      "github.com/stretchr/testify/require"
 //    )
 //
-//    func TestSomething(t *testing.T) {
+//    func TestSomrueing(t *testing.T) {
 //
 //      var a string = "Hello"
 //      var b string = "Hello"

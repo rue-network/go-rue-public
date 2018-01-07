@@ -1,18 +1,18 @@
-// Copyright 2017 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2017 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package params
 
@@ -39,10 +39,10 @@ func TestCheckCompatible(t *testing.T) {
 		},
 		{
 			stored: AllRuehashProtocolChanges,
-			new:    &ChainConfig{HomesteadBlock: nil},
+			new:    &ChainConfig{HorizonBlock: nil},
 			head:   3,
 			wantErr: &ConfigCompatError{
-				What:         "Homestead fork block",
+				What:         "Horizon fork block",
 				StoredConfig: big.NewInt(0),
 				NewConfig:    nil,
 				RewindTo:     0,
@@ -50,18 +50,18 @@ func TestCheckCompatible(t *testing.T) {
 		},
 		{
 			stored: AllRuehashProtocolChanges,
-			new:    &ChainConfig{HomesteadBlock: big.NewInt(1)},
+			new:    &ChainConfig{HorizonBlock: big.NewInt(1)},
 			head:   3,
 			wantErr: &ConfigCompatError{
-				What:         "Homestead fork block",
+				What:         "Horizon fork block",
 				StoredConfig: big.NewInt(0),
 				NewConfig:    big.NewInt(1),
 				RewindTo:     0,
 			},
 		},
 		{
-			stored: &ChainConfig{HomesteadBlock: big.NewInt(30), EIP150Block: big.NewInt(10)},
-			new:    &ChainConfig{HomesteadBlock: big.NewInt(25), EIP150Block: big.NewInt(20)},
+			stored: &ChainConfig{HorizonBlock: big.NewInt(30), EIP150Block: big.NewInt(10)},
+			new:    &ChainConfig{HorizonBlock: big.NewInt(25), EIP150Block: big.NewInt(20)},
 			head:   25,
 			wantErr: &ConfigCompatError{
 				What:         "EIP150 fork block",

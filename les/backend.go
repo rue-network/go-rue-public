@@ -1,20 +1,20 @@
-// Copyright 2016 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2016 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
-// Package les implements the Light Ruereum Subprotocol.
+// Package les implements the Light Ethereum Subprotocol.
 package les
 
 import (
@@ -45,7 +45,7 @@ import (
 	rpc "github.com/Rue-Foundation/go-rue/rpc"
 )
 
-type LightRuereum struct {
+type LightEthereum struct {
 	odr         *LesOdr
 	relay       *LesTxRelay
 	chainConfig *params.ChainConfig
@@ -77,8 +77,8 @@ type LightRuereum struct {
 	wg sync.WaitGroup
 }
 
-func New(ctx *node.ServiceContext, config *rue.Config) (*LightRuereum, error) {
-	chainDb, err := rue.CreateDB(ctx, config, "lightchaindata")
+func New(ctx *node.ServiceContext, config *rue.Config) (*LightEthereum, error) {
+	chainDb, err :=rue.CreateDB(ctx, config, "lightchaindata")
 	if err != nil {
 		return nil, err
 	}
@@ -91,18 +91,18 @@ func New(ctx *node.ServiceContext, config *rue.Config) (*LightRuereum, error) {
 	peers := newPeerSet()
 	quitSync := make(chan struct{})
 
-	lrue := &LightRuereum{
+	lrue := &LightEthereum{
 		chainConfig:      chainConfig,
 		chainDb:          chainDb,
 		eventMux:         ctx.EventMux,
 		peers:            peers,
 		reqDist:          newRequestDistributor(peers, quitSync),
 		accountManager:   ctx.AccountManager,
-		engine:           rue.CreateConsensusEngine(ctx, &config.Ruehash, chainConfig, chainDb),
+		engine:          rue.CreateConsensusEngine(ctx, &config.Ruehash, chainConfig, chainDb),
 		shutdownChan:     make(chan bool),
 		networkId:        config.NetworkId,
 		bloomRequests:    make(chan chan *bloombits.Retrieval),
-		bloomIndexer:     rue.NewBloomIndexer(chainDb, light.BloomTrieFrequency),
+		bloomIndexer:    rue.NewBloomIndexer(chainDb, light.BloomTrieFrequency),
 		chtIndexer:       light.NewChtIndexer(chainDb, true),
 		bloomTrieIndexer: light.NewBloomTrieIndexer(chainDb, true),
 	}
@@ -150,12 +150,12 @@ func lesTopic(genesisHash common.Hash, protocolVersion uint) discv5.Topic {
 
 type LightDummyAPI struct{}
 
-// Ruerbase is the address that mining rewards will be send to
-func (s *LightDummyAPI) Ruerbase() (common.Address, error) {
+// Etherbase is the address that mining rewards will be send to
+func (s *LightDummyAPI) Etherbase() (common.Address, error) {
 	return common.Address{}, fmt.Errorf("not supported")
 }
 
-// Coinbase is the address that mining rewards will be send to (alias for Ruerbase)
+// Coinbase is the address that mining rewards will be send to (alias for Etherbase)
 func (s *LightDummyAPI) Coinbase() (common.Address, error) {
 	return common.Address{}, fmt.Errorf("not supported")
 }
@@ -170,9 +170,9 @@ func (s *LightDummyAPI) Mining() bool {
 	return false
 }
 
-// APIs returns the collection of RPC services the ruereum package offers.
+// APIs returns the collection of RPC services the rueereum package offers.
 // NOTE, some of these services probably need to be moved to somewhere else.
-func (s *LightRuereum) APIs() []rpc.API {
+func (s *LightEthereum) APIs() []rpc.API {
 	return append(rueapi.GetAPIs(s.ApiBackend), []rpc.API{
 		{
 			Namespace: "rue",
@@ -198,26 +198,26 @@ func (s *LightRuereum) APIs() []rpc.API {
 	}...)
 }
 
-func (s *LightRuereum) ResetWithGenesisBlock(gb *types.Block) {
+func (s *LightEthereum) ResetWithGenesisBlock(gb *types.Block) {
 	s.blockchain.ResetWithGenesisBlock(gb)
 }
 
-func (s *LightRuereum) BlockChain() *light.LightChain      { return s.blockchain }
-func (s *LightRuereum) TxPool() *light.TxPool              { return s.txPool }
-func (s *LightRuereum) Engine() consensus.Engine           { return s.engine }
-func (s *LightRuereum) LesVersion() int                    { return int(s.protocolManager.SubProtocols[0].Version) }
-func (s *LightRuereum) Downloader() *downloader.Downloader { return s.protocolManager.downloader }
-func (s *LightRuereum) EventMux() *event.TypeMux           { return s.eventMux }
+func (s *LightEthereum) BlockChain() *light.LightChain      { return s.blockchain }
+func (s *LightEthereum) TxPool() *light.TxPool              { return s.txPool }
+func (s *LightEthereum) Engine() consensus.Engine           { return s.engine }
+func (s *LightEthereum) LesVersion() int                    { return int(s.protocolManager.SubProtocols[0].Version) }
+func (s *LightEthereum) Downloader() *downloader.Downloader { return s.protocolManager.downloader }
+func (s *LightEthereum) EventMux() *event.TypeMux           { return s.eventMux }
 
 // Protocols implements node.Service, returning all the currently configured
 // network protocols to start.
-func (s *LightRuereum) Protocols() []p2p.Protocol {
+func (s *LightEthereum) Protocols() []p2p.Protocol {
 	return s.protocolManager.SubProtocols
 }
 
 // Start implements node.Service, starting all internal goroutines needed by the
-// Ruereum protocol implementation.
-func (s *LightRuereum) Start(srvr *p2p.Server) error {
+// Ethereum protocol implementation.
+func (s *LightEthereum) Start(srvr *p2p.Server) error {
 	s.startBloomHandlers()
 	log.Warn("Light client mode is an experimental feature")
 	s.netRPCService = rueapi.NewPublicNetAPI(srvr, s.networkId)
@@ -230,8 +230,8 @@ func (s *LightRuereum) Start(srvr *p2p.Server) error {
 }
 
 // Stop implements node.Service, terminating all internal goroutines used by the
-// Ruereum protocol.
-func (s *LightRuereum) Stop() error {
+// Ethereum protocol.
+func (s *LightEthereum) Stop() error {
 	s.odr.Stop()
 	if s.bloomIndexer != nil {
 		s.bloomIndexer.Close()

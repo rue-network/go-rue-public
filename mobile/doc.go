@@ -1,23 +1,23 @@
-// Copyright 2016 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2016 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
-// Package grue contains the simplified mobile APIs to go-ruereum.
+// Package grue contains the simplified mobile APIs to go-rueereum.
 //
-// The scope of this package is *not* to allow writing a custom Ruereum client
-// with pieces plucked from go-ruereum, rather to allow writing native dapps on
+// The scope of this package is *not* to allow writing a custom Ethereum client
+// with pieces plucked from go-rueereum, rather to allow writing native dapps on
 // mobile platforms. Keep this in mind when using or extending this package!
 //
 // API limitations
@@ -33,13 +33,13 @@
 // writing custom library generators, but those are out of scope now.
 //
 // Content wise each file in this package corresponds to an entire Go package
-// from the go-ruereum repository. Please adhere to this scoping to prevent this
+// from the go-rueereum repository. Please adhere to this scoping to prevent this
 // package getting unmaintainable.
 //
 // Wrapping guidelines:
 //
 // Every type that is to be exposed should be wrapped into its own plain struct,
-// which internally contains a single field: the original go-ruereum version.
+// which internally contains a single field: the original go-rueereum version.
 // This is needed because gomobile cannot expose named types for now.
 //
 // Whenever a method argument or a return type is a custom struct, the pointer

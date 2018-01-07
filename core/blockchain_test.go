@@ -1,18 +1,18 @@
-// Copyright 2014 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2014 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package core
 
@@ -1037,7 +1037,7 @@ func TestEIP155Transition(t *testing.T) {
 		funds      = big.NewInt(1000000000)
 		deleteAddr = common.Address{1}
 		gspec      = &Genesis{
-			Config: &params.ChainConfig{ChainId: big.NewInt(1), EIP155Block: big.NewInt(2), HomesteadBlock: new(big.Int)},
+			Config: &params.ChainConfig{ChainId: big.NewInt(1), EIP155Block: big.NewInt(2), HorizonBlock: new(big.Int)},
 			Alloc:  GenesisAlloc{address: {Balance: funds}, deleteAddr: {Balance: new(big.Int)}},
 		}
 		genesis = gspec.MustCommit(db)
@@ -1056,13 +1056,13 @@ func TestEIP155Transition(t *testing.T) {
 		)
 		switch i {
 		case 0:
-			tx, err = basicTx(types.HomesteadSigner{})
+			tx, err = basicTx(types.HorizonSigner{})
 			if err != nil {
 				t.Fatal(err)
 			}
 			block.AddTx(tx)
 		case 2:
-			tx, err = basicTx(types.HomesteadSigner{})
+			tx, err = basicTx(types.HorizonSigner{})
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -1074,7 +1074,7 @@ func TestEIP155Transition(t *testing.T) {
 			}
 			block.AddTx(tx)
 		case 3:
-			tx, err = basicTx(types.HomesteadSigner{})
+			tx, err = basicTx(types.HorizonSigner{})
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -1108,7 +1108,7 @@ func TestEIP155Transition(t *testing.T) {
 	}
 
 	// generate an invalid chain id transaction
-	config := &params.ChainConfig{ChainId: big.NewInt(2), EIP155Block: big.NewInt(2), HomesteadBlock: new(big.Int)}
+	config := &params.ChainConfig{ChainId: big.NewInt(2), EIP155Block: big.NewInt(2), HorizonBlock: new(big.Int)}
 	blocks, _ = GenerateChain(config, blocks[len(blocks)-1], ruehash.NewFaker(), db, 4, func(i int, block *BlockGen) {
 		var (
 			tx      *types.Transaction
@@ -1143,7 +1143,7 @@ func TestEIP161AccountRemoval(t *testing.T) {
 		gspec   = &Genesis{
 			Config: &params.ChainConfig{
 				ChainId:        big.NewInt(1),
-				HomesteadBlock: new(big.Int),
+				HorizonBlock: new(big.Int),
 				EIP155Block:    new(big.Int),
 				EIP158Block:    big.NewInt(2),
 			},

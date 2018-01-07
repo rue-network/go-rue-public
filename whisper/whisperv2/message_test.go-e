@@ -1,18 +1,18 @@
-// Copyright 2014 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2014 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package whisperv2
 
@@ -25,7 +25,7 @@ import (
 	"github.com/Rue-Foundation/go-rue/crypto"
 )
 
-// Tests whruer a message can be wrapped without any identity or encryption.
+// Tests whrueer a message can be wrapped without any identity or encryption.
 func TestMessageSimpleWrap(t *testing.T) {
 	payload := []byte("hello world")
 
@@ -47,7 +47,7 @@ func TestMessageSimpleWrap(t *testing.T) {
 	}
 }
 
-// Tests whruer a message can be signed, and wrapped in plain-text.
+// Tests whrueer a message can be signed, and wrapped in plain-text.
 func TestMessageCleartextSignRecover(t *testing.T) {
 	key, err := crypto.GenerateKey()
 	if err != nil {
@@ -79,7 +79,7 @@ func TestMessageCleartextSignRecover(t *testing.T) {
 	}
 }
 
-// Tests whruer a message can be encrypted and decrypted using an anonymous
+// Tests whrueer a message can be encrypted and decrypted using an anonymous
 // sender (i.e. no signature).
 func TestMessageAnonymousEncryptDecrypt(t *testing.T) {
 	key, err := crypto.GenerateKey()
@@ -111,7 +111,7 @@ func TestMessageAnonymousEncryptDecrypt(t *testing.T) {
 	}
 }
 
-// Tests whruer a message can be properly signed and encrypted.
+// Tests whrueer a message can be properly signed and encrypted.
 func TestMessageFullCrypto(t *testing.T) {
 	fromKey, err := crypto.GenerateKey()
 	if err != nil {

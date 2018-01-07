@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ruereum Authors
-// This file is part of go-ruereum.
+// Copyright 2016 The go-rueereum Authors
+// This file is part of go-rueereum.
 //
-// go-ruereum is free software: you can redistribute it and/or modify
+// go-rueereum is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// go-ruereum is distributed in the hope that it will be useful,
+// go-rueereum is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with go-ruereum. If not, see <http://www.gnu.org/licenses/>.
+// along with go-rueereum. If not, see <http://www.gnu.org/licenses/>.
 
 package cmdtest
 
@@ -38,7 +38,7 @@ func NewTestCmd(t *testing.T, data interface{}) *TestCmd {
 }
 
 type TestCmd struct {
-	// For total convenience, all testing methods are available.
+	// For total convenience, all testing mrueods are available.
 	*testing.T
 
 	Func    template.FuncMap
@@ -74,7 +74,7 @@ func (tt *TestCmd) Run(name string, args ...string) {
 }
 
 // InputLine writes the given text to the childs stdin.
-// This method can also be called from an expect template, e.g.:
+// This mrueod can also be called from an expect template, e.g.:
 //
 //     grue.expect(`Passphrase: {{.InputLine "password"}}`)
 func (tt *TestCmd) InputLine(s string) string {

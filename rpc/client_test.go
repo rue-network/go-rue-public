@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2016 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package rpc
 
@@ -200,10 +200,10 @@ func TestClientSubscribeInvalidArg(t *testing.T) {
 		defer func() {
 			err := recover()
 			if shouldPanic && err == nil {
-				t.Errorf("RueSubscribe should've panicked for %#v", arg)
+				t.Errorf("EthSubscribe should've panicked for %#v", arg)
 			}
 			if !shouldPanic && err != nil {
-				t.Errorf("RueSubscribe shouldn't have panicked for %#v", arg)
+				t.Errorf("EthSubscribe shouldn't have panicked for %#v", arg)
 				buf := make([]byte, 1024*1024)
 				buf = buf[:runtime.Stack(buf, false)]
 				t.Error(err)
@@ -221,7 +221,7 @@ func TestClientSubscribeInvalidArg(t *testing.T) {
 }
 
 func TestClientSubscribe(t *testing.T) {
-	server := newTestServer("eth", new(NotificationTestService))
+	server := newTestServer("rue", new(NotificationTestService))
 	defer server.Stop()
 	client := DialInProc(server)
 	defer client.Close()
@@ -313,13 +313,13 @@ func TestClientSubscribeClose(t *testing.T) {
 	select {
 	case err := <-errc:
 		if err == nil {
-			t.Errorf("RueSubscribe returned nil error after Close")
+			t.Errorf("EthSubscribe returned nil error after Close")
 		}
 		if sub != nil {
-			t.Error("RueSubscribe returned non-nil subscription after Close")
+			t.Error("EthSubscribe returned non-nil subscription after Close")
 		}
 	case <-time.After(1 * time.Second):
-		t.Fatalf("RueSubscribe did not return within 1s after Close")
+		t.Fatalf("EthSubscribe did not return within 1s after Close")
 	}
 }
 
@@ -458,7 +458,7 @@ func TestClientReconnect(t *testing.T) {
 	time.Sleep(2 * time.Second)
 
 	// Start it up again and call again. The connection should be reestablished.
-	// We spawn multiple calls here to check whether this hangs somehow.
+	// We spawn multiple calls here to check whrueer this hangs somehow.
 	s2, l2 := startServer(l1.Addr().String())
 	defer l2.Close()
 	defer s2.Stop()
@@ -520,7 +520,7 @@ func httpTestClient(srv *Server, transport string, fl *flakeyListener) (*Client,
 
 func ipcTestClient(srv *Server, fl *flakeyListener) (*Client, net.Listener) {
 	// Listen on a random endpoint.
-	endpoint := fmt.Sprintf("go-ethereum-test-ipc-%d-%d", os.Getpid(), rand.Int63())
+	endpoint := fmt.Sprintf("go-rueereum-test-ipc-%d-%d", os.Getpid(), rand.Int63())
 	if runtime.GOOS == "windows" {
 		endpoint = `\\.\pipe\` + endpoint
 	} else {

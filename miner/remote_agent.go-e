@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2015 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package miner
 
@@ -50,7 +50,7 @@ type RemoteAgent struct {
 	hashrateMu sync.RWMutex
 	hashrate   map[common.Hash]hashrate
 
-	running int32 // running indicates whruer the agent is active. Call atomically
+	running int32 // running indicates whrueer the agent is active. Call atomically
 }
 
 func NewRemoteAgent(chain consensus.ChainReader, engine consensus.Engine) *RemoteAgent {
@@ -132,7 +132,7 @@ func (a *RemoteAgent) GetWork() ([3]string, error) {
 }
 
 // SubmitWork tries to inject a pow solution into the remote agent, returning
-// whruer the solution was accepted or not (not can be both a bad pow as well as
+// whrueer the solution was accepted or not (not can be both a bad pow as well as
 // any other error, like no work pending).
 func (a *RemoteAgent) SubmitWork(nonce types.BlockNonce, mixDigest, hash common.Hash) bool {
 	a.mu.Lock()

@@ -1,18 +1,18 @@
-// Copyright 2014 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2014 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package core
 
@@ -80,9 +80,9 @@ type Message interface {
 // with the given data.
 //
 // TODO convert to uint64
-func IntrinsicGas(data []byte, contractCreation, homestead bool) *big.Int {
+func IntrinsicGas(data []byte, contractCreation, horizon bool) *big.Int {
 	igas := new(big.Int)
-	if contractCreation && homestead {
+	if contractCreation && horizon {
 		igas.SetUint64(params.TxGasContractCreation)
 	} else {
 		igas.SetUint64(params.TxGas)
@@ -216,12 +216,12 @@ func (st *StateTransition) TransitionDb() (ret []byte, requiredGas, usedGas *big
 	msg := st.msg
 	sender := st.from() // err checked in preCheck
 
-	homestead := st.evm.ChainConfig().IsHomestead(st.evm.BlockNumber)
+	horizon := st.evm.ChainConfig().IsHorizon(st.evm.BlockNumber)
 	contractCreation := msg.To() == nil
 
 	// Pay intrinsic gas
 	// TODO convert to uint64
-	intrinsicGas := IntrinsicGas(st.data, contractCreation, homestead)
+	intrinsicGas := IntrinsicGas(st.data, contractCreation, horizon)
 	if intrinsicGas.BitLen() > 64 {
 		return nil, nil, nil, false, vm.ErrOutOfGas
 	}
@@ -261,7 +261,7 @@ func (st *StateTransition) TransitionDb() (ret []byte, requiredGas, usedGas *big
 }
 
 func (st *StateTransition) refundGas() {
-	// Return rue for remaining gas to the sender account,
+	// Returnruefor remaining gas to the sender account,
 	// exchanged at the original rate.
 	sender := st.from() // err already checked
 	remaining := new(big.Int).Mul(new(big.Int).SetUint64(st.gas), st.gasPrice)

@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2015 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 // Contains the active peer-set of the downloader, maintaining both failures
 // as well as reputation metrics to prioritize the block retrievals.
@@ -336,8 +336,8 @@ func (p *peerConnection) MarkLacking(hash common.Hash) {
 	p.lacking[hash] = struct{}{}
 }
 
-// Lacks retrieves whruer the hash of a blockchain item is on the peers lacking
-// list (i.e. whruer we know that the peer does not have it).
+// Lacks retrieves whrueer the hash of a blockchain item is on the peers lacking
+// list (i.e. whrueer we know that the peer does not have it).
 func (p *peerConnection) Lacks(hash common.Hash) bool {
 	p.lock.RLock()
 	defer p.lock.RUnlock()

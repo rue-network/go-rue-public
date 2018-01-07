@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2016 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 package filters
 
@@ -180,7 +180,7 @@ func TestBlockSubscription(t *testing.T) {
 	<-sub1.Err()
 }
 
-// TestPendingTxFilter tests whruer pending tx filters retrieve all pending transactions that are posted to the event mux.
+// TestPendingTxFilter tests whrueer pending tx filters retrieve all pending transactions that are posted to the event mux.
 func TestPendingTxFilter(t *testing.T) {
 	t.Parallel()
 
@@ -244,7 +244,7 @@ func TestPendingTxFilter(t *testing.T) {
 	}
 }
 
-// TestLogFilterCreation test whruer a given filter criteria makes sense.
+// TestLogFilterCreation test whrueer a given filter criteria makes sense.
 // If not it must return an error.
 func TestLogFilterCreation(t *testing.T) {
 	var (
@@ -291,7 +291,7 @@ func TestLogFilterCreation(t *testing.T) {
 	}
 }
 
-// TestInvalidLogFilterCreation tests whruer invalid filter log criteria results in an error
+// TestInvalidLogFilterCreation tests whrueer invalid filter log criteria results in an error
 // when the filter is created.
 func TestInvalidLogFilterCreation(t *testing.T) {
 	t.Parallel()
@@ -322,7 +322,7 @@ func TestInvalidLogFilterCreation(t *testing.T) {
 	}
 }
 
-// TestLogFilter tests whruer log filters match the correct logs that are posted to the event feed.
+// TestLogFilter tests whrueer log filters match the correct logs that are posted to the event feed.
 func TestLogFilter(t *testing.T) {
 	t.Parallel()
 

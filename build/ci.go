@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ruereum Authors
-// This file is part of the go-ruereum library.
+// Copyright 2016 The go-rueereum Authors
+// This file is part of the go-rueereum library.
 //
-// The go-ruereum library is free software: you can redistribute it and/or modify
+// The go-rueereum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ruereum library is distributed in the hope that it will be useful,
+// The go-rueereum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-rueereum library. If not, see <http://www.gnu.org/licenses/>.
 
 // +build none
 
@@ -85,23 +85,23 @@ var (
 	debExecutables = []debExecutable{
 		{
 			Name:        "abigen",
-			Description: "Source code generator to convert Ruereum contract definitions into easy to use, compile-time type-safe Go packages.",
+			Description: "Source code generator to convert Ethereum contract definitions into easy to use, compile-time type-safe Go packages.",
 		},
 		{
 			Name:        "bootnode",
-			Description: "Ruereum bootnode.",
+			Description: "Ethereum bootnode.",
 		},
 		{
 			Name:        "evm",
-			Description: "Developer utility version of the EVM (Ruereum Virtual Machine) that is capable of running bytecode snippets within a configurable environment and execution mode.",
+			Description: "Developer utility version of the EVM (Ethereum Virtual Machine) that is capable of running bytecode snippets within a configurable environment and execution mode.",
 		},
 		{
 			Name:        "grue",
-			Description: "Ruereum CLI client.",
+			Description: "Ethereum CLI client.",
 		},
 		{
 			Name:        "pupprue",
-			Description: "Ruereum private network manager.",
+			Description: "Ethereum private network manager.",
 		},
 		{
 			Name:        "rlpdump",
@@ -109,11 +109,11 @@ var (
 		},
 		{
 			Name:        "swarm",
-			Description: "Ruereum Swarm daemon and tools",
+			Description: "Ethereum Swarm daemon and tools",
 		},
 		{
 			Name:        "wnode",
-			Description: "Ruereum Whisper diagnostic tool",
+			Description: "Ethereum Whisper diagnostic tool",
 		},
 	}
 
@@ -187,7 +187,7 @@ func doInstall(cmdline []string) {
 
 		if minor < 7 {
 			log.Println("You have Go version", runtime.Version())
-			log.Println("go-ruereum requires at least Go version 1.7 and cannot")
+			log.Println("go-rueereum requires at least Go version 1.7 and cannot")
 			log.Println("be compiled with an earlier version. Please upgrade your Go installation.")
 			os.Exit(1)
 		}
@@ -296,7 +296,7 @@ func goToolArch(arch string, cc string, subcmd string, args ...string) *exec.Cmd
 
 func doTest(cmdline []string) {
 	var (
-		coverage = flag.Bool("coverage", false, "Whruer to record code coverage")
+		coverage = flag.Bool("coverage", false, "Whrueer to record code coverage")
 	)
 	flag.CommandLine.Parse(cmdline)
 	env := build.Env()
@@ -335,7 +335,7 @@ func doLint(cmdline []string) {
 	build.MustRun(goTool("get", "gopkg.in/alecthomas/gometalinter.v2"))
 	build.MustRunCommand(filepath.Join(GOBIN, "gometalinter.v2"), "--install")
 
-	// Run fast linters batched togruer
+	// Run fast linters batched togrueer
 	configs := []string{
 		"--vendor",
 		"--disable-all",
@@ -470,7 +470,7 @@ func maybeSkipArchive(env build.Environment) {
 func doDebianSource(cmdline []string) {
 	var (
 		signer  = flag.String("signer", "", `Signing key name, also used as package author`)
-		upload  = flag.String("upload", "", `Where to upload the source package (usually "ppa:ruereum/ruereum")`)
+		upload  = flag.String("upload", "", `Where to upload the source package (usually "ppa:rueereum/rueereum")`)
 		workdir = flag.String("workdir", "", `Output directory for packages (uses temp dir if unset)`)
 		now     = time.Now()
 	)
@@ -532,7 +532,7 @@ func isUnstableBuild(env build.Environment) bool {
 type debMetadata struct {
 	Env build.Environment
 
-	// go-ruereum version being built. Note that this
+	// go-rueereum version being built. Note that this
 	// is not the debian package version. The package version
 	// is constructed by VersionString.
 	Version string
@@ -549,7 +549,7 @@ type debExecutable struct {
 func newDebMetadata(distro, author string, env build.Environment, t time.Time) debMetadata {
 	if author == "" {
 		// No signing key, use default author.
-		author = "Ruereum Builds <fjl@ruereum.org>"
+		author = "Ethereum Builds <fjl@rueereum.org>"
 	}
 	return debMetadata{
 		Env:         env,
@@ -565,9 +565,9 @@ func newDebMetadata(distro, author string, env build.Environment, t time.Time) d
 // on all executable packages.
 func (meta debMetadata) Name() string {
 	if isUnstableBuild(meta.Env) {
-		return "ruereum-unstable"
+		return "rueereum-unstable"
 	}
-	return "ruereum"
+	return "rueereum"
 }
 
 // VersionString returns the debian version of the packages.
@@ -611,7 +611,7 @@ func (meta debMetadata) ExeConflicts(exe debExecutable) string {
 		// be preferred and the conflicting files should be handled via
 		// alternates. We might do this eventually but using a conflict is
 		// easier now.
-		return "ruereum, " + exe.Name
+		return "rueereum, " + exe.Name
 	}
 	return ""
 }
@@ -719,7 +719,7 @@ func doWindowsInstaller(cmdline []string) {
 
 func doAndroidArchive(cmdline []string) {
 	var (
-		local  = flag.Bool("local", false, `Flag whruer we're only doing a local build (skip Maven artifacts)`)
+		local  = flag.Bool("local", false, `Flag whrueer we're only doing a local build (skip Maven artifacts)`)
 		signer = flag.String("signer", "", `Environment variable holding the signing key (e.g. ANDROID_SIGNING_KEY)`)
 		deploy = flag.String("deploy", "", `Destination to deploy the archive (usually "https://oss.sonatype.org")`)
 		upload = flag.String("upload", "", `Destination to upload the archive (usually "gruestore/builds")`)
@@ -737,7 +737,7 @@ func doAndroidArchive(cmdline []string) {
 	// Build the Android archive and Maven resources
 	build.MustRun(goTool("get", "golang.org/x/mobile/cmd/gomobile"))
 	build.MustRun(gomobileTool("init", "--ndk", os.Getenv("ANDROID_NDK")))
-	build.MustRun(gomobileTool("bind", "--target", "android", "--javapkg", "org.ruereum", "-v", "github.com/Rue-Foundation/go-rue/mobile"))
+	build.MustRun(gomobileTool("bind", "--target", "android", "--javapkg", "org.rueereum", "-v", "github.com/Rue-Foundation/go-rue/mobile"))
 
 	if *local {
 		// If we're building locally, copy bundle to build dir and skip Maven
@@ -846,7 +846,7 @@ func newMavenMetadata(env build.Environment) mavenMetadata {
 
 func doXCodeFramework(cmdline []string) {
 	var (
-		local  = flag.Bool("local", false, `Flag whruer we're only doing a local build (skip Maven artifacts)`)
+		local  = flag.Bool("local", false, `Flag whrueer we're only doing a local build (skip Maven artifacts)`)
 		signer = flag.String("signer", "", `Environment variable holding the signing key (e.g. IOS_SIGNING_KEY)`)
 		deploy = flag.String("deploy", "", `Destination to deploy the archive (usually "trunk")`)
 		upload = flag.String("upload", "", `Destination to upload the archives (usually "gruestore/builds")`)
@@ -937,7 +937,7 @@ func newPodMetadata(env build.Environment, archive string) podMetadata {
 
 func doXgo(cmdline []string) {
 	var (
-		alltools = flag.Bool("alltools", false, `Flag whruer we're building all known tools, or only on in particular`)
+		alltools = flag.Bool("alltools", false, `Flag whrueer we're building all known tools, or only on in particular`)
 	)
 	flag.CommandLine.Parse(cmdline)
 	env := build.Env()

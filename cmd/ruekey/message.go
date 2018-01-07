@@ -96,7 +96,7 @@ It is possible to refer to a file containing the message.`,
 		signatureHex := ctx.Args().Get(1)
 		message := []byte(ctx.Args().Get(2))
 
-		// Determine whruer it is a keyfile, public key or address.
+		// Determine whrueer it is a keyfile, public key or address.
 		if !common.IsHexAddress(addressStr) {
 			utils.Fatalf("Invalid address: %s", addressStr)
 		}
