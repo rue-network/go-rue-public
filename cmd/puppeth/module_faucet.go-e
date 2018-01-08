@@ -42,7 +42,7 @@ ADD account.pass /account.pass
 EXPOSE 8080 30303 30303/udp
 
 ENTRYPOINT [ \
-	"faucet", "--genesis", "/genesis.json", "--network", "{{.NetworkID}}", "--bootnodes", "{{.Bootnodes}}", "--ruestats", "{{.Ruestats}}", "--rueport", "{{.RuePort}}",     \
+	"faucet", "--genesis", "/genesis.json", "--network", "{{.NetworkID}}", "--bootnodes", "{{.Bootnodes}}", "--ruestats", "{{.Ruestats}}", "--ethport", "{{.EthPort}}",     \
 	"--faucet.name", "{{.FaucetName}}", "--faucet.amount", "{{.FaucetAmount}}", "--faucet.minutes", "{{.FaucetMinutes}}", "--faucet.tiers", "{{.FaucetTiers}}",             \
 	"--account.json", "/account.json", "--account.pass", "/account.pass"                                                                                                    \
 	{{if .CaptchaToken}}, "--captcha.token", "{{.CaptchaToken}}", "--captcha.secret", "{{.CaptchaSecret}}"{{end}}{{if .NoAuth}}, "--noauth"{{end}}                          \
@@ -57,13 +57,13 @@ services:
     build: .
     image: {{.Network}}/faucet
     ports:
-      - "{{.RuePort}}:{{.RuePort}}"{{if not .VHost}}
+      - "{{.EthPort}}:{{.EthPort}}"{{if not .VHost}}
       - "{{.ApiPort}}:8080"{{end}}
     volumes:
       - {{.Datadir}}:/root/.faucet
     environment:
-      - RUE_PORT={{.RuePort}}
-      - RUE_NAME={{.RueName}}
+      - ETH_PORT={{.EthPort}}
+      - ETH_NAME={{.EthName}}
       - FAUCET_AMOUNT={{.FaucetAmount}}
       - FAUCET_MINUTES={{.FaucetMinutes}}
       - FAUCET_TIERS={{.FaucetTiers}}
@@ -181,7 +181,7 @@ func (info *faucetInfos) Report() map[string]string {
 	return report
 }
 
-// checkFaucet does a health-check against an faucet server to verify whrueer
+// checkFaucet does a health-check against an faucet server to verify whruer
 // it's running, and if yes, gathering a collection of useful infos about it.
 func checkFaucet(client *sshClient, network string) (*faucetInfos, error) {
 	// Inspect a possible faucet container on the host
@@ -228,8 +228,8 @@ func checkFaucet(client *sshClient, network string) (*faucetInfos, error) {
 	return &faucetInfos{
 		node: &nodeInfos{
 			datadir:  infos.volumes["/root/.faucet"],
-			portFull: infos.portmap[infos.envvars["RUE_PORT"]+"/tcp"],
-			ruestats: infos.envvars["RUE_NAME"],
+			portFull: infos.portmap[infos.envvars["ETH_PORT"]+"/tcp"],
+			ruestats: infos.envvars["ETH_NAME"],
 			keyJSON:  keyJSON,
 			keyPass:  keyPass,
 		},

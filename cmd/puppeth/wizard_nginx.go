@@ -22,7 +22,7 @@ import (
 	"github.com/Rue-Foundation/go-rue/log"
 )
 
-// ensureVirtualHost checks whrueer a reverse-proxy is running on the specified
+// ensureVirtualHost checks whruer a reverse-proxy is running on the specified
 // host machine, and if yes requests a virtual host from the user to host a
 // specific web service on. If no proxy exists, the method will offer to deploy
 // one.

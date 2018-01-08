@@ -64,9 +64,9 @@ func decryptPreSaleKey(fileContent []byte, password string) (key *Key, err error
 	iv := encSeedBytes[:16]
 	cipherText := encSeedBytes[16:]
 	/*
-		See https://github.com/ruereum/pyruesaletool
+		See https://github.com/ruereum/pyethsaletool
 
-		pyruesaletool generates the encryption key from password by
+		pyethsaletool generates the encryption key from password by
 		2000 rounds of PBKDF2 with HMAC-SHA-256 using password as salt (:().
 		16 byte key length within PBKDF2 and resulting key is used as AES key
 	*/

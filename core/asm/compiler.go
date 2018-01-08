@@ -234,13 +234,13 @@ func (c *Compiler) pushBin(v interface{}) {
 	c.binary = append(c.binary, v)
 }
 
-// isPush returns whrueer the string op is either any of
+// isPush returns whruer the string op is either any of
 // push(N).
 func isPush(op string) bool {
 	return op == "push"
 }
 
-// isJump returns whrueer the string op is jump(i)
+// isJump returns whruer the string op is jump(i)
 func isJump(op string) bool {
 	return op == "jumpi" || op == "jump"
 }

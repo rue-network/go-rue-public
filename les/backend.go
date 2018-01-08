@@ -78,7 +78,7 @@ type LightRuereum struct {
 }
 
 func New(ctx *node.ServiceContext, config *rue.Config) (*LightRuereum, error) {
-	chainDb, err :=rue.CreateDB(ctx, config, "lightchaindata")
+	chainDb, err := rue.CreateDB(ctx, config, "lightchaindata")
 	if err != nil {
 		return nil, err
 	}
@@ -98,11 +98,11 @@ func New(ctx *node.ServiceContext, config *rue.Config) (*LightRuereum, error) {
 		peers:            peers,
 		reqDist:          newRequestDistributor(peers, quitSync),
 		accountManager:   ctx.AccountManager,
-		engine:          rue.CreateConsensusEngine(ctx, &config.Ruehash, chainConfig, chainDb),
+		engine:           rue.CreateConsensusEngine(ctx, &config.Ruehash, chainConfig, chainDb),
 		shutdownChan:     make(chan bool),
 		networkId:        config.NetworkId,
 		bloomRequests:    make(chan chan *bloombits.Retrieval),
-		bloomIndexer:    rue.NewBloomIndexer(chainDb, light.BloomTrieFrequency),
+		bloomIndexer:     rue.NewBloomIndexer(chainDb, light.BloomTrieFrequency),
 		chtIndexer:       light.NewChtIndexer(chainDb, true),
 		bloomTrieIndexer: light.NewBloomTrieIndexer(chainDb, true),
 	}

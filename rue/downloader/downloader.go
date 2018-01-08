@@ -263,7 +263,7 @@ func (d *Downloader) Progress() ruereum.SyncProgress {
 	}
 }
 
-// Synchronising returns whrueer the downloader is currently retrieving blocks.
+// Synchronising returns whruer the downloader is currently retrieving blocks.
 func (d *Downloader) Synchronising() bool {
 	return atomic.LoadInt32(&d.synchronising) > 0
 }
@@ -572,7 +572,7 @@ func (d *Downloader) fetchHeight(p *peerConnection) (*types.Header, error) {
 				log.Debug("Received headers from incorrect peer", "peer", packet.PeerId())
 				break
 			}
-			// Make sure the peer actually gave somrueing valid
+			// Make sure the peer actually gave something valid
 			headers := packet.(*headerPack).headers
 			if len(headers) != 1 {
 				p.log.Debug("Multiple headers for single request", "headers", len(headers))
@@ -645,7 +645,7 @@ func (d *Downloader) findAncestor(p *peerConnection, height uint64) (uint64, err
 				log.Debug("Received headers from incorrect peer", "peer", packet.PeerId())
 				break
 			}
-			// Make sure the peer actually gave somrueing valid
+			// Make sure the peer actually gave something valid
 			headers := packet.(*headerPack).headers
 			if len(headers) == 0 {
 				p.log.Warn("Empty head header set")
@@ -722,7 +722,7 @@ func (d *Downloader) findAncestor(p *peerConnection, height uint64) (uint64, err
 					log.Debug("Received headers from incorrect peer", "peer", packer.PeerId())
 					break
 				}
-				// Make sure the peer actually gave somrueing valid
+				// Make sure the peer actually gave something valid
 				headers := packer.(*headerPack).headers
 				if len(headers) != 1 {
 					p.log.Debug("Multiple headers for single request", "headers", len(headers))
@@ -1011,7 +1011,7 @@ func (d *Downloader) fetchParts(errCancel error, deliveryCh chan dataPack, deliv
 				if err == errInvalidChain {
 					return err
 				}
-				// Unless a peer delivered somrueing completely else than requested (usually
+				// Unless a peer delivered something completely else than requested (usually
 				// caused by a timed out request which came through in the end), set it to
 				// idle. If the delivery's stale, the peer should have already been idled.
 				if err != errStaleDelivery {
@@ -1215,7 +1215,7 @@ func (d *Downloader) processHeaders(origin uint64, td *big.Int) error {
 				// L: Notice that R's head and TD increased compared to ours, start sync
 				// L: Import of block 11 finishes
 				// L: Sync begins, and finds common ancestor at 11
-				// L: Request new headers up from 11 (R's TD was higher, it must have somrueing)
+				// L: Request new headers up from 11 (R's TD was higher, it must have something)
 				// R: Nothing to give
 				if d.mode != LightSync {
 					if !gotHeaders && td.Cmp(d.blockchain.GetTdByHash(d.blockchain.CurrentBlock().Hash())) > 0 {
@@ -1228,7 +1228,7 @@ func (d *Downloader) processHeaders(origin uint64, td *big.Int) error {
 				//
 				// This check cannot be executed "as is" for full imports, since blocks may still be
 				// queued for processing when the header download completes. However, as long as the
-				// peer gave us somrueing useful, we're already happy/progressed (above check).
+				// peer gave us something useful, we're already happy/progressed (above check).
 				if d.mode == FastSync || d.mode == LightSync {
 					if td.Cmp(d.lightchain.GetTdByHash(d.lightchain.CurrentHeader().Hash())) > 0 {
 						return errStallingPeer
@@ -1242,7 +1242,7 @@ func (d *Downloader) processHeaders(origin uint64, td *big.Int) error {
 			gotHeaders = true
 
 			for len(headers) > 0 {
-				// Terminate if somrueing failed in between processing chunks
+				// Terminate if something failed in between processing chunks
 				select {
 				case <-d.cancelCh:
 					return errCancelHeaderProcessing

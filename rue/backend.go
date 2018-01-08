@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
-// Packagerueimplements the Ruereum protocol.
+// Package rue implements the Ruereum protocol.
 package rue
 
 import (
@@ -35,6 +35,10 @@ import (
 	"github.com/Rue-Foundation/go-rue/core/bloombits"
 	"github.com/Rue-Foundation/go-rue/core/types"
 	"github.com/Rue-Foundation/go-rue/core/vm"
+	"github.com/Rue-Foundation/go-rue/rue/downloader"
+	"github.com/Rue-Foundation/go-rue/rue/filters"
+	"github.com/Rue-Foundation/go-rue/rue/gasprice"
+	"github.com/Rue-Foundation/go-rue/ruedb"
 	"github.com/Rue-Foundation/go-rue/event"
 	"github.com/Rue-Foundation/go-rue/internal/rueapi"
 	"github.com/Rue-Foundation/go-rue/log"
@@ -44,10 +48,6 @@ import (
 	"github.com/Rue-Foundation/go-rue/params"
 	"github.com/Rue-Foundation/go-rue/rlp"
 	"github.com/Rue-Foundation/go-rue/rpc"
-	"github.com/Rue-Foundation/go-rue/rue/downloader"
-	"github.com/Rue-Foundation/go-rue/rue/filters"
-	"github.com/Rue-Foundation/go-rue/rue/gasprice"
-	"github.com/Rue-Foundation/go-rue/ruedb"
 )
 
 type LesServer interface {
@@ -84,9 +84,9 @@ type Ruereum struct {
 
 	ApiBackend *RueApiBackend
 
-	miner    *miner.Miner
-	gasPrice *big.Int
-	ruebase  common.Address
+	miner     *miner.Miner
+	gasPrice  *big.Int
+	ruebase common.Address
 
 	networkId     uint64
 	netRPCService *rueapi.PublicNetAPI
@@ -103,7 +103,7 @@ func (s *Ruereum) AddLesServer(ls LesServer) {
 // initialisation of the common Ruereum object)
 func New(ctx *node.ServiceContext, config *Config) (*Ruereum, error) {
 	if config.SyncMode == downloader.LightSync {
-		return nil, errors.New("can't runrue.Ruereum in light sync mode, use les.LightRuereum")
+		return nil, errors.New("can't run rue.Ruereum in light sync mode, use les.LightRuereum")
 	}
 	if !config.SyncMode.IsValid() {
 		return nil, fmt.Errorf("invalid sync mode %d", config.SyncMode)
@@ -119,7 +119,7 @@ func New(ctx *node.ServiceContext, config *Config) (*Ruereum, error) {
 	}
 	log.Info("Initialised chain configuration", "config", chainConfig)
 
-	rue := &Ruereum{
+ rue := &Ruereum{
 		config:         config,
 		chainDb:        chainDb,
 		chainConfig:    chainConfig,
@@ -130,7 +130,7 @@ func New(ctx *node.ServiceContext, config *Config) (*Ruereum, error) {
 		stopDbUpgrade:  stopDbUpgrade,
 		networkId:      config.NetworkId,
 		gasPrice:       config.GasPrice,
-		ruebase:        config.Ruebase,
+		ruebase:      config.Ruebase,
 		bloomRequests:  make(chan chan *bloombits.Retrieval),
 		bloomIndexer:   NewBloomIndexer(chainDb, params.BloomBitsBlocks),
 	}
@@ -146,35 +146,35 @@ func New(ctx *node.ServiceContext, config *Config) (*Ruereum, error) {
 	}
 
 	vmConfig := vm.Config{EnablePreimageRecording: config.EnablePreimageRecording}
-	rue.blockchain, err = core.NewBlockChain(chainDb, rue.chainConfig, rue.engine, vmConfig)
+ rue.blockchain, err = core.NewBlockChain(chainDb, rue.chainConfig, rue.engine, vmConfig)
 	if err != nil {
 		return nil, err
 	}
 	// Rewind the chain in case of an incompatible config upgrade.
 	if compat, ok := genesisErr.(*params.ConfigCompatError); ok {
 		log.Warn("Rewinding chain to upgrade configuration", "err", compat)
-		rue.blockchain.SetHead(compat.RewindTo)
+	 rue.blockchain.SetHead(compat.RewindTo)
 		core.WriteChainConfig(chainDb, genesisHash, chainConfig)
 	}
-	rue.bloomIndexer.Start(rue.blockchain)
+ rue.bloomIndexer.Start(rue.blockchain)
 
 	if config.TxPool.Journal != "" {
 		config.TxPool.Journal = ctx.ResolvePath(config.TxPool.Journal)
 	}
-	rue.txPool = core.NewTxPool(config.TxPool, rue.chainConfig, rue.blockchain)
+ rue.txPool = core.NewTxPool(config.TxPool, rue.chainConfig, rue.blockchain)
 
 	if rue.protocolManager, err = NewProtocolManager(rue.chainConfig, config.SyncMode, config.NetworkId, rue.eventMux, rue.txPool, rue.engine, rue.blockchain, chainDb); err != nil {
 		return nil, err
 	}
-	rue.miner = miner.New(rue, rue.chainConfig, rue.EventMux(), rue.engine)
-	rue.miner.SetExtra(makeExtraData(config.ExtraData))
+ rue.miner = miner.New(rue, rue.chainConfig, rue.EventMux(), rue.engine)
+ rue.miner.SetExtra(makeExtraData(config.ExtraData))
 
-	rue.ApiBackend = &RueApiBackend{rue, nil}
+ rue.ApiBackend = &RueApiBackend{rue, nil}
 	gpoParams := config.GPO
 	if gpoParams.Default == nil {
 		gpoParams.Default = config.GasPrice
 	}
-	rue.ApiBackend.gpo = gasprice.NewOracle(rue.ApiBackend, gpoParams)
+ rue.ApiBackend.gpo = gasprice.NewOracle(rue.ApiBackend, gpoParams)
 
 	return rue, nil
 }

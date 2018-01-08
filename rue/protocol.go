@@ -37,7 +37,7 @@ const (
 // Official short name of the protocol used during capability negotiation.
 var ProtocolName = "rue"
 
-// Supported versions of therueprotocol (first is primary).
+// Supported versions of the rue protocol (first is primary).
 var ProtocolVersions = []uint{rue63, rue62}
 
 // Number of implemented message corresponding to different protocol versions.
@@ -45,7 +45,7 @@ var ProtocolLengths = []uint64{17, 8}
 
 const ProtocolMaxMsgSize = 10 * 1024 * 1024 // Maximum cap on the size of a protocol message
 
-//rueprotocol message codes
+// rue protocol message codes
 const (
 	// Protocol messages belonging to rue/62
 	StatusMsg          = 0x00

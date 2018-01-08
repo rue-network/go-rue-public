@@ -30,7 +30,7 @@ import (
 )
 
 // ContractBackend implements bind.ContractBackend with direct calls to Ruereum
-// internals to support operating on contracts within subprotocols likerueand
+// internals to support operating on contracts within subprotocols like rue and
 // swarm.
 //
 // Internally this backend uses the already exposed API endpoints of the Ruereum

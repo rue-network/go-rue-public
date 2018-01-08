@@ -116,7 +116,7 @@ languages and regions given a script.`,
 	`
 matchLang holds pairs of langIDs of base languages that are typically
 mutually intelligible. Each pair is associated with a confidence and
-whrueer the intelligibility goes one or both ways.`,
+whruer the intelligibility goes one or both ways.`,
 	`
 matchScript holds pairs of scriptIDs where readers of one script
 can typically also read the other. Each is associated with a confidence.`,

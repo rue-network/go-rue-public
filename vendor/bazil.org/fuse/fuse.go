@@ -1291,7 +1291,7 @@ func (r *StatfsResponse) String() string {
 	)
 }
 
-// An AccessRequest asks whrueer the file can be accessed
+// An AccessRequest asks whruer the file can be accessed
 // for the purpose specified by the mask.
 type AccessRequest struct {
 	Header `json:"-"`

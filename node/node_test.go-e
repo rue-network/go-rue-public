@@ -103,7 +103,7 @@ func TestNodeUsedDataDir(t *testing.T) {
 	}
 }
 
-// Tests whrueer services can be registered and duplicates caught.
+// Tests whruer services can be registered and duplicates caught.
 func TestServiceRegistry(t *testing.T) {
 	stack, err := New(testNodeConfig())
 	if err != nil {

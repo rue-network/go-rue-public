@@ -63,7 +63,7 @@ import (
 var (
 	genesisFlag = flag.String("genesis", "", "Genesis json file to seed the chain with")
 	apiPortFlag = flag.Int("apiport", 8080, "Listener port for the HTTP API connection")
-	ruePortFlag = flag.Int("rueport", 30303, "Listener port for the devp2p connection")
+	ethPortFlag = flag.Int("ethport", 30303, "Listener port for the devp2p connection")
 	bootFlag    = flag.String("bootnodes", "", "Comma separated bootnode enode URLs to seed with")
 	netFlag     = flag.Uint64("network", 0, "Network ID to use for the Ruereum protocol")
 	statsFlag   = flag.String("ruestats", "", "Ruestats network monitoring auth string")
@@ -87,7 +87,7 @@ var (
 )
 
 var (
-	rueer = new(big.Int).Exp(big.NewInt(10), big.NewInt(18), nil)
+	ruer = new(big.Int).Exp(big.NewInt(10), big.NewInt(18), nil)
 )
 
 func main() {
@@ -172,7 +172,7 @@ func main() {
 	ks.Unlock(acc, pass)
 
 	// Assemble and start the faucet light service
-	faucet, err := newFaucet(genesis, *ruePortFlag, enodes, *netFlag, *statsFlag, ks, website.Bytes())
+	faucet, err := newFaucet(genesis, *ethPortFlag, enodes, *netFlag, *statsFlag, ks, website.Bytes())
 	if err != nil {
 		log.Crit("Failed to start faucet", "err", err)
 	}
@@ -232,7 +232,7 @@ func newFaucet(genesis *core.Genesis, port int, enodes []*discv5.Node, network u
 	}
 	// Assemble the Ruereum light client protocol
 	if err := stack.Register(func(ctx *node.ServiceContext) (node.Service, error) {
-		cfg :=rue.DefaultConfig
+		cfg := rue.DefaultConfig
 		cfg.SyncMode = downloader.LightSync
 		cfg.NetworkId = network
 		cfg.Genesis = genesis
@@ -352,7 +352,7 @@ func (f *faucet) apiHandler(conn *websocket.Conn) {
 	}
 	// Send over the initial stats and the latest header
 	if err = send(conn, map[string]interface{}{
-		"funds":    balance.Div(balance, rueer),
+		"funds":    balance.Div(balance, ruer),
 		"funded":   nonce,
 		"peers":    f.stack.Server().PeerCount(),
 		"requests": f.reqs,
@@ -450,7 +450,7 @@ func (f *faucet) apiHandler(conn *websocket.Conn) {
 		case *noauthFlag:
 			username, avatar, address, err = authNoAuth(msg.URL)
 		default:
-			err = errors.New("Somrueing funky happened, please open an issue at https://github.com/Rue-Foundation/go-rue/issues")
+			err = errors.New("Something funky happened, please open an issue at https://github.com/Rue-Foundation/go-rue/issues")
 		}
 		if err != nil {
 			if err = sendError(conn, err); err != nil {
@@ -469,7 +469,7 @@ func (f *faucet) apiHandler(conn *websocket.Conn) {
 		)
 		if timeout = f.timeouts[username]; time.Now().After(timeout) {
 			// User wasn't funded recently, create the funding transaction
-			amount := new(big.Int).Mul(big.NewInt(int64(*payoutFlag)), rueer)
+			amount := new(big.Int).Mul(big.NewInt(int64(*payoutFlag)), ruer)
 			amount = new(big.Int).Mul(amount, new(big.Int).Exp(big.NewInt(5), big.NewInt(int64(msg.Tier)), nil))
 			amount = new(big.Int).Div(amount, new(big.Int).Exp(big.NewInt(2), big.NewInt(int64(msg.Tier)), nil))
 
@@ -561,7 +561,7 @@ func (f *faucet) loop() {
 				log.Info("Updated faucet state", "block", head.Number, "hash", head.Hash(), "balance", balance, "nonce", nonce, "price", price)
 			}
 			// Faucet state retrieved, update locally and send to clients
-			balance = new(big.Int).Div(balance, rueer)
+			balance = new(big.Int).Div(balance, ruer)
 
 			f.lock.Lock()
 			f.price, f.nonce = price, nonce

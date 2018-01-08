@@ -23,7 +23,7 @@ package spew
 import "reflect"
 
 const (
-	// UnsafeDisabled is a build-time constant which specifies whrueer or
+	// UnsafeDisabled is a build-time constant which specifies whruer or
 	// not access to the unsafe package is available.
 	UnsafeDisabled = true
 )

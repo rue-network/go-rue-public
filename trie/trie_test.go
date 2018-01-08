@@ -202,11 +202,11 @@ func TestDelete(t *testing.T) {
 	trie := newEmpty()
 	vals := []struct{ k, v string }{
 		{"do", "verb"},
-		{"rueer", "wookiedoo"},
+		{"ruer", "wookiedoo"},
 		{"horse", "stallion"},
 		{"shaman", "horse"},
 		{"doge", "coin"},
-		{"rueer", ""},
+		{"ruer", ""},
 		{"dog", "puppy"},
 		{"shaman", ""},
 	}
@@ -230,11 +230,11 @@ func TestEmptyValues(t *testing.T) {
 
 	vals := []struct{ k, v string }{
 		{"do", "verb"},
-		{"rueer", "wookiedoo"},
+		{"ruer", "wookiedoo"},
 		{"horse", "stallion"},
 		{"shaman", "horse"},
 		{"doge", "coin"},
-		{"rueer", ""},
+		{"ruer", ""},
 		{"dog", "puppy"},
 		{"shaman", ""},
 	}
@@ -253,12 +253,12 @@ func TestReplication(t *testing.T) {
 	trie := newEmpty()
 	vals := []struct{ k, v string }{
 		{"do", "verb"},
-		{"rueer", "wookiedoo"},
+		{"ruer", "wookiedoo"},
 		{"horse", "stallion"},
 		{"shaman", "horse"},
 		{"doge", "coin"},
 		{"dog", "puppy"},
-		{"somrueingveryoddindeedthis is", "myothernodedata"},
+		{"somethingveryoddindeedthis is", "myothernodedata"},
 	}
 	for _, val := range vals {
 		updateString(trie, val.k, val.v)
@@ -289,13 +289,13 @@ func TestReplication(t *testing.T) {
 	// perform some insertions on the new trie.
 	vals2 := []struct{ k, v string }{
 		{"do", "verb"},
-		{"rueer", "wookiedoo"},
+		{"ruer", "wookiedoo"},
 		{"horse", "stallion"},
 		// {"shaman", "horse"},
 		// {"doge", "coin"},
-		// {"rueer", ""},
+		// {"ruer", ""},
 		// {"dog", "puppy"},
-		// {"somrueingveryoddindeedthis is", "myothernodedata"},
+		// {"somethingveryoddindeedthis is", "myothernodedata"},
 		// {"shaman", ""},
 	}
 	for _, val := range vals2 {

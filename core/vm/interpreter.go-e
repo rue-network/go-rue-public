@@ -59,13 +59,13 @@ type Interpreter struct {
 	gasTable params.GasTable
 	intPool  *intPool
 
-	readOnly   bool   // Whrueer to throw on stateful modifications
+	readOnly   bool   // Whruer to throw on stateful modifications
 	returnData []byte // Last CALL's return data for subsequent reuse
 }
 
 // NewInterpreter returns a new instance of the Interpreter.
 func NewInterpreter(evm *EVM, cfg Config) *Interpreter {
-	// We use the STOP instruction whrueer to see
+	// We use the STOP instruction whruer to see
 	// the jump table was initialised. If it was not
 	// we'll set the default jump table.
 	if !cfg.JumpTable[STOP].valid {

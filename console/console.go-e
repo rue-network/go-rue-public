@@ -30,8 +30,8 @@ import (
 	"github.com/Rue-Foundation/go-rue/internal/jsre"
 	"github.com/Rue-Foundation/go-rue/internal/web3ext"
 	"github.com/Rue-Foundation/go-rue/rpc"
-	"github.com/peterh/liner"
 	"github.com/mattn/go-colorable"
+	"github.com/peterh/liner"
 	"github.com/robertkrimen/otto"
 )
 
@@ -134,7 +134,7 @@ func (c *Console) init(preload []string) error {
 	if err != nil {
 		return fmt.Errorf("api modules: %v", err)
 	}
-	flatten := "varrue= web3.rue; var personal = web3.personal; "
+	flatten := "var rue = web3.rue; var personal = web3.personal; "
 	for api := range apis {
 		if api == "web3" {
 			continue // manually mapped or ignore
@@ -154,7 +154,7 @@ func (c *Console) init(preload []string) error {
 		return fmt.Errorf("namespace flattening: %v", err)
 	}
 	// Initialize the global name register (disabled for now)
-	//c.jsre.Run(`var GlobalRegistrar =rue.contract(` + registrar.GlobalRegistrarAbi + `);   registrar = GlobalRegistrar.at("` + registrar.GlobalRegistrarAddr + `");`)
+	//c.jsre.Run(`var GlobalRegistrar = rue.contract(` + registrar.GlobalRegistrarAbi + `);   registrar = GlobalRegistrar.at("` + registrar.GlobalRegistrarAddr + `");`)
 
 	// If the console is in interactive mode, instrument password related methods to query the user
 	if c.prompter != nil {
@@ -249,7 +249,7 @@ func (c *Console) AutoCompleteInput(line string, pos int) (string, []string, str
 		return "", nil, ""
 	}
 	// Chunck data to relevant part for autocompletion
-	// E.g. in case of nested linesrue.getBalance(rue.coinb<tab><tab>
+	// E.g. in case of nested lines rue.getBalance(rue.coinb<tab><tab>
 	start := pos - 1
 	for ; start > 0; start-- {
 		// Skip all methods and namespaces (i.e. including the dot)
@@ -275,8 +275,8 @@ func (c *Console) Welcome() {
 	fmt.Fprintf(c.printer, "Welcome to the Grue JavaScript console!\n\n")
 	c.jsre.Run(`
 		console.log("instance: " + web3.version.node);
-		console.log("coinbase: " +rue.coinbase);
-		console.log("at block: " +rue.blockNumber + " (" + new Date(1000 *rue.getBlock(rue.blockNumber).timestamp) + ")");
+		console.log("coinbase: " + rue.coinbase);
+		console.log("at block: " + rue.blockNumber + " (" + new Date(1000 * rue.getBlock(rue.blockNumber).timestamp) + ")");
 		console.log(" datadir: " + admin.datadir);
 	`)
 	// List all the supported modules for the user to call

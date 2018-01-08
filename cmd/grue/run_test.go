@@ -82,7 +82,7 @@ func runGrue(t *testing.T, args ...string) *testgrue {
 		tt.Datadir = tmpdir(t)
 		tt.Cleanup = func() { os.RemoveAll(tt.Datadir) }
 		args = append([]string{"-datadir", tt.Datadir}, args...)
-		// Remove the temporary datadir if somrueing fails below.
+		// Remove the temporary datadir if something fails below.
 		defer func() {
 			if t.Failed() {
 				tt.Cleanup()

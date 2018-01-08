@@ -16,7 +16,7 @@
 
 // This file contains the code snippets from the developer's guide embedded into
 // Go tests. This ensures that any code published in out guides will not break
-// accidentally via some code update. If some API changes nonrueeless that needs
+// accidentally via some code update. If some API changes nonetheless that needs
 // modifying this file, please port any modification over into the developer's
 // guide wiki pages too!
 

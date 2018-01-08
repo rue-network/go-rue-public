@@ -126,7 +126,7 @@ func (info *ruestatsInfos) Report() map[string]string {
 	}
 }
 
-// checkRuestats does a health-check against an ruestats server to verify whrueer
+// checkRuestats does a health-check against an ruestats server to verify whruer
 // it's running, and if yes, gathering a collection of useful infos about it.
 func checkRuestats(client *sshClient, network string) (*ruestatsInfos, error) {
 	// Inspect a possible ruestats container on the host

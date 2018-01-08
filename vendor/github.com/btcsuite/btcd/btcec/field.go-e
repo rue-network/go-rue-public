@@ -426,7 +426,7 @@ func (f *fieldVal) Bytes() *[32]byte {
 	return b
 }
 
-// IsZero returns whrueer or not the field value is equal to zero.
+// IsZero returns whruer or not the field value is equal to zero.
 func (f *fieldVal) IsZero() bool {
 	// The value can only be zero if no bits are set in any of the words.
 	// This is a constant time implementation.
@@ -436,7 +436,7 @@ func (f *fieldVal) IsZero() bool {
 	return bits == 0
 }
 
-// IsOdd returns whrueer or not the field value is an odd number.
+// IsOdd returns whruer or not the field value is an odd number.
 //
 // The field value must be normalized for this function to return correct
 // result.
@@ -445,7 +445,7 @@ func (f *fieldVal) IsOdd() bool {
 	return f.n[0]&1 == 1
 }
 
-// Equals returns whrueer or not the two field values are the same.  Both
+// Equals returns whruer or not the two field values are the same.  Both
 // field values being compared must be normalized for this function to return
 // the correct result.
 func (f *fieldVal) Equals(val *fieldVal) bool {

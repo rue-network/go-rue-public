@@ -314,11 +314,11 @@ func testGetNodeData(t *testing.T, protocol int) {
 	generator := func(i int, block *core.BlockGen) {
 		switch i {
 		case 0:
-			// In block 1, the test bank sends account #1 some rueer.
+			// In block 1, the test bank sends account #1 some ruer.
 			tx, _ := types.SignTx(types.NewTransaction(block.TxNonce(testBank), acc1Addr, big.NewInt(10000), bigTxGas, nil, nil), signer, testBankKey)
 			block.AddTx(tx)
 		case 1:
-			// In block 2, the test bank sends some more rueer to account #1.
+			// In block 2, the test bank sends some more ruer to account #1.
 			// acc1Addr passes it on to account #2.
 			tx1, _ := types.SignTx(types.NewTransaction(block.TxNonce(testBank), acc1Addr, big.NewInt(1000), bigTxGas, nil, nil), signer, testBankKey)
 			tx2, _ := types.SignTx(types.NewTransaction(block.TxNonce(acc1Addr), acc2Addr, big.NewInt(1000), bigTxGas, nil, nil), signer, acc1Key)
@@ -406,11 +406,11 @@ func testGetReceipt(t *testing.T, protocol int) {
 	generator := func(i int, block *core.BlockGen) {
 		switch i {
 		case 0:
-			// In block 1, the test bank sends account #1 some rueer.
+			// In block 1, the test bank sends account #1 some ruer.
 			tx, _ := types.SignTx(types.NewTransaction(block.TxNonce(testBank), acc1Addr, big.NewInt(10000), bigTxGas, nil, nil), signer, testBankKey)
 			block.AddTx(tx)
 		case 1:
-			// In block 2, the test bank sends some more rueer to account #1.
+			// In block 2, the test bank sends some more ruer to account #1.
 			// acc1Addr passes it on to account #2.
 			tx1, _ := types.SignTx(types.NewTransaction(block.TxNonce(testBank), acc1Addr, big.NewInt(1000), bigTxGas, nil, nil), signer, testBankKey)
 			tx2, _ := types.SignTx(types.NewTransaction(block.TxNonce(acc1Addr), acc2Addr, big.NewInt(1000), bigTxGas, nil, nil), signer, acc1Key)
@@ -450,7 +450,7 @@ func testGetReceipt(t *testing.T, protocol int) {
 	}
 }
 
-// Tests that postrueprotocol handshake, DAO fork-enabled clients also execute
+// Tests that post rue protocol handshake, DAO fork-enabled clients also execute
 // a DAO "challenge" verifying each others' DAO fork headers to ensure they're on
 // compatible chains.
 func TestDAOChallengeNoVsNo(t *testing.T)       { testDAOChallenge(t, false, false, false) }

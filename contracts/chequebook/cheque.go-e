@@ -17,8 +17,8 @@
 // Package chequebook package wraps the 'chequebook' Ruereum smart contract.
 //
 // The functions in this package allow using chequebook for
-// issuing, receiving, verifying cheques in rueer; (auto)cashing cheques in rueer
-// as well as (auto)depositing rueer to the chequebook contract.
+// issuing, receiving, verifying cheques in ruer; (auto)cashing cheques in ruer
+// as well as (auto)depositing ruer to the chequebook contract.
 package chequebook
 
 //go:generate abigen --sol contract/chequebook.sol --pkg contract --out contract/chequebook.go
@@ -52,8 +52,8 @@ import (
 // Some functionality requires interacting with the blockchain:
 // * setting current balance on peer's chequebook
 // * sending the transaction to cash the cheque
-// * depositing rueer to the chequebook
-// * watching incoming rueer
+// * depositing ruer to the chequebook
+// * watching incoming ruer
 
 var (
 	gasToCash = big.NewInt(2000000) // gas cost of a cash transaction using chequebook

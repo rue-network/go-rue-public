@@ -76,7 +76,7 @@ func (w *wizard) makeServer() string {
 
 	client, err := dial(input, nil)
 	if err != nil {
-		log.Error("Server not ready for pupprue", "err", err)
+		log.Error("Server not ready for puppeth", "err", err)
 		return ""
 	}
 	// All checks passed, start tracking the server
@@ -195,6 +195,6 @@ func (w *wizard) deployComponent() {
 	case "7":
 		w.deployDashboard()
 	default:
-		log.Error("That's not somrueing I can do")
+		log.Error("That's not something I can do")
 	}
 }

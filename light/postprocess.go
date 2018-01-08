@@ -52,7 +52,7 @@ type trustedCheckpoint struct {
 
 var (
 	mainnetCheckpoint = trustedCheckpoint{
-		name:          "ETH mainnet",
+		name:          "RUE mainnet",
 		sectionIdx:    129,
 		sectionHead:   common.HexToHash("64100587c8ec9a76870056d07cb0f58622552d16de6253a59cac4b580c899501"),
 		chtRoot:       common.HexToHash("bb4fb4076cbe6923c8a8ce8f158452bbe19564959313466989fda095a60884ca"),

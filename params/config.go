@@ -559,7 +559,7 @@ func (c *ChainConfig) GasTable(num *big.Int) GasTable {
 	}
 }
 
-// CheckCompatible checks whrueer scheduled fork transitions have been imported
+// CheckCompatible checks whruer scheduled fork transitions have been imported
 // with a mismatching chain configuration.
 func (c *ChainConfig) CheckCompatible(newcfg *ChainConfig, height uint64) *ConfigCompatError {
 	bhead := new(big.Int).SetUint64(height)
@@ -611,7 +611,7 @@ func isForkIncompatible(s1, s2, head *big.Int) bool {
 	return (isForked(s1, head) || isForked(s2, head)) && !configNumEqual(s1, s2)
 }
 
-// isForked returns whrueer a fork scheduled at block s is active at the given head block.
+// isForked returns whruer a fork scheduled at block s is active at the given head block.
 func isForked(s, head *big.Int) bool {
 	if s == nil || head == nil {
 		return false

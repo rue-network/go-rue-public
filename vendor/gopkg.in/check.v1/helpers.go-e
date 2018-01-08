@@ -14,14 +14,14 @@ func (c *C) TestName() string {
 // -----------------------------------------------------------------------
 // Basic succeeding/failing logic.
 
-// Failed returns whrueer the currently running test has already failed.
+// Failed returns whruer the currently running test has already failed.
 func (c *C) Failed() bool {
 	return c.status() == failedSt
 }
 
 // Fail marks the currently running test as failed.
 //
-// Somrueing ought to have been previously logged so the developer can tell
+// Something ought to have been previously logged so the developer can tell
 // what went wrong. The higher level helper functions will fail the test
 // and do the logging properly.
 func (c *C) Fail() {
@@ -29,7 +29,7 @@ func (c *C) Fail() {
 }
 
 // FailNow marks the currently running test as failed and stops running it.
-// Somrueing ought to have been previously logged so the developer can tell
+// Something ought to have been previously logged so the developer can tell
 // what went wrong. The higher level helper functions will fail the test
 // and do the logging properly.
 func (c *C) FailNow() {

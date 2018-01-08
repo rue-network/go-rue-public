@@ -31,10 +31,10 @@ import (
 	"github.com/Rue-Foundation/go-rue/core/state"
 	"github.com/Rue-Foundation/go-rue/core/types"
 	"github.com/Rue-Foundation/go-rue/core/vm"
+	"github.com/Rue-Foundation/go-rue/ruedb"
 	"github.com/Rue-Foundation/go-rue/event"
 	"github.com/Rue-Foundation/go-rue/log"
 	"github.com/Rue-Foundation/go-rue/params"
-	"github.com/Rue-Foundation/go-rue/ruedb"
 	"gopkg.in/fatih/set.v0"
 )
 
@@ -106,7 +106,7 @@ type worker struct {
 	agents map[Agent]struct{}
 	recv   chan *Result
 
-	rue     Backend
+ rue     Backend
 	chain   *core.BlockChain
 	proc    core.Validator
 	chainDb ruedb.Database
@@ -131,7 +131,7 @@ func newWorker(config *params.ChainConfig, engine consensus.Engine, coinbase com
 	worker := &worker{
 		config:         config,
 		engine:         engine,
-		rue:            rue,
+	 rue:            rue,
 		mux:            mux,
 		txCh:           make(chan core.TxPreEvent, txChanSize),
 		chainHeadCh:    make(chan core.ChainHeadEvent, chainHeadChanSize),
@@ -425,12 +425,12 @@ func (self *worker) commitNewWork() {
 		log.Error("Failed to prepare header for mining", "err", err)
 		return
 	}
-	// If we are care about TheDAO hard-fork check whrueer to override the extra-data or not
+	// If we are care about TheDAO hard-fork check whruer to override the extra-data or not
 	if daoBlock := self.config.DAOForkBlock; daoBlock != nil {
-		// Check whrueer the block is among the fork extra-override range
+		// Check whruer the block is among the fork extra-override range
 		limit := new(big.Int).Add(daoBlock, params.DAOForkExtraRange)
 		if header.Number.Cmp(daoBlock) >= 0 && header.Number.Cmp(limit) < 0 {
-			// Depending whrueer we support or oppose the fork, override differently
+			// Depending whruer we support or oppose the fork, override differently
 			if self.config.DAOForkSupport {
 				header.Extra = common.CopyBytes(params.DAOForkBlockExtra)
 			} else if bytes.Equal(header.Extra, params.DAOForkBlockExtra) {
@@ -523,7 +523,7 @@ func (env *Work) commitTransactions(mux *event.TypeMux, txs *types.TransactionsB
 		//
 		// We use the eip155 signer regardless of the current hf.
 		from, _ := types.Sender(env.signer, tx)
-		// Check whrueer the tx is replay protected. If we're not in the EIP155 hf
+		// Check whruer the tx is replay protected. If we're not in the EIP155 hf
 		// phase, start ignoring the sender until we do.
 		if tx.Protected() && !env.config.IsEIP155(env.header.Number) {
 			log.Trace("Ignoring reply protected transaction", "hash", tx.Hash(), "eip155", env.config.EIP155Block)

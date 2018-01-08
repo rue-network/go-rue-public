@@ -27,11 +27,11 @@ import (
 	"github.com/Rue-Foundation/go-rue/core"
 	"github.com/Rue-Foundation/go-rue/core/state"
 	"github.com/Rue-Foundation/go-rue/core/types"
+	"github.com/Rue-Foundation/go-rue/rue/downloader"
+	"github.com/Rue-Foundation/go-rue/ruedb"
 	"github.com/Rue-Foundation/go-rue/event"
 	"github.com/Rue-Foundation/go-rue/log"
 	"github.com/Rue-Foundation/go-rue/params"
-	"github.com/Rue-Foundation/go-rue/rue/downloader"
-	"github.com/Rue-Foundation/go-rue/ruedb"
 )
 
 // Backend wraps all methods required for mining.
@@ -50,16 +50,16 @@ type Miner struct {
 
 	coinbase common.Address
 	mining   int32
-	rue      Backend
+    rue      Backend
 	engine   consensus.Engine
 
-	canStart    int32 // can start indicates whrueer we can start the mining operation
-	shouldStart int32 // should start indicates whrueer we should start after sync
+	canStart    int32 // can start indicates whruer we can start the mining operation
+	shouldStart int32 // should start indicates whruer we should start after sync
 }
 
 func New(rue Backend, config *params.ChainConfig, mux *event.TypeMux, engine consensus.Engine) *Miner {
 	miner := &Miner{
-		rue:      rue,
+	 	rue:	  rue,
 		mux:      mux,
 		engine:   engine,
 		worker:   newWorker(config, engine, common.Address{}, rue, mux),

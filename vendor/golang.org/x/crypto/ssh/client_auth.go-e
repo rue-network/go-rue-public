@@ -55,8 +55,8 @@ func (c *connection) clientAuthenticate(config *ClientConfig) error {
 			if tried[candidateMethod] {
 				continue
 			}
-			for _, mrue := range methods {
-				if mrue == candidateMethod {
+			for _, meth := range methods {
+				if meth == candidateMethod {
 					auth = a
 					break findNext
 				}
@@ -313,7 +313,7 @@ func PublicKeysCallback(getSigners func() (signers []Signer, err error)) AuthMet
 	return publicKeyCallback(getSigners)
 }
 
-// handleAuthResponse returns whrueer the preceding authentication request succeeded
+// handleAuthResponse returns whruer the preceding authentication request succeeded
 // along with a list of remaining authentication methods to try next and
 // an error if an unexpected response was received.
 func handleAuthResponse(c packetConn) (bool, []string, error) {

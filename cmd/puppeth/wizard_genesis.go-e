@@ -133,7 +133,7 @@ func (w *wizard) makeGenesis() {
 // manageGenesis permits the modification of chain configuration parameters in
 // a genesis config and the export of the entire genesis spec.
 func (w *wizard) manageGenesis() {
-	// Figure out whrueer to modify or export the genesis
+	// Figure out whruer to modify or export the genesis
 	fmt.Println()
 	fmt.Println(" 1. Modify existing fork rules")
 	fmt.Println(" 2. Export genesis configuration")
@@ -188,6 +188,6 @@ func (w *wizard) manageGenesis() {
 		w.conf.flush()
 
 	default:
-		log.Error("That's not somrueing I can do")
+		log.Error("That's not something I can do")
 	}
 }

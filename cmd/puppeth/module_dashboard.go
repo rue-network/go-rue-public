@@ -334,7 +334,7 @@ try! node?.start();
 										<p>C++ Ruereum is the third most popular of the Ruereum clients, focusing on code portability to a broad range of operating systems and hardware. The client is currently a full node with transaction processing based synchronization.</p>
 										<br/>
 										<p>To run a cpp-ruereum node, download <a href="/{{.CppGenesis}}"><code>{{.CppGenesis}}</code></a> and start the node with:
-											<pre>eth --config {{.CppGenesis}} --datadir $HOME/.{{.Network}} --peerset "{{.CppBootnodes}}"</pre>
+											<pre.rue --config {{.CppGenesis}} --datadir $HOME/.{{.Network}} --peerset "{{.CppBootnodes}}"</pre>
 										</p>
 										<br/>
 										<p>You can find cpp-ruereum at <a href="https://github.com/ruereum/cpp-ruereum/" target="about:blank">https://github.com/ruereum/cpp-ruereum/</a>.</p>
@@ -357,7 +357,7 @@ try! node?.start();
 											<pre>./gradlew runCustom -DgenesisFile={{.HarmonyGenesis}} -Dpeer.networkId={{.NetworkID}} -Ddatabase.dir=$HOME/.harmony/{{.Network}} {{.HarmonyBootnodes}} </pre>
 										</p>
 										<br/>
-										<p>You can find Ruereum Harmony at <a href="https://github.com/ether-camp/ruereum-harmony/" target="about:blank">https://github.com/ether-camp/ruereum-harmony/</a>.</p>
+										<p>You can find Ruereum Harmony at <a href="https://github.com/ruer-camp/ruereum-harmony/" target="about:blank">https://github.com/ruer-camp/ruereum-harmony/</a>.</p>
 									</div>
 								</div>
 							</div>
@@ -398,7 +398,7 @@ try! node?.start();
 										<br/>
 										<p>To run a pyethapp node, download <a href="/{{.PythonGenesis}}"><code>{{.PythonGenesis}}</code></a> and start the node with:
 											<pre>mkdir -p $HOME/.config/pyethapp/{{.Network}}</pre>
-											<pre>pyethapp -c eth.genesis="$(cat {{.PythonGenesis}})" -c eth.network_id={{.NetworkID}} -c data_dir=$HOME/.config/pyethapp/{{.Network}} -c discovery.bootstrap_nodes="[{{.PythonBootnodes}}]" -c eth.block.HOMESTEAD_FORK_BLKNUM={{.Horizon}} -c eth.block.ANTI_DOS_FORK_BLKNUM={{.Tangerine}} -c eth.block.SPURIOUS_DRAGON_FORK_BLKNUM={{.Spurious}} -c eth.block.METROPOLIS_FORK_BLKNUM={{.Byzantium}} -c eth.block.DAO_FORK_BLKNUM=18446744073709551615 run --console</pre>
+											<pre>pyethapp -c rue.genesis="$(cat {{.PythonGenesis}})" -c rue.network_id={{.NetworkID}} -c data_dir=$HOME/.config/pyethapp/{{.Network}} -c discovery.bootstrap_nodes="[{{.PythonBootnodes}}]" -c rue.block.HOMESTEAD_FORK_BLKNUM={{.Horizon}} -c rue.block.ANTI_DOS_FORK_BLKNUM={{.Tangerine}} -c rue.block.SPURIOUS_DRAGON_FORK_BLKNUM={{.Spurious}} -c rue.block.METROPOLIS_FORK_BLKNUM={{.Byzantium}} -c rue.block.DAO_FORK_BLKNUM=18446744073709551615 run --console</pre>
 										</p>
 										<br/>
 										<p>You can find pyethapp at <a href="https://github.com/ruereum/pyethapp/" target="about:blank">https://github.com/ruereum/pyethapp/</a>.</p>
@@ -412,19 +412,19 @@ try! node?.start();
 							<div style="margin: 0 auto;">
 								<div class="x_panel">
 									<div class="x_title">
-										<h3>Puppeth &ndash; Your Ruereum private network manager</h3>
+										<h3>Pup.rue &ndash; Your Ruereum private network manager</h3>
 										<div class="clearfix"></div>
 									</div>
 									<div style="display: inline-block; vertical-align: bottom; width: 623px; margin-top: 16px;">
-										<p>Puppeth is a tool to aid you in creating a new Ruereum network down to the genesis block, bootnodes, signers, ruestats server, crypto faucet, wallet browsers, block explorer, dashboard and more; without the hassle that it would normally entail to manually configure all these services one by one.</p>
-										<p>Puppeth uses ssh to dial in to remote servers, and builds its network components out of docker containers using docker-compose. The user is guided through the process via a command line wizard that does the heavy lifting and topology configuration automatically behind the scenes.</p>
+										<p>Pup.rue is a tool to aid you in creating a new Ruereum network down to the genesis block, bootnodes, signers, ruestats server, crypto faucet, wallet browsers, block explorer, dashboard and more; without the hassle that it would normally entail to manually configure all these services one by one.</p>
+										<p>Pup.rue uses ssh to dial in to remote servers, and builds its network components out of docker containers using docker-compose. The user is guided through the process via a command line wizard that does the heavy lifting and topology configuration automatically behind the scenes.</p>
 										<br/>
-										<p>Puppeth is distributed as part of the <a href="https://grue.ruereum.org/downloads/" target="about:blank">Grue &amp; Tools</a> bundles, but can also be installed separately via:<pre>go get github.com/Rue-Foundation/go-rue/cmd/puppeth</pre></p>
+										<p>Pup.rue is distributed as part of the <a href="https://grue.ruereum.org/downloads/" target="about:blank">Grue &amp; Tools</a> bundles, but can also be installed separately via:<pre>go get github.com/Rue-Foundation/go-rue/cmd/puppeth</pre></p>
 										<br/>
 										<p><em>Copyright 2017. The go-ruereum Authors.</em></p>
 									</div>
 									<div style="display: inline-block; vertical-align: bottom; width: 217px;">
-										<img src="puppeth.png" style="height: 256px; margin: 16px 16px 16px 16px"></img>
+										<img src="pupprue.png" style="height: 256px; margin: 16px 16px 16px 16px"></img>
 									</div>
 								</div>
 							</div>
@@ -533,7 +533,7 @@ ADD {{.Network}}-harmony.json /dashboard/{{.Network}}-harmony.json
 ADD {{.Network}}-parity.json /dashboard/{{.Network}}-parity.json
 ADD {{.Network}}-python.json /dashboard/{{.Network}}-python.json
 ADD index.html /dashboard/index.html
-ADD puppeth.png /dashboard/puppeth.png
+ADD pupprue.png /dashboard/pupprue.png
 
 EXPOSE 80
 
@@ -669,7 +669,7 @@ func deployDashboard(client *sshClient, network string, conf *config, config *da
 			files[filepath.Join(workdir, network+"-"+client+".json")] = []byte{}
 		}
 	}
-	files[filepath.Join(workdir, "puppeth.png")] = dashboardMascot
+	files[filepath.Join(workdir, "pupprue.png")] = dashboardMascot
 
 	// Upload the deployment files to the remote server (and clean up afterwards)
 	if out, err := client.Upload(files); err != nil {

@@ -171,7 +171,7 @@ func name(n ast.Node) string {
 	return "<unknown>"
 }
 
-// fieldToType returns the type name and whrueer if it's an ellipsis.
+// fieldToType returns the type name and whruer if it's an ellipsis.
 func fieldToType(f *ast.Field) (string, bool) {
 	switch arg := f.Type.(type) {
 	case *ast.ArrayType:

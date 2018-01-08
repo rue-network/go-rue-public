@@ -389,8 +389,8 @@ func IoctlGetTermios(fd int, req uint) (*Termios, error) {
 // compat_43_orecvmsg
 // compat_43_osend
 // compat_43_osendmsg
-// compat_43_osrueostid
-// compat_43_osrueostname
+// compat_43_osethostid
+// compat_43_osethostname
 // compat_43_osetrlimit
 // compat_43_osigblock
 // compat_43_osigsetmask

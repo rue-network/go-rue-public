@@ -15,7 +15,7 @@ func handleFusermountStderr(errCh chan<- error) func(line string) (ignore bool) 
 	return func(line string) (ignore bool) {
 		if line == `fusermount: failed to open /etc/fuse.conf: Permission denied` {
 			// Silence this particular message, it occurs way too
-			// commonly and isn't very relevant to whrueer the mount
+			// commonly and isn't very relevant to whruer the mount
 			// succeeds or not.
 			return true
 		}
@@ -44,7 +44,7 @@ func handleFusermountStderr(errCh chan<- error) func(line string) (ignore bool) 
 	}
 }
 
-// isBoringFusermountError returns whrueer the Wait error is
+// isBoringFusermountError returns whruer the Wait error is
 // uninteresting; exit status 1 is.
 func isBoringFusermountError(err error) bool {
 	if err, ok := err.(*exec.ExitError); ok && err.Exited() {

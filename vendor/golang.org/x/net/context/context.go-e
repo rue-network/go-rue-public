@@ -19,7 +19,7 @@
 // explicitly to each function that needs it. The Context should be the first
 // parameter, typically named ctx:
 //
-// 	func DoSomrueing(ctx context.Context, arg Arg) error {
+// 	func DoSomething(ctx context.Context, arg Arg) error {
 // 		// ... use ctx ...
 // 	}
 //
@@ -59,11 +59,11 @@ type Context interface {
 	//
 	// Done is provided for use in select statements:
 	//
-	//  // Stream generates values with DoSomrueing and sends them to out
-	//  // until DoSomrueing returns an error or ctx.Done is closed.
+	//  // Stream generates values with DoSomething and sends them to out
+	//  // until DoSomething returns an error or ctx.Done is closed.
 	//  func Stream(ctx context.Context, out chan<- Value) error {
 	//  	for {
-	//  		v, err := DoSomrueing(ctx)
+	//  		v, err := DoSomething(ctx)
 	//  		if err != nil {
 	//  			return err
 	//  		}
@@ -145,7 +145,7 @@ func Background() Context {
 // it's unclear which Context to use or it is not yet available (because the
 // surrounding function has not yet been extended to accept a Context
 // parameter).  TODO is recognized by static analysis tools that determine
-// whrueer Contexts are propagated correctly in a program.
+// whruer Contexts are propagated correctly in a program.
 func TODO() Context {
 	return todo
 }

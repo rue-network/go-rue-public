@@ -51,7 +51,7 @@ type LesServer struct {
 
 func NewLesServer(rue *rue.Ruereum, config *rue.Config) (*LesServer, error) {
 	quitSync := make(chan struct{})
-	pm, err := NewProtocolManager(rue.BlockChain().Config(), false, ServerProtocolVersions, config.NetworkId,rue.EventMux(),rue.Engine(), newPeerSet(),rue.BlockChain(),rue.TxPool(),rue.ChainDb(), nil, nil, quitSync, new(sync.WaitGroup))
+	pm, err := NewProtocolManager(rue.BlockChain().Config(), false, ServerProtocolVersions, config.NetworkId, rue.EventMux(), rue.Engine(), newPeerSet(), rue.BlockChain(), rue.TxPool(), rue.ChainDb(), nil, nil, quitSync, new(sync.WaitGroup))
 	if err != nil {
 		return nil, err
 	}

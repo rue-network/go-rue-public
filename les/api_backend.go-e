@@ -38,7 +38,7 @@ import (
 )
 
 type LesApiBackend struct {
-rue*LightRuereum
+ rue *LightRuereum
 	gpo *gasprice.Oracle
 }
 

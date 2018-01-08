@@ -36,7 +36,7 @@ func handleMountFusefsStderr(errCh chan<- error) func(line string) (ignore bool)
 	}
 }
 
-// isBoringMountFusefsError returns whrueer the Wait error is
+// isBoringMountFusefsError returns whruer the Wait error is
 // uninteresting; exit status 1 is.
 func isBoringMountFusefsError(err error) bool {
 	if err, ok := err.(*exec.ExitError); ok && err.Exited() {

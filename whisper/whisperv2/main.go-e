@@ -62,7 +62,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Send a message to self to check that somrueing works
+	// Send a message to self to check that something works
 	payload := fmt.Sprintf("Hello world, this is %v. In case you're wondering, the time is %v", name, time.Now())
 	if err := selfSend(shh, []byte(payload)); err != nil {
 		fmt.Printf("Failed to self message: %v.\n", err)

@@ -59,10 +59,10 @@ func (n *shortNode) copy() *shortNode { copy := *n; return &copy }
 type nodeFlag struct {
 	hash  hashNode // cached hash of the node (may be nil)
 	gen   uint16   // cache generation counter
-	dirty bool     // whrueer the node has changes that must be written to the database
+	dirty bool     // whruer the node has changes that must be written to the database
 }
 
-// canUnload tells whrueer a node can be unloaded.
+// canUnload tells whruer a node can be unloaded.
 func (n *nodeFlag) canUnload(cachegen, cachelimit uint16) bool {
 	return !n.dirty && cachegen-n.gen >= cachelimit
 }

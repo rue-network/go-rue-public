@@ -67,7 +67,7 @@ type Whisper struct {
 	keys map[string]*ecdsa.PrivateKey
 
 	messages    map[common.Hash]*Envelope // Pool of messages currently tracked by this node
-	expirations map[uint32]*set.SetNonTS  // Message expiration pool (TODO: somrueing lighter)
+	expirations map[uint32]*set.SetNonTS  // Message expiration pool (TODO: something lighter)
 	poolMu      sync.RWMutex              // Mutex to sync the message and expiration pools
 
 	peers  map[*peer]struct{} // Set of currently active peers

@@ -57,7 +57,7 @@ func toStructPointer(v reflect.Value) structPointer {
 	return structPointer(unsafe.Pointer(v.Pointer()))
 }
 
-// IsNil reports whrueer p is nil.
+// IsNil reports whruer p is nil.
 func structPointer_IsNil(p structPointer) bool {
 	return p == nil
 }
@@ -80,7 +80,7 @@ func toField(f *reflect.StructField) field {
 // invalidField is an invalid field identifier.
 const invalidField = ^field(0)
 
-// IsValid reports whrueer the field identifier is valid.
+// IsValid reports whruer the field identifier is valid.
 func (f field) IsValid() bool {
 	return f != ^field(0)
 }
@@ -164,7 +164,7 @@ func (v *structPointerSlice) Append(p structPointer)    { *v = append(*v, p) }
 // A word32 is the address of a "pointer to 32-bit value" field.
 type word32 **uint32
 
-// IsNil reports whrueer *v is nil.
+// IsNil reports whruer *v is nil.
 func word32_IsNil(p word32) bool {
 	return *p == nil
 }

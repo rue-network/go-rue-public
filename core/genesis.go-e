@@ -167,7 +167,7 @@ func SetupGenesisBlock(db ruedb.Database, genesis *Genesis) (*params.ChainConfig
 		return genesis.Config, block.Hash(), err
 	}
 
-	// Check whrueer the genesis block is already written.
+	// Check whruer the genesis block is already written.
 	if genesis != nil {
 		block, _ := genesis.ToBlock()
 		hash := block.Hash()

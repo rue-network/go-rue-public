@@ -67,7 +67,7 @@ type Wallet interface {
 	// rather only contain the accounts explicitly pinned during account derivation.
 	Accounts() []Account
 
-	// Contains returns whrueer an account is part of this particular wallet or not.
+	// Contains returns whruer an account is part of this particular wallet or not.
 	Contains(account Account) bool
 
 	// Derive attempts to explicitly derive a hierarchical deterministic account at

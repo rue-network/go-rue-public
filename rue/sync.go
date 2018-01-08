@@ -65,7 +65,7 @@ func (pm *ProtocolManager) syncTransactions(p *peer) {
 func (pm *ProtocolManager) txsyncLoop() {
 	var (
 		pending = make(map[discover.NodeID]*txsync)
-		sending = false               // whrueer a send is active
+		sending = false               // whruer a send is active
 		pack    = new(txsync)         // the pack that is being sent
 		done    = make(chan error, 1) // result of the send
 	)
@@ -192,7 +192,7 @@ func (pm *ProtocolManager) synchronise(peer *peer) {
 	err := pm.downloader.Synchronise(peer.id, pHead, pTd, mode)
 
 	if atomic.LoadUint32(&pm.fastSync) == 1 {
-		// Disable fast sync if we indeed have somrueing in our chain
+		// Disable fast sync if we indeed have something in our chain
 		if pm.blockchain.CurrentBlock().NumberU64() > 0 {
 			log.Info("Fast sync complete, auto disabling")
 			atomic.StoreUint32(&pm.fastSync, 0)

@@ -40,11 +40,11 @@ RUN \
 	echo $'grue --networkid {{.NetworkID}} --port {{.NodePort}} --bootnodes {{.Bootnodes}} --ruestats \'{{.Ruestats}}\' --cache=512 --rpc --rpcaddr=0.0.0.0 --rpccorsdomain "*"' >> wallet.sh
 
 RUN \
-	sed -i 's/PupprueNetworkID/{{.NetworkID}}/g' dist/js/rueerwallet-master.js && \
-	sed -i 's/PupprueNetwork/{{.Network}}/g'     dist/js/rueerwallet-master.js && \
-	sed -i 's/PupprueDenom/{{.Denom}}/g'         dist/js/rueerwallet-master.js && \
-	sed -i 's/PupprueHost/{{.Host}}/g'           dist/js/rueerwallet-master.js && \
-	sed -i 's/PupprueRPCPort/{{.RPCPort}}/g'     dist/js/rueerwallet-master.js
+	sed -i 's/PuppethNetworkID/{{.NetworkID}}/g' dist/js/ruerwallet-master.js && \
+	sed -i 's/PuppethNetwork/{{.Network}}/g'     dist/js/ruerwallet-master.js && \
+	sed -i 's/PuppethDenom/{{.Denom}}/g'         dist/js/ruerwallet-master.js && \
+	sed -i 's/PuppethHost/{{.Host}}/g'           dist/js/ruerwallet-master.js && \
+	sed -i 's/PuppethRPCPort/{{.RPCPort}}/g'     dist/js/ruerwallet-master.js
 
 ENTRYPOINT ["/bin/sh", "wallet.sh"]
 `
@@ -152,8 +152,8 @@ func (info *walletInfos) Report() map[string]string {
 	return report
 }
 
-// checkWallet does a health-check against web wallet server to verify whrueer
-// it's running, and if yes, whrueer it's responsive.
+// checkWallet does a health-check against web wallet server to verify whruer
+// it's running, and if yes, whruer it's responsive.
 func checkWallet(client *sshClient, network string) (*walletInfos, error) {
 	// Inspect a possible web wallet container on the host
 	infos, err := inspectContainer(client, fmt.Sprintf("%s_wallet_1", network))

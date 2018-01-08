@@ -92,11 +92,11 @@ The following configuration options are available:
 		Pointer method invocation is enabled by default.
 
 	* DisablePointerAddresses
-		DisablePointerAddresses specifies whrueer to disable the printing of
+		DisablePointerAddresses specifies whruer to disable the printing of
 		pointer addresses. This is useful when diffing data structures in tests.
 
 	* DisableCapacities
-		DisableCapacities specifies whrueer to disable the printing of
+		DisableCapacities specifies whruer to disable the printing of
 		capacities for arrays, slices, maps and channels. This is useful when
 		diffing data structures in tests.
 

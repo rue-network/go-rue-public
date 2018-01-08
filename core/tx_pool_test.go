@@ -162,14 +162,14 @@ func (c *testChain) State() (*state.StateDB, error) {
 		c.statedb, _ = state.New(common.Hash{}, state.NewDatabase(db))
 		// simulate that the new head block included tx0 and tx1
 		c.statedb.SetNonce(c.address, 2)
-		c.statedb.SetBalance(c.address, new(big.Int).SetUint64(params.Rueer))
+		c.statedb.SetBalance(c.address, new(big.Int).SetUint64(params.Ether))
 		*c.trigger = false
 	}
 	return stdb, nil
 }
 
 // This test simulates a scenario where a new block is imported during a
-// state reset and tests whrueer the pending state is in sync with the
+// state reset and tests whruer the pending state is in sync with the
 // block head event that initiated the resetState().
 func TestStateChangeDuringTransactionPoolReset(t *testing.T) {
 	t.Parallel()
@@ -183,7 +183,7 @@ func TestStateChangeDuringTransactionPoolReset(t *testing.T) {
 	)
 
 	// setup pool with 2 transaction in it
-	statedb.SetBalance(address, new(big.Int).SetUint64(params.Rueer))
+	statedb.SetBalance(address, new(big.Int).SetUint64(params.Ether))
 	blockchain := &testChain{&testBlockChain{statedb, big.NewInt(1000000000), new(event.Feed)}, address, &trigger}
 
 	tx0 := transaction(0, big.NewInt(100000), key)
@@ -922,7 +922,7 @@ func TestTransactionPendingLimiting(t *testing.T) {
 	}
 }
 
-// Tests that the transaction limits are enforced the same way irrelevant whrueer
+// Tests that the transaction limits are enforced the same way irrelevant whruer
 // the transactions are added one by one or in batches.
 func TestTransactionQueueLimitingEquivalency(t *testing.T)   { testTransactionLimitingEquivalency(t, 1) }
 func TestTransactionPendingLimitingEquivalency(t *testing.T) { testTransactionLimitingEquivalency(t, 0) }

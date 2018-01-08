@@ -174,7 +174,7 @@ func (w *wallet) Open(passphrase string) error {
 }
 
 // heartbeat is a health check loop for the USB wallets to periodically verify
-// whrueer they are still present or if they malfunctioned.
+// whruer they are still present or if they malfunctioned.
 func (w *wallet) heartbeat() {
 	w.log.Debug("USB wallet health-check started")
 	defer w.log.Debug("USB wallet health-check stopped")
@@ -368,7 +368,7 @@ func (w *wallet) selfDerive() {
 				w.log.Warn("USB wallet nonce retrieval failed", "err", err)
 				break
 			}
-			// If the next account is empty, stop self-derivation, but add it nonrueeless
+			// If the next account is empty, stop self-derivation, but add it nonetheless
 			if balance.Sign() == 0 && nonce == 0 {
 				empty = true
 			}
@@ -430,7 +430,7 @@ func (w *wallet) selfDerive() {
 	errc <- err
 }
 
-// Contains implements accounts.Wallet, returning whrueer a particular account is
+// Contains implements accounts.Wallet, returning whruer a particular account is
 // or is not pinned into this wallet instance. Although we could attempt to resolve
 // unpinned accounts, that would be an non-negligible hardware operation.
 func (w *wallet) Contains(account accounts.Account) bool {
@@ -506,7 +506,7 @@ func (w *wallet) SignHash(account accounts.Account, hash []byte) ([]byte, error)
 // transaction or a failure if the user denied the transaction.
 //
 // Note, if the version of the Ruereum application running on the Ledger wallet is
-// too old to sign EIP-155 transactions, but such is requested nonrueeless, an error
+// too old to sign EIP-155 transactions, but such is requested nonetheless, an error
 // will be returned opposed to silently signing in Horizon mode.
 func (w *wallet) SignTx(account accounts.Account, tx *types.Transaction, chainID *big.Int) (*types.Transaction, error) {
 	w.stateLock.RLock() // Comms have own mutex, this is for the state fields

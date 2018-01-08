@@ -82,7 +82,7 @@ func importComment(s ast.Spec) string {
 	return c.Text()
 }
 
-// collapse indicates whrueer prev may be removed, leaving only next.
+// collapse indicates whruer prev may be removed, leaving only next.
 func collapse(prev, next ast.Spec) bool {
 	if importPath(next) != importPath(prev) || importName(next) != importName(prev) {
 		return false

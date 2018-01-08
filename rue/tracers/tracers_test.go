@@ -44,8 +44,8 @@ import (
 // call trace run, assembling all the gathered information into a test case.
 var makeTest = function(tx, rewind) {
   // Generate the genesis block from the block, transaction and prestate data
-  var block   =rue.getBlock(rue.getTransaction(tx).blockHash);
-  var genesis =rue.getBlock(block.parentHash);
+  var block   = rue.getBlock(rue.getTransaction(tx).blockHash);
+  var genesis = rue.getBlock(block.parentHash);
 
   delete genesis.gasUsed;
   delete genesis.logsBloom;
@@ -80,7 +80,7 @@ var makeTest = function(tx, rewind) {
       gasLimit:   block.gasLimit.toString(),
       miner:      block.miner,
     },
-    input: rue.getRawTransaction(tx),
+    input:  rue.getRawTransaction(tx),
     result: result,
   }, null, 2));
 }

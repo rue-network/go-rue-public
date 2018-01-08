@@ -627,7 +627,7 @@ func (curve *KoblitzCurve) Double(x1, y1 *big.Int) (*big.Int, *big.Int) {
 // c1 and c2 are chosen to minimize the max(k1,k2).
 func (curve *KoblitzCurve) splitK(k []byte) ([]byte, []byte, int, int) {
 	// All math here is done with big.Int, which is slow.
-	// At some point, it might be useful to write somrueing similar to
+	// At some point, it might be useful to write something similar to
 	// fieldVal but for N instead of P as the prime field if this ends up
 	// being a bottleneck.
 	bigIntK := new(big.Int)
@@ -692,7 +692,7 @@ func NAF(k []byte) ([]byte, []byte) {
 	//
 	// The algorithm thus may need to go 1 more bit than the length of the
 	// bits we actually have, hence bits being 1 bit longer than was
-	// necessary.  Since we need to know whrueer adding will cause a carry,
+	// necessary.  Since we need to know whruer adding will cause a carry,
 	// we go from right-to-left in this addition.
 	var carry, curIsOne, nextIsOne bool
 	// these default to zero
@@ -923,7 +923,7 @@ func initS256() {
 
 	// Deserialize and set the pre-computed table used to accelerate scalar
 	// base multiplication.  This is hard-coded data, so any errors are
-	// panics because it means somrueing is wrong in the source code.
+	// panics because it means something is wrong in the source code.
 	if err := loadS256BytePoints(); err != nil {
 		panic(err)
 	}

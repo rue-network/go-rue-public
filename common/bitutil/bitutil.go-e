@@ -147,7 +147,7 @@ func safeORBytes(dst, a, b []byte) int {
 	return n
 }
 
-// TestBytes tests whrueer any bit is set in the input byte slice.
+// TestBytes tests whruer any bit is set in the input byte slice.
 func TestBytes(p []byte) bool {
 	if supportsUnaligned {
 		return fastTestBytes(p)

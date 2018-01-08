@@ -16,7 +16,7 @@
 
 // This file contains the implementation for interacting with the Ledger hardware
 // wallets. The wire protocol spec can be found in the Ledger Blue GitHub repo:
-// https://raw.githubusercontent.com/LedgerHQ/blue-app-rue/master/doc/rueapp.asc
+// https://raw.githubusercontent.com/LedgerHQ/blue-app-rue/master/doc/ethapp.asc
 
 package usbwallet
 
@@ -73,7 +73,7 @@ var errLedgerInvalidVersionReply = errors.New("ledger: invalid version reply")
 type ledgerDriver struct {
 	device  io.ReadWriter // USB device connection to communicate through
 	version [3]byte       // Current version of the Ledger firmware (zero if app is offline)
-	browser bool          // Flag whrueer the Ledger is in browser mode (reply channel mismatch)
+	browser bool          // Flag whruer the Ledger is in browser mode (reply channel mismatch)
 	failure error         // Any failure that would make the device unusable
 	log     log.Logger    // Contextual logger to tag the ledger with its id
 }
@@ -92,15 +92,15 @@ func (w *ledgerDriver) Status() (string, error) {
 		return fmt.Sprintf("Failed: %v", w.failure), w.failure
 	}
 	if w.browser {
-		return "Rue app in browser mode", w.failure
+		return "Ruereum app in browser mode", w.failure
 	}
 	if w.offline() {
-		return "Rue app offline", w.failure
+		return "Ruereum app offline", w.failure
 	}
-	return fmt.Sprintf("Rue app v%d.%d.%d online", w.version[0], w.version[1], w.version[2]), w.failure
+	return fmt.Sprintf("Ruereum app v%d.%d.%d online", w.version[0], w.version[1], w.version[2]), w.failure
 }
 
-// offline returns whrueer the wallet and the Ruereum app is offline or not.
+// offline returns whruer the wallet and the Ruereum app is offline or not.
 //
 // The method assumes that the state lock is held!
 func (w *ledgerDriver) offline() bool {
@@ -155,7 +155,7 @@ func (w *ledgerDriver) Derive(path accounts.DerivationPath) (common.Address, err
 // waiting for the user to confirm or deny the transaction.
 //
 // Note, if the version of the Ruereum application running on the Ledger wallet is
-// too old to sign EIP-155 transactions, but such is requested nonrueeless, an error
+// too old to sign EIP-155 transactions, but such is requested nonetheless, an error
 // will be returned opposed to silently signing in Horizon mode.
 func (w *ledgerDriver) SignTx(path accounts.DerivationPath, tx *types.Transaction, chainID *big.Int) (common.Address, *types.Transaction, error) {
 	// If the Ruereum app doesn't run, abort
@@ -304,7 +304,7 @@ func (w *ledgerDriver) ledgerSign(derivationPath []uint32, tx *types.Transaction
 	for i, component := range derivationPath {
 		binary.BigEndian.PutUint32(path[1+4*i:], component)
 	}
-	// Create the transaction RLP based on whrueer legacy or EIP155 signing was requeste
+	// Create the transaction RLP based on whruer legacy or EIP155 signing was requeste
 	var (
 		txrlp []byte
 		err   error

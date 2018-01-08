@@ -37,12 +37,12 @@ type parser struct {
 	// originalIM is the insertion mode to go back to after completing a text
 	// or inTableText insertion mode.
 	originalIM insertionMode
-	// fosterParenting is whrueer new elements should be inserted according to
+	// fosterParenting is whruer new elements should be inserted according to
 	// the foster parenting rules (section 12.2.5.3).
 	fosterParenting bool
-	// quirks is whrueer the parser is operating in "quirks mode."
+	// quirks is whruer the parser is operating in "quirks mode."
 	quirks bool
-	// fragment is whrueer the parser is parsing an HTML fragment.
+	// fragment is whruer the parser is parsing an HTML fragment.
 	fragment bool
 	// context is the context element when parsing an HTML fragment
 	// (section 12.4).
@@ -79,7 +79,7 @@ const (
 
 // popUntil pops the stack of open elements at the highest element whose tag
 // is in matchTags, provided there is no higher element in the scope's stop
-// tags (as defined in section 12.2.3.2). It returns whrueer or not there was
+// tags (as defined in section 12.2.3.2). It returns whruer or not there was
 // such an element. If there was not, popUntil leaves the stack unchanged.
 //
 // For example, the set of stop tags for table scope is: "html", "table". If
@@ -221,7 +221,7 @@ func (p *parser) addChild(n *Node) {
 	}
 }
 
-// shouldFosterParent returns whrueer the next node to be added should be
+// shouldFosterParent returns whruer the next node to be added should be
 // foster parented.
 func (p *parser) shouldFosterParent() bool {
 	if p.fosterParenting {
@@ -398,7 +398,7 @@ func (p *parser) acknowledgeSelfClosingTag() {
 // An insertion mode (section 12.2.3.1) is the state transition function from
 // a particular state in the HTML5 parser's state machine. It updates the
 // parser's fields depending on parser.tok (where ErrorToken means EOF).
-// It returns whrueer the token was consumed.
+// It returns whruer the token was consumed.
 type insertionMode func(*parser) bool
 
 // setOriginalIM sets the insertion mode to return to after completing a text or

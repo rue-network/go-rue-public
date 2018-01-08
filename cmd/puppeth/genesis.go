@@ -34,7 +34,7 @@ type cppRuereumGenesisSpec struct {
 	SealEngine string `json:"sealEngine"`
 	Params     struct {
 		AccountStartNonce       hexutil.Uint64 `json:"accountStartNonce"`
-		HorizonForkBlock        hexutil.Uint64 `json:"horizonForkBlock"`
+		HorizonForkBlock      hexutil.Uint64 `json:"horizonForkBlock"`
 		EIP150ForkBlock         hexutil.Uint64 `json:"EIP150ForkBlock"`
 		EIP158ForkBlock         hexutil.Uint64 `json:"EIP158ForkBlock"`
 		ByzantiumForkBlock      hexutil.Uint64 `json:"byzantiumForkBlock"`
@@ -68,15 +68,15 @@ type cppRuereumGenesisSpec struct {
 // cppRuereumGenesisSpecAccount is the prefunded genesis account and/or precompiled
 // contract definition.
 type cppRuereumGenesisSpecAccount struct {
-	Balance     *hexutil.Big                  `json:"balance"`
-	Nonce       uint64                        `json:"nonce,omitempty"`
+	Balance     *hexutil.Big                   `json:"balance"`
+	Nonce       uint64                         `json:"nonce,omitempty"`
 	Precompiled *cppRuereumGenesisSpecBuiltin `json:"precompiled,omitempty"`
 }
 
 // cppRuereumGenesisSpecBuiltin is the precompiled contract definition.
 type cppRuereumGenesisSpecBuiltin struct {
-	Name          string                              `json:"name,omitempty"`
-	StartingBlock hexutil.Uint64                      `json:"startingBlock,omitempty"`
+	Name          string                               `json:"name,omitempty"`
+	StartingBlock hexutil.Uint64                       `json:"startingBlock,omitempty"`
 	Linear        *cppRuereumGenesisSpecLinearPricing `json:"linear,omitempty"`
 }
 
@@ -173,7 +173,7 @@ type parityChainSpec struct {
 				GasLimitBoundDivisor   *hexutil.Big `json:"gasLimitBoundDivisor"`
 				DurationLimit          *hexutil.Big `json:"durationLimit"`
 				BlockReward            *hexutil.Big `json:"blockReward"`
-				HorizonTransition      uint64       `json:"horizonTransition"`
+				HorizonTransition    uint64       `json:"horizonTransition"`
 				EIP150Transition       uint64       `json:"eip150Transition"`
 				EIP160Transition       uint64       `json:"eip160Transition"`
 				EIP161abcTransition    uint64       `json:"eip161abcTransition"`

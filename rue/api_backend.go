@@ -38,7 +38,7 @@ import (
 
 // RueApiBackend implements rueapi.Backend for full nodes
 type RueApiBackend struct {
-rue*Ruereum
+ 	rue *Ruereum
 	gpo *gasprice.Oracle
 }
 

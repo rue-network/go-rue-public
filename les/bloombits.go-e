@@ -54,7 +54,7 @@ func (rue *LightRuereum) startBloomHandlers() {
 				case request := <-rue.bloomRequests:
 					task := <-request
 					task.Bitsets = make([][]byte, len(task.Sections))
-					compVectors, err := light.GetBloomBits(task.Context,rue.odr, task.Bit, task.Sections)
+					compVectors, err := light.GetBloomBits(task.Context, rue.odr, task.Bit, task.Sections)
 					if err == nil {
 						for i := range task.Sections {
 							if blob, err := bitutil.DecompressBytes(compVectors[i], int(light.BloomTrieFrequency/8)); err == nil {

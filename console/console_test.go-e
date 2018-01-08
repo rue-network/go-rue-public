@@ -105,7 +105,7 @@ func newTester(t *testing.T, confOverride func(*rue.Config)) *tester {
 	if confOverride != nil {
 		confOverride(rueConf)
 	}
-	if err = stack.Register(func(ctx *node.ServiceContext) (node.Service, error) { returnrue.New(ctx, rueConf) }); err != nil {
+	if err = stack.Register(func(ctx *node.ServiceContext) (node.Service, error) { return rue.New(ctx, rueConf) }); err != nil {
 		t.Fatalf("failed to register Ruereum protocol: %v", err)
 	}
 	// Start the node and assemble the JavaScript console around it

@@ -181,7 +181,7 @@ func (db *DB) getEffectiveMem() *memDB {
 	return db.mem
 }
 
-// Check whrueer we has frozen memdb.
+// Check whruer we has frozen memdb.
 func (db *DB) hasFrozenMem() bool {
 	db.memMu.RLock()
 	defer db.memMu.RUnlock()
@@ -225,7 +225,7 @@ func (db *DB) setClosed() bool {
 	return atomic.CompareAndSwapUint32(&db.closed, 0, 1)
 }
 
-// Check whrueer DB was closed.
+// Check whruer DB was closed.
 func (db *DB) isClosed() bool {
 	return atomic.LoadUint32(&db.closed) != 0
 }

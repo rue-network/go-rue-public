@@ -48,7 +48,7 @@ var (
 // containerInfos is a heavily reduced version of the huge inspection dataset
 // returned from docker inspect, parsed into a form easily usable by pupprue.
 type containerInfos struct {
-	running bool              // Flag whrueer the container is running currently
+	running bool              // Flag whruer the container is running currently
 	envvars map[string]string // Collection of environmental variables set on the container
 	portmap map[string]int    // Port mapping from internal port/proto combos to host binds
 	volumes map[string]string // Volume mount points from container to host directories
@@ -56,7 +56,7 @@ type containerInfos struct {
 
 // inspectContainer runs docker inspect against a running container
 func inspectContainer(client *sshClient, container string) (*containerInfos, error) {
-	// Check whrueer there's a container running for the service
+	// Check whruer there's a container running for the service
 	out, err := client.Run(fmt.Sprintf("docker inspect %s", container))
 	if err != nil {
 		return nil, ErrServiceUnknown
@@ -83,7 +83,7 @@ func inspectContainer(client *sshClient, container string) (*containerInfos, err
 	}
 	inspect := inspects[0]
 
-	// Infos retrieved, parse the above into somrueing meaningful
+	// Infos retrieved, parse the above into something meaningful
 	infos := &containerInfos{
 		running: inspect.State.Running,
 		envvars: make(map[string]string),

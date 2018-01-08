@@ -926,7 +926,7 @@ var SolidityParam = require('./param');
  * @returns {SolidityParam}
  */
 var formatInputInt = function (value) {
-    BigNumber.config(c.ETH_BIGNUMBER_ROUNDING_MODE);
+    BigNumber.config(c.RUE_BIGNUMBER_ROUNDING_MODE);
     var result = utils.padLeft(utils.toTwosComplement(value).toString(16), 64);
     return new SolidityParam(result);
 };
@@ -1761,7 +1761,7 @@ if (typeof XMLHttpRequest === 'undefined') {
 /// required to define ETH_BIGNUMBER_ROUNDING_MODE
 var BigNumber = require('bignumber.js');
 
-var ETH_UNITS = [
+var RUE_UNITS = [
     'wei',
     'kwei',
     'Mwei',
@@ -1792,11 +1792,11 @@ var ETH_UNITS = [
 ];
 
 module.exports = {
-    ETH_PADDING: 32,
-    ETH_SIGNATURE_LENGTH: 4,
-    ETH_UNITS: ETH_UNITS,
-    ETH_BIGNUMBER_ROUNDING_MODE: { ROUNDING_MODE: BigNumber.ROUND_DOWN },
-    ETH_POLLING_TIMEOUT: 1000/2,
+    RUE_PADDING: 32,
+    RUE_SIGNATURE_LENGTH: 4,
+    RUE_UNITS: RUE_UNITS,
+    RUE_BIGNUMBER_ROUNDING_MODE: { ROUNDING_MODE: BigNumber.ROUND_DOWN },
+    RUE_POLLING_TIMEOUT: 1000/2,
     defaultBlock: 'latest',
     defaultAccount: undefined
 };
@@ -2530,7 +2530,7 @@ var BigNumber = require('bignumber.js');
 function Web3 (provider) {
     this._requestManager = new RequestManager(provider);
     this.currentProvider = provider;
-    this.rue= new Rue(this);
+    this.rue = new Rue(this);
     this.db = new DB(this);
     this.shh = new Shh(this);
     this.net = new Net(this);
@@ -2609,7 +2609,7 @@ var properties = function () {
             inputFormatter: utils.toDecimal
         }),
         new Property({
-            name: 'version.ethereum',
+            name: 'version.ruereum',
             getter: 'rue_protocolVersion',
             inputFormatter: utils.toDecimal
         }),
@@ -2849,7 +2849,7 @@ var addFunctionsToContract = function (contract) {
     contract.abi.filter(function (json) {
         return json.type === 'function';
     }).map(function (json) {
-        return new SolidityFunction(contract._eth, json, contract.address);
+        return new SolidityFunction(contract._rue, json, contract.address);
     }).forEach(function (f) {
         f.attachToContract(contract);
     });
@@ -2956,7 +2956,7 @@ var checkForContractAddress = function(contract, callback){
  * @param {Array} abi
  */
 var ContractFactory = function (rue, abi) {
-    this.rue= rue;
+    this.rue = rue;
     this.abi = abi;
 
     /**
@@ -3094,7 +3094,7 @@ ContractFactory.prototype.getData = function () {
  * @param {Address} contract address
  */
 var Contract = function (rue, abi, address) {
-    this._eth = rue;
+    this._rue = rue;
     this.transactionHash = null;
     this.address = address;
     this.abi = abi;
@@ -3997,7 +3997,7 @@ var sha3 = require('../utils/sha3');
  * This prototype should be used to call/sendTransaction to solidity functions
  */
 var SolidityFunction = function (rue, json, address) {
-    this._eth = rue;
+    this._rue = rue;
     this._inputTypes = json.inputs.map(function (i) {
         return i.type;
     });
@@ -4535,7 +4535,7 @@ Iban.fromBban = function (bban) {
  * @return {Iban} the IBAN object
  */
 Iban.createIndirect = function (options) {
-    return Iban.fromBban('rue' + options.institution + options.identifier);
+    return Iban.fromBban('RUE' + options.institution + options.identifier);
 };
 
 /**
@@ -4557,7 +4557,7 @@ Iban.isValid = function (iban) {
  * @returns {Boolean} true if it is, otherwise false
  */
 Iban.prototype.isValid = function () {
-    return /^XE[0-9]{2}(rue[0-9A-Z]{13}|[0-9A-Z]{30,31})$/.test(this._iban) &&
+    return /^XE[0-9]{2}(RUE[0-9A-Z]{13}|[0-9A-Z]{30,31})$/.test(this._iban) &&
         mod9710(iso13616Prepare(this._iban)) === 1;
 };
 
@@ -5185,7 +5185,7 @@ module.exports = DB;
     along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
 */
 /**
- * @filerue.js
+ * @file rue.js
  * @author Marek Kotewicz <marek@ethdev.com>
  * @author Fabian Vogelsteller <fabian@ethdev.com>
  * @date 2015
@@ -5226,7 +5226,7 @@ var uncleCountCall = function (args) {
     return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'rue_getUncleCountByBlockHash' : 'rue_getUncleCountByBlockNumber';
 };
 
-function rue(web3) {
+function Rue(web3) {
     this._requestManager = web3._requestManager;
 
     var self = this;
@@ -5246,7 +5246,7 @@ function rue(web3) {
     this.sendIBANTransaction = transfer.bind(null, this);
 }
 
-Object.defineProperty(rue.prototype, 'defaultBlock', {
+Object.defineProperty(Rue.prototype, 'defaultBlock', {
     get: function () {
         return c.defaultBlock;
     },
@@ -5256,7 +5256,7 @@ Object.defineProperty(rue.prototype, 'defaultBlock', {
     }
 });
 
-Object.defineProperty(rue.prototype, 'defaultAccount', {
+Object.defineProperty(Rue.prototype, 'defaultAccount', {
     get: function () {
         return c.defaultAccount;
     },
@@ -5500,28 +5500,28 @@ var properties = function () {
     ];
 };
 
-rue.prototype.contract = function (abi) {
+Rue.prototype.contract = function (abi) {
     var factory = new Contract(this, abi);
     return factory;
 };
 
-rue.prototype.filter = function (options, callback, filterCreationErrorCallback) {
+Rue.prototype.filter = function (options, callback, filterCreationErrorCallback) {
     return new Filter(options, 'rue', this._requestManager, watches.rue(), formatters.outputLogFormatter, callback, filterCreationErrorCallback);
 };
 
-rue.prototype.namereg = function () {
+Rue.prototype.namereg = function () {
     return this.contract(namereg.global.abi).at(namereg.global.address);
 };
 
-rue.prototype.icapNamereg = function () {
+Rue.prototype.icapNamereg = function () {
     return this.contract(namereg.icap.abi).at(namereg.icap.address);
 };
 
-rue.prototype.isSyncing = function (callback) {
+Rue.prototype.isSyncing = function (callback) {
     return new IsSyncing(this._requestManager, callback);
 };
 
-module.exports = rue;
+module.exports = Rue;
 
 },{"../../utils/config":18,"../../utils/utils":20,"../contract":25,"../filter":29,"../formatters":30,"../iban":33,"../method":36,"../namereg":44,"../property":45,"../syncing":48,"../transfer":49,"./watches":43}],39:[function(require,module,exports){
 /*
@@ -5540,7 +5540,7 @@ module.exports = rue;
     You should have received a copy of the GNU Lesser General Public License
     along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
 */
-/** @filerue.js
+/** @file rue.js
  * @authors:
  *   Marek Kotewicz <marek@ethdev.com>
  * @date 2015
@@ -5560,7 +5560,7 @@ var Net = function (web3) {
     });
 };
 
-/// @returns an array of objects describing web3.rueapi properties
+/// @returns an array of objects describing web3.eth api properties
 var properties = function () {
     return [
         new Property({
@@ -5595,7 +5595,7 @@ module.exports = Net;
     along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
 */
 /**
- * @filerue.js
+ * @file rue.js
  * @author Marek Kotewicz <marek@ethdev.com>
  * @author Fabian Vogelsteller <fabian@ethdev.com>
  * @date 2015
@@ -6012,8 +6012,8 @@ module.exports = Swarm;
 
 var Method = require('../method');
 
-/// @returns an array of objects describing web3.rue.filter api methods
-varrue= function () {
+/// @returns an array of objects describing web3.eth.filter api methods
+var rue = function () {
     var newFilterCall = function (args) {
         var type = args[0];
 
@@ -6091,7 +6091,7 @@ var shh = function () {
 };
 
 module.exports = {
-   rue:rue,
+    rue: rue,
     shh: shh
 };
 
@@ -6481,7 +6481,7 @@ RequestManager.prototype.reset = function (keepIsSyncing) {
  */
 RequestManager.prototype.poll = function () {
     /*jshint maxcomplexity: 6 */
-    this.timeout = setTimeout(this.poll.bind(this), c.ETH_POLLING_TIMEOUT);
+    this.timeout = setTimeout(this.poll.bind(this), c.RUE_POLLING_TIMEOUT);
 
     if (Object.keys(this.polls).length === 0) {
         return;
@@ -6702,11 +6702,11 @@ var transfer = function (rue, from, to, value, callback) {
     }
     
     if (!callback) {
-        var address =rue.icapNamereg().addr(iban.institution());
+        var address = rue.icapNamereg().addr(iban.institution());
         return deposit(rue, from, address, value, iban.client());
     }
 
-   rue.icapNamereg().addr(iban.institution(), function (err, address) {
+    rue.icapNamereg().addr(iban.institution(), function (err, address) {
         return deposit(rue, from, address, value, iban.client(), callback);
     });
     
@@ -6722,7 +6722,7 @@ var transfer = function (rue, from, to, value, callback) {
  * @param {Function} callback, callback
  */
 var transferToAddress = function (rue, from, to, value, callback) {
-    returnrue.sendTransaction({
+    return rue.sendTransaction({
         address: to,
         from: from,
         value: value
@@ -6741,7 +6741,7 @@ var transferToAddress = function (rue, from, to, value, callback) {
  */
 var deposit = function (rue, from, to, value, client, callback) {
     var abi = exchangeAbi;
-    returnrue.contract(abi).at(to).deposit(client, {
+    return rue.contract(abi).at(to).deposit(client, {
         from: from,
         value: value
     }, callback);

@@ -84,8 +84,8 @@ func TestAccountNewBadRepeat(t *testing.T) {
 	grue.Expect(`
 Your new account is locked with a password. Please give a password. Do not forget this password.
 !! Unsupported terminal, password will be echoed.
-Passphrase: {{.InputLine "somrueing"}}
-Repeat passphrase: {{.InputLine "somrueing else"}}
+Passphrase: {{.InputLine "something"}}
+Repeat passphrase: {{.InputLine "something else"}}
 Fatal: Passphrases do not match
 `)
 }

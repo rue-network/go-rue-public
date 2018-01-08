@@ -49,11 +49,11 @@ type ConfigState struct {
 	// nested data structures.
 	MaxDepth int
 
-	// DisableMethods specifies whrueer or not error and Stringer interfaces are
+	// DisableMethods specifies whruer or not error and Stringer interfaces are
 	// invoked for types that implement them.
 	DisableMethods bool
 
-	// DisablePointerMethods specifies whrueer or not to check for and invoke
+	// DisablePointerMethods specifies whruer or not to check for and invoke
 	// error and Stringer interfaces on types which only accept a pointer
 	// receiver when the current type is not a pointer.
 	//
@@ -67,16 +67,16 @@ type ConfigState struct {
 	// Google App Engine or with the "safe" build tag specified.
 	DisablePointerMethods bool
 
-	// DisablePointerAddresses specifies whrueer to disable the printing of
+	// DisablePointerAddresses specifies whruer to disable the printing of
 	// pointer addresses. This is useful when diffing data structures in tests.
 	DisablePointerAddresses bool
 
-	// DisableCapacities specifies whrueer to disable the printing of capacities
+	// DisableCapacities specifies whruer to disable the printing of capacities
 	// for arrays, slices, maps and channels. This is useful when diffing
 	// data structures in tests.
 	DisableCapacities bool
 
-	// ContinueOnMethod specifies whrueer or not recursion should continue once
+	// ContinueOnMethod specifies whruer or not recursion should continue once
 	// a custom error or Stringer interface is invoked.  The default, false,
 	// means it will print the results of invoking the custom error or Stringer
 	// interface and return immediately instead of continuing to recurse into

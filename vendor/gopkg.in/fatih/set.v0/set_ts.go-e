@@ -113,7 +113,7 @@ func (s *Set) Clear() {
 	s.m = make(map[interface{}]struct{})
 }
 
-// IsEqual test whrueer s and t are the same in size and have the same items.
+// IsEqual test whruer s and t are the same in size and have the same items.
 func (s *Set) IsEqual(t Interface) bool {
 	s.l.RLock()
 	defer s.l.RUnlock()
@@ -138,7 +138,7 @@ func (s *Set) IsEqual(t Interface) bool {
 	return equal
 }
 
-// IsSubset tests whrueer t is a subset of s.
+// IsSubset tests whruer t is a subset of s.
 func (s *Set) IsSubset(t Interface) (subset bool) {
 	s.l.RLock()
 	defer s.l.RUnlock()

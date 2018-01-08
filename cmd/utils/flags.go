@@ -39,6 +39,11 @@ import (
 	"github.com/Rue-Foundation/go-rue/core/vm"
 	"github.com/Rue-Foundation/go-rue/crypto"
 	"github.com/Rue-Foundation/go-rue/dashboard"
+	"github.com/Rue-Foundation/go-rue/rue"
+	"github.com/Rue-Foundation/go-rue/rue/downloader"
+	"github.com/Rue-Foundation/go-rue/rue/gasprice"
+	"github.com/Rue-Foundation/go-rue/ruedb"
+	"github.com/Rue-Foundation/go-rue/ruestats"
 	"github.com/Rue-Foundation/go-rue/les"
 	"github.com/Rue-Foundation/go-rue/log"
 	"github.com/Rue-Foundation/go-rue/metrics"
@@ -49,11 +54,6 @@ import (
 	"github.com/Rue-Foundation/go-rue/p2p/nat"
 	"github.com/Rue-Foundation/go-rue/p2p/netutil"
 	"github.com/Rue-Foundation/go-rue/params"
-	"github.com/Rue-Foundation/go-rue/rue"
-	"github.com/Rue-Foundation/go-rue/rue/downloader"
-	"github.com/Rue-Foundation/go-rue/rue/gasprice"
-	"github.com/Rue-Foundation/go-rue/ruedb"
-	"github.com/Rue-Foundation/go-rue/ruestats"
 	whisper "github.com/Rue-Foundation/go-rue/whisper/whisperv5"
 	"gopkg.in/urfave/cli.v1"
 )
@@ -976,7 +976,7 @@ func SetShhConfig(ctx *cli.Context, stack *node.Node, cfg *whisper.Config) {
 	}
 }
 
-// SetRueConfig applies rue-related command line flags to the config.
+// SetRueConfig applies eth-related command line flags to the config.
 func SetRueConfig(ctx *cli.Context, stack *node.Node, cfg *rue.Config) {
 	// Avoid conflicting network flags
 	checkExclusive(ctx, DeveloperFlag, TestnetFlag, RinkebyFlag)
@@ -1122,7 +1122,7 @@ func RegisterShhService(stack *node.Node, cfg *whisper.Config) {
 // th egiven node.
 func RegisterRueStatsService(stack *node.Node, url string) {
 	if err := stack.Register(func(ctx *node.ServiceContext) (node.Service, error) {
-		// Retrieve bothrueand les services
+		// Retrieve both rue and les services
 		var rueServ *rue.Ruereum
 		ctx.Service(&rueServ)
 

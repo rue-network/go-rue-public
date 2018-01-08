@@ -125,7 +125,7 @@ type blockChain interface {
 
 // TxPoolConfig are the configuration parameters of the transaction pool.
 type TxPoolConfig struct {
-	NoLocals  bool          // Whrueer local transaction handling should be disabled
+	NoLocals  bool          // Whruer local transaction handling should be disabled
 	Journal   string        // Journal of local transactions to survive node restarts
 	Rejournal time.Duration // Time interval to regenerate the local transaction journal
 
@@ -551,7 +551,7 @@ func (pool *TxPool) local() map[common.Address]types.Transactions {
 	return txs
 }
 
-// validateTx checks whrueer a transaction is valid according to the consensus
+// validateTx checks whruer a transaction is valid according to the consensus
 // rules and adheres to some heuristic limits of the local node (price and size).
 func (pool *TxPool) validateTx(tx *types.Transaction, local bool) error {
 	// Heuristic limit, reject transactions over 32KB to prevent DOS attacks
@@ -817,7 +817,7 @@ func (pool *TxPool) addTxsLocked(txs []*types.Transaction, local bool) []error {
 			}
 		}
 	}
-	// Only reprocess the internal state if somrueing was actually added
+	// Only reprocess the internal state if something was actually added
 	if len(dirty) > 0 {
 		addrs := make([]common.Address, 0, len(dirty))
 		for addr := range dirty {

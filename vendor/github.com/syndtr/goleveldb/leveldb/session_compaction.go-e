@@ -218,7 +218,7 @@ func (c *compaction) expand() {
 	c.imin, c.imax = imin, imax
 }
 
-// Check whrueer compaction is trivial.
+// Check whruer compaction is trivial.
 func (c *compaction) trivial() bool {
 	return len(c.levels[0]) == 1 && len(c.levels[1]) == 0 && c.gp.size() <= c.maxGPOverlaps
 }

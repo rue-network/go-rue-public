@@ -175,7 +175,7 @@ func (q *queue) PendingReceipts() int {
 	return q.receiptTaskQueue.Size()
 }
 
-// InFlightHeaders retrieves whrueer there are header fetch requests currently
+// InFlightHeaders retrieves whruer there are header fetch requests currently
 // in flight.
 func (q *queue) InFlightHeaders() bool {
 	q.lock.Lock()
@@ -184,7 +184,7 @@ func (q *queue) InFlightHeaders() bool {
 	return len(q.headerPendPool) > 0
 }
 
-// InFlightBlocks retrieves whrueer there are block fetch requests currently in
+// InFlightBlocks retrieves whruer there are block fetch requests currently in
 // flight.
 func (q *queue) InFlightBlocks() bool {
 	q.lock.Lock()
@@ -193,7 +193,7 @@ func (q *queue) InFlightBlocks() bool {
 	return len(q.blockPendPool) > 0
 }
 
-// InFlightReceipts retrieves whrueer there are receipt fetch requests currently
+// InFlightReceipts retrieves whruer there are receipt fetch requests currently
 // in flight.
 func (q *queue) InFlightReceipts() bool {
 	q.lock.Lock()
@@ -395,7 +395,7 @@ func (q *queue) ReserveHeaders(p *peerConnection, count int) *fetchRequest {
 	q.lock.Lock()
 	defer q.lock.Unlock()
 
-	// Short circuit if the peer's already downloading somrueing (sanity check to
+	// Short circuit if the peer's already downloading something (sanity check to
 	// not corrupt state)
 	if _, ok := q.headerPendPool[p.id]; ok {
 		return nil
@@ -431,7 +431,7 @@ func (q *queue) ReserveHeaders(p *peerConnection, count int) *fetchRequest {
 
 // ReserveBodies reserves a set of body fetches for the given peer, skipping any
 // previously failed downloads. Beside the next batch of needed fetches, it also
-// returns a flag whrueer empty blocks were queued requiring processing.
+// returns a flag whruer empty blocks were queued requiring processing.
 func (q *queue) ReserveBodies(p *peerConnection, count int) (*fetchRequest, bool, error) {
 	isNoop := func(header *types.Header) bool {
 		return header.TxHash == types.EmptyRootHash && header.UncleHash == types.EmptyUncleHash
@@ -444,7 +444,7 @@ func (q *queue) ReserveBodies(p *peerConnection, count int) (*fetchRequest, bool
 
 // ReserveReceipts reserves a set of receipt fetches for the given peer, skipping
 // any previously failed downloads. Beside the next batch of needed fetches, it
-// also returns a flag whrueer empty receipts were queued requiring importing.
+// also returns a flag whruer empty receipts were queued requiring importing.
 func (q *queue) ReserveReceipts(p *peerConnection, count int) (*fetchRequest, bool, error) {
 	isNoop := func(header *types.Header) bool {
 		return header.ReceiptHash == types.EmptyRootHash
@@ -465,7 +465,7 @@ func (q *queue) ReserveReceipts(p *peerConnection, count int) (*fetchRequest, bo
 func (q *queue) reserveHeaders(p *peerConnection, count int, taskPool map[common.Hash]*types.Header, taskQueue *prque.Prque,
 	pendPool map[string]*fetchRequest, donePool map[common.Hash]struct{}, isNoop func(*types.Header) bool) (*fetchRequest, bool, error) {
 	// Short circuit if the pool has been depleted, or if the peer's already
-	// downloading somrueing (sanity check not to corrupt state)
+	// downloading something (sanity check not to corrupt state)
 	if taskQueue.Empty() {
 		return nil, false, nil
 	}

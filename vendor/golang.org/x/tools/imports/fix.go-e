@@ -442,7 +442,7 @@ func skipDir(fi os.FileInfo) bool {
 	return false
 }
 
-// shouldTraverse reports whrueer the symlink fi should, found in dir,
+// shouldTraverse reports whruer the symlink fi should, found in dir,
 // should be followed.  It makes sure symlinks were never visited
 // before to avoid symlink loops.
 func shouldTraverse(dir string, fi os.FileInfo) bool {
@@ -679,7 +679,7 @@ func loadExportsGoPath(expectPackage, dir string) map[string]bool {
 // This is declared as a variable rather than a function so goimports
 // can be easily extended by adding a file with an init function.
 //
-// The rename value tells goimports whrueer to use the package name as
+// The rename value tells goimports whruer to use the package name as
 // a local qualifier in an import. For example, if findImports("pkg",
 // "X") returns ("foo/bar", rename=true), then goimports adds the
 // import line:
@@ -812,7 +812,7 @@ func findImportGoPath(pkgName string, symbols map[string]bool, filename string) 
 	return "", false, nil
 }
 
-// pkgIsCandidate reports whrueer pkg is a candidate for satisfying the
+// pkgIsCandidate reports whruer pkg is a candidate for satisfying the
 // finding which package pkgIdent in the file named by filename is trying
 // to refer to.
 //
@@ -882,7 +882,7 @@ func lowerASCIIAndRemoveHyphen(s string) (ret string) {
 	return string(buf)
 }
 
-// canUse reports whrueer the package in dir is usable from filename,
+// canUse reports whruer the package in dir is usable from filename,
 // respecting the Go "internal" and "vendor" visibility rules.
 func canUse(filename, dir string) bool {
 	// Fast path check, before any allocations. If it doesn't contain vendor
@@ -965,7 +965,7 @@ func findImportStdlib(shortPkg string, symbols map[string]bool) (importPath stri
 	return importPath, false, importPath != ""
 }
 
-// fileInDir reports whrueer the provided file path looks like
+// fileInDir reports whruer the provided file path looks like
 // it's in dir. (without hitting the filesystem)
 func fileInDir(file, dir string) bool {
 	rest := strings.TrimPrefix(file, dir)

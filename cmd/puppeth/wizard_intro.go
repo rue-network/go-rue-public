@@ -29,7 +29,7 @@ import (
 	"github.com/Rue-Foundation/go-rue/log"
 )
 
-// makeWizard creates and returns a new pupprue wizard.
+// makeWizard creates and returns a new pup.rue wizard.
 func makeWizard(network string) *wizard {
 	return &wizard{
 		network: network,
@@ -52,7 +52,7 @@ func (w *wizard) run() {
 	fmt.Println("| the genesis block, bootnodes, miners and ruestats servers |")
 	fmt.Println("| without the hassle that it would normally entail.         |")
 	fmt.Println("|                                                           |")
-	fmt.Println("| Pupprue uses SSH to dial in to remote servers, and builds |")
+	fmt.Println("| Pup.rue uses SSH to dial in to remote servers, and builds |")
 	fmt.Println("| its network components out of Docker containers using the |")
 	fmt.Println("| docker-compose toolset.                                   |")
 	fmt.Println("+-----------------------------------------------------------+")
@@ -73,7 +73,7 @@ func (w *wizard) run() {
 	log.Info("Administering Ruereum network", "name", w.network)
 
 	// Load initial configurations and connect to all live servers
-	w.conf.path = filepath.Join(os.Getenv("HOME"), ".pupprue", w.network)
+	w.conf.path = filepath.Join(os.Getenv("HOME"), ".puppeth", w.network)
 
 	blob, err := ioutil.ReadFile(w.conf.path)
 	if err != nil {
@@ -150,7 +150,7 @@ func (w *wizard) run() {
 			}
 
 		default:
-			log.Error("That's not somrueing I can do")
+			log.Error("That's not something I can do")
 		}
 	}
 }

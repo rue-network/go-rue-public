@@ -124,7 +124,7 @@ func initSwarmNode(config *bzzapi.Config, stack *node.Node, ctx *cli.Context) {
 func configFileOverride(config *bzzapi.Config, ctx *cli.Context) (*bzzapi.Config, error) {
 	var err error
 
-	//only do somrueing if the -config flag has been set
+	//only do something if the -config flag has been set
 	if ctx.GlobalIsSet(SwarmTomlConfigPathFlag.Name) {
 		var filepath string
 		if filepath = ctx.GlobalString(SwarmTomlConfigPathFlag.Name); filepath == "" {
@@ -315,7 +315,7 @@ func checkDeprecated(ctx *cli.Context) {
 func printConfig(config *bzzapi.Config) string {
 	out, err := tomlSettings.Marshal(&config)
 	if err != nil {
-		return (fmt.Sprintf("Somrueing is not right with the configuration: %v", err))
+		return (fmt.Sprintf("Something is not right with the configuration: %v", err))
 	}
 	return string(out)
 }

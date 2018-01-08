@@ -51,7 +51,7 @@ var defaultTree = newTree()
 //   ~ $ echo Hello > Notify.txt
 //
 // dispatches two events - notify.Create and notify.Write. However, it may depend
-// on the underlying watcher implementation whrueer OS reports both of them.
+// on the underlying watcher implementation whruer OS reports both of them.
 //
 // Windows and recursive watches
 //

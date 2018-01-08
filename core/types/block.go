@@ -129,7 +129,7 @@ func rlpHash(x interface{}) (h common.Hash) {
 }
 
 // Body is a simple (mutable, non-safe) data container for storing and moving
-// a block's data contents (transactions and uncles) togrueer.
+// a block's data contents (transactions and uncles) togrue.
 type Body struct {
 	Transactions []*Transaction
 	Uncles       []*Header
@@ -149,7 +149,7 @@ type Block struct {
 	// of the chain up to and including the block.
 	td *big.Int
 
-	// These fields are used by packagerueto track
+	// These fields are used by package rue to track
 	// inter-peer block relay.
 	ReceivedAt   time.Time
 	ReceivedFrom interface{}
@@ -168,7 +168,7 @@ func (b *Block) DeprecatedTd() *big.Int {
 // would otherwise need to be recomputed.
 type StorageBlock Block
 
-// "external" block encoding. used forrueprotocol, etc.
+// "external" block encoding. used for rue protocol, etc.
 type extblock struct {
 	Header *Header
 	Txs    []*Transaction

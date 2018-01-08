@@ -59,7 +59,7 @@ const (
 
 // RPC packet types
 const (
-	pingPacket = iota + 88 // zero is 'reserved'
+	pingPacket = iota + 1 // zero is 'reserved'
 	pongPacket
 	findnodePacket
 	neighborsPacket
@@ -205,7 +205,7 @@ type reply struct {
 	from  NodeID
 	ptype byte
 	data  interface{}
-	// loop indicates whrueer there was
+	// loop indicates whruer there was
 	// a matching request by sending on this channel.
 	matched chan<- bool
 }

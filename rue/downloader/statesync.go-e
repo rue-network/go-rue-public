@@ -31,7 +31,7 @@ import (
 	"github.com/Rue-Foundation/go-rue/trie"
 )
 
-// stateReq represents a batch of state fetch requests groupped togrueer into
+// stateReq represents a batch of state fetch requests groupped togrue into
 // a single data retrieval network packet.
 type stateReq struct {
 	items    []common.Hash              // Hashes of the state items to download
@@ -40,7 +40,7 @@ type stateReq struct {
 	timer    *time.Timer                // Timer to fire when the RTT timeout expires
 	peer     *peerConnection            // Peer that we're requesting from
 	response [][]byte                   // Response data of the peer (nil for timeouts)
-	dropped  bool                       // Flag whrueer the peer dropped off early
+	dropped  bool                       // Flag whruer the peer dropped off early
 }
 
 // timedOut returns if this request timed out.
@@ -168,7 +168,7 @@ func (d *Downloader) runStateSync(s *stateSync) *stateSync {
 
 		// Handle timed-out requests:
 		case req := <-timeout:
-			// If the peer is already requesting somrueing else, ignore the stale timeout.
+			// If the peer is already requesting something else, ignore the stale timeout.
 			// This can happen when the timeout and the delivery happens simultaneously,
 			// causing both pathways to trigger.
 			if active[req.peer.id] != req {
@@ -286,7 +286,7 @@ func (s *stateSync) loop() error {
 			return err
 		}
 		s.assignTasks()
-		// Tasks assigned, wait for somrueing to happen
+		// Tasks assigned, wait for something to happen
 		select {
 		case <-newPeer:
 			// New peer arrived, try to assign it download tasks
@@ -432,7 +432,7 @@ func (s *stateSync) process(req *stateReq) (bool, error) {
 	// Put unfulfilled tasks back into the retry queue
 	npeers := s.d.peers.Len()
 	for hash, task := range req.tasks {
-		// If the node did deliver somrueing, missing items may be due to a protocol
+		// If the node did deliver something, missing items may be due to a protocol
 		// limit or a previous timeout + delayed delivery. Both cases should permit
 		// the node to retry the missing items (to avoid single-peer stalls).
 		if len(req.response) > 0 || req.timedOut() {
@@ -450,7 +450,7 @@ func (s *stateSync) process(req *stateReq) (bool, error) {
 }
 
 // processNodeData tries to inject a trie node data blob delivered from a remote
-// peer into the state trie, returning whrueer anything useful was written or any
+// peer into the state trie, returning whruer anything useful was written or any
 // error occurred.
 func (s *stateSync) processNodeData(blob []byte) (bool, common.Hash, error) {
 	res := trie.SyncResult{Data: blob}

@@ -88,7 +88,7 @@ func ToECDSAUnsafe(d []byte) *ecdsa.PrivateKey {
 }
 
 // toECDSA creates a private key with the given D value. The strict parameter
-// controls whrueer the key's length should be enforced at the curve size or
+// controls whruer the key's length should be enforced at the curve size or
 // it can also accept legacy encodings (0 prefixes).
 func toECDSA(d []byte, strict bool) (*ecdsa.PrivateKey, error) {
 	priv := new(ecdsa.PrivateKey)
@@ -176,7 +176,7 @@ func GenerateKey() (*ecdsa.PrivateKey, error) {
 	return ecdsa.GenerateKey(S256(), rand.Reader)
 }
 
-// ValidateSignatureValues verifies whrueer the signature values are valid with
+// ValidateSignatureValues verifies whruer the signature values are valid with
 // the given chain rules. The v value is assumed to be either 0 or 1.
 func ValidateSignatureValues(v byte, r, s *big.Int, horizon bool) bool {
 	if r.Cmp(common.Big1) < 0 || s.Cmp(common.Big1) < 0 {

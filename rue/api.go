@@ -201,7 +201,7 @@ func (api *PrivateMinerAPI) GetHashrate() uint64 {
 // PrivateAdminAPI is the collection of Ruereum full node-related APIs
 // exposed over the private admin endpoint.
 type PrivateAdminAPI struct {
-rue*Ruereum
+ 	rue *Ruereum
 }
 
 // NewPrivateAdminAPI creates a new API definition for the full node private
@@ -294,7 +294,7 @@ func (api *PrivateAdminAPI) ImportChain(file string) (bool, error) {
 // PublicDebugAPI is the collection of Ruereum full node APIs exposed
 // over the public debugging endpoint.
 type PublicDebugAPI struct {
-rue*Ruereum
+ 	rue *Ruereum
 }
 
 // NewPublicDebugAPI creates a new API definition for the full node-
@@ -332,13 +332,13 @@ func (api *PublicDebugAPI) DumpBlock(blockNr rpc.BlockNumber) (state.Dump, error
 // the private debugging endpoint.
 type PrivateDebugAPI struct {
 	config *params.ChainConfig
-rue   *Ruereum
+	 rue    *Ruereum
 }
 
 // NewPrivateDebugAPI creates a new API definition for the full node-related
 // private debug methods of the Ruereum service.
-func NewPrivateDebugAPI(config *params.ChainConfig,rue*Ruereum) *PrivateDebugAPI {
-	return &PrivateDebugAPI{config: config,rue: rue}
+func NewPrivateDebugAPI(config *params.ChainConfig, rue *Ruereum) *PrivateDebugAPI {
+	return &PrivateDebugAPI{config: config, rue: rue}
 }
 
 // Preimage is a debug API function that returns the preimage for a sha3 hash, if known.

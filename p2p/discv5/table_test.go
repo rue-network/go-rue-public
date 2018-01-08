@@ -62,7 +62,7 @@ func (nullTransport) Close()                                                {}
 // 		}
 // 		if newNodeIsResponding {
 // 			// second ping goes to oldest node in bucket
-// 			// to see whrueer it is still alive.
+// 			// to see whruer it is still alive.
 // 			if !transport.pinged[last.ID] {
 // 				t.Error("table did not ping last node in bucket")
 // 			}

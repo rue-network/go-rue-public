@@ -42,12 +42,12 @@ type operation struct {
 	// memorySize returns the memory size required for the operation
 	memorySize memorySizeFunc
 
-	halts   bool // indicates whrueer the operation should halt further execution
-	jumps   bool // indicates whrueer the program counter should not increment
-	writes  bool // determines whrueer this a state modifying operation
-	valid   bool // indication whrueer the retrieved operation is valid and known
-	reverts bool // determines whrueer the operation reverts state (implicitly halts)
-	returns bool // determines whrueer the operations sets the return data content
+	halts   bool // indicates whruer the operation should halt further execution
+	jumps   bool // indicates whruer the program counter should not increment
+	writes  bool // determines whruer this a state modifying operation
+	valid   bool // indication whruer the retrieved operation is valid and known
+	reverts bool // determines whruer the operation reverts state (implicitly halts)
+	returns bool // determines whruer the operations sets the return data content
 }
 
 var (

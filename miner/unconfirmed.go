@@ -25,7 +25,7 @@ import (
 	"github.com/Rue-Foundation/go-rue/log"
 )
 
-// headerRetriever is used by the unconfirmed block set to verify whrueer a previously
+// headerRetriever is used by the unconfirmed block set to verify whruer a previously
 // mined block is part of the canonical chain or not.
 type headerRetriever interface {
 	// GetHeaderByNumber retrieves the canonical header associated with a block number.

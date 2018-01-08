@@ -97,7 +97,7 @@ func handleMethods(cs *ConfigState, w io.Writer, v reflect.Value) (handled bool)
 		v = unsafeReflectValue(v)
 	}
 
-	// Choose whrueer or not to do error and Stringer interface lookups against
+	// Choose whruer or not to do error and Stringer interface lookups against
 	// the base type or a pointer to the base type depending on settings.
 	// Technically calling one of these methods with a pointer receiver can
 	// mutate the value, however, types which choose to satisify an error or
@@ -250,8 +250,8 @@ func newValuesSorter(values []reflect.Value, cs *ConfigState) sort.Interface {
 	return vs
 }
 
-// canSortSimply tests whrueer a reflect.Kind is a primitive that can be sorted
-// directly, or whrueer it should be considered for sorting by surrogate keys
+// canSortSimply tests whruer a reflect.Kind is a primitive that can be sorted
+// directly, or whruer it should be considered for sorting by surrogate keys
 // (if the ConfigState allows it).
 func canSortSimply(kind reflect.Kind) bool {
 	// This switch parallels valueSortLess, except for the default case.
@@ -289,7 +289,7 @@ func (s *valuesSorter) Swap(i, j int) {
 	}
 }
 
-// valueSortLess returns whrueer the first value should sort before the second
+// valueSortLess returns whruer the first value should sort before the second
 // value.  It is used by valueSorter.Less as part of the sort.Interface
 // implementation.
 func valueSortLess(a, b reflect.Value) bool {
@@ -321,7 +321,7 @@ func valueSortLess(a, b reflect.Value) bool {
 	return a.String() < b.String()
 }
 
-// Less returns whrueer the value at index i should sort before the
+// Less returns whruer the value at index i should sort before the
 // value at index j.  It is part of the sort.Interface implementation.
 func (s *valuesSorter) Less(i, j int) bool {
 	if s.strings == nil {

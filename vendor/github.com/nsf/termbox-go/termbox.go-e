@@ -329,10 +329,10 @@ func parse_mouse_event(event *Event, buf string) (int, bool) {
 			return 0, false
 		}
 
-		// whrueer it's a capital M or not
+		// whruer it's a capital M or not
 		isM := buf[mi] == 'M'
 
-		// whrueer it's urxvt or not
+		// whruer it's urxvt or not
 		isU := false
 
 		// buf[2] is safe here, because having M or m found means we have at

@@ -180,7 +180,7 @@ func TestBlockSubscription(t *testing.T) {
 	<-sub1.Err()
 }
 
-// TestPendingTxFilter tests whrueer pending tx filters retrieve all pending transactions that are posted to the event mux.
+// TestPendingTxFilter tests whruer pending tx filters retrieve all pending transactions that are posted to the event mux.
 func TestPendingTxFilter(t *testing.T) {
 	t.Parallel()
 
@@ -244,7 +244,7 @@ func TestPendingTxFilter(t *testing.T) {
 	}
 }
 
-// TestLogFilterCreation test whrueer a given filter criteria makes sense.
+// TestLogFilterCreation test whruer a given filter criteria makes sense.
 // If not it must return an error.
 func TestLogFilterCreation(t *testing.T) {
 	var (
@@ -291,7 +291,7 @@ func TestLogFilterCreation(t *testing.T) {
 	}
 }
 
-// TestInvalidLogFilterCreation tests whrueer invalid filter log criteria results in an error
+// TestInvalidLogFilterCreation tests whruer invalid filter log criteria results in an error
 // when the filter is created.
 func TestInvalidLogFilterCreation(t *testing.T) {
 	t.Parallel()
@@ -322,7 +322,7 @@ func TestInvalidLogFilterCreation(t *testing.T) {
 	}
 }
 
-// TestLogFilter tests whrueer log filters match the correct logs that are posted to the event feed.
+// TestLogFilter tests whruer log filters match the correct logs that are posted to the event feed.
 func TestLogFilter(t *testing.T) {
 	t.Parallel()
 

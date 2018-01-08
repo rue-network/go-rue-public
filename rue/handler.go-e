@@ -66,8 +66,8 @@ func errResp(code errCode, format string, v ...interface{}) error {
 type ProtocolManager struct {
 	networkId uint64
 
-	fastSync  uint32 // Flag whrueer fast sync is enabled (gets disabled if we already have blocks)
-	acceptTxs uint32 // Flag whrueer we're considered synchronised (enables transaction processing)
+	fastSync  uint32 // Flag whruer fast sync is enabled (gets disabled if we already have blocks)
+	acceptTxs uint32 // Flag whruer we're considered synchronised (enables transaction processing)
 
 	txpool      txPool
 	blockchain  *core.BlockChain
@@ -114,7 +114,7 @@ func NewProtocolManager(config *params.ChainConfig, mode downloader.SyncMode, ne
 		txsyncCh:    make(chan *txsync),
 		quitSync:    make(chan struct{}),
 	}
-	// Figure out whrueer to allow fast sync or not
+	// Figure out whruer to allow fast sync or not
 	if mode == downloader.FastSync && blockchain.CurrentBlock().NumberU64() > 0 {
 		log.Warn("Blockchain not empty, fast sync disabled")
 		mode = downloader.FullSync
@@ -248,7 +248,7 @@ func (pm *ProtocolManager) newPeer(pv int, p *p2p.Peer, rw p2p.MsgReadWriter) *p
 	return newPeer(pv, p, newMeteredMsgWriter(rw))
 }
 
-// handle is the callback invoked to manage the life cycle of anruepeer. When
+// handle is the callback invoked to manage the life cycle of an rue peer. When
 // this function terminates, the peer is disconnected.
 func (pm *ProtocolManager) handle(p *peer) error {
 	if pm.peers.Len() >= pm.maxPeers {

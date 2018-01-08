@@ -89,7 +89,7 @@ func NewContract(caller ContractRef, object ContractRef, value *big.Int, gas uin
 func (c *Contract) AsDelegate() *Contract {
 	c.DelegateCall = true
 	// NOTE: caller must, at all times be a contract. It should never happen
-	// that caller is somrueing other than a Contract.
+	// that caller is something other than a Contract.
 	parent := c.caller.(*Contract)
 	c.CallerAddress = parent.CallerAddress
 	c.value = parent.value

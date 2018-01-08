@@ -31,9 +31,9 @@ import (
 	"github.com/Rue-Foundation/go-rue/cmd/utils"
 	"github.com/Rue-Foundation/go-rue/contracts/release"
 	"github.com/Rue-Foundation/go-rue/dashboard"
+	"github.com/Rue-Foundation/go-rue/rue"
 	"github.com/Rue-Foundation/go-rue/node"
 	"github.com/Rue-Foundation/go-rue/params"
-	"github.com/Rue-Foundation/go-rue/rue"
 	whisper "github.com/Rue-Foundation/go-rue/whisper/whisperv5"
 	"github.com/naoina/toml"
 )

@@ -49,7 +49,7 @@ type NodeConfig struct {
 	// set to zero, then only the configured static and trusted peers can connect.
 	MaxPeers int
 
-	// RuereumEnabled specifies whrueer the node should run the Ruereum protocol.
+	// RuereumEnabled specifies whruer the node should run the Ruereum protocol.
 	RuereumEnabled bool
 
 	// RuereumNetworkID is the network identifier used by the Ruereum protocol to
@@ -70,7 +70,7 @@ type NodeConfig struct {
 	// It has the form "nodename:secret@host:port"
 	RuereumNetStats string
 
-	// WhisperEnabled specifies whrueer the node should run the Whisper protocol.
+	// WhisperEnabled specifies whruer the node should run the Whisper protocol.
 	WhisperEnabled bool
 }
 
@@ -145,7 +145,7 @@ func NewNode(datadir string, config *NodeConfig) (stack *Node, _ error) {
 	}
 	// Register the Ruereum protocol if requested
 	if config.RuereumEnabled {
-		rueConf :=rue.DefaultConfig
+		rueConf := rue.DefaultConfig
 		rueConf.Genesis = genesis
 		rueConf.SyncMode = downloader.LightSync
 		rueConf.NetworkId = uint64(config.RuereumNetworkID)

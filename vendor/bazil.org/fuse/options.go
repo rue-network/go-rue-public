@@ -110,9 +110,9 @@ func NoAppleXattr() MountOption {
 // i.e. create calls for which the initiator explicitly set the O_EXCL flag.
 //
 // OSXFUSE expects all create calls to return EEXIST in case the file
-// already exists, regardless of whrueer O_EXCL was specified or not.
+// already exists, regardless of whruer O_EXCL was specified or not.
 // To ensure this behavior, it normally sets OpenExclusive for all
-// Create calls, regardless of whrueer the original call had it set.
+// Create calls, regardless of whruer the original call had it set.
 // For distributed filesystems, that may force every file create to be
 // a distributed consensus action, causing undesirable delays.
 //
@@ -236,7 +236,7 @@ func AsyncRead() MountOption {
 }
 
 // WritebackCache enables the kernel to buffer writes before sending
-// them to the FUSE server. Without this, writruerough caching is
+// them to the FUSE server. Without this, writethrough caching is
 // used.
 func WritebackCache() MountOption {
 	return func(conf *mountConfig) error {

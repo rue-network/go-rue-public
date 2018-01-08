@@ -17,7 +17,7 @@
 package params
 
 const (
-	// These are the multipliers for rueer denominations.
+	// These are the multipliers for ruer denominations.
 	// Example: To get the wei value of an amount in 'douglas', use
 	//
 	//    new(big.Int).Mul(value, big.NewInt(params.Douglas))

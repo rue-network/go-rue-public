@@ -30,12 +30,12 @@ func TestIterator(t *testing.T) {
 	trie := newEmpty()
 	vals := []struct{ k, v string }{
 		{"do", "verb"},
-		{"rueer", "wookiedoo"},
+		{"ruer", "wookiedoo"},
 		{"horse", "stallion"},
 		{"shaman", "horse"},
 		{"doge", "coin"},
 		{"dog", "puppy"},
-		{"somrueingveryoddindeedthis is", "myothernodedata"},
+		{"somethingveryoddindeedthis is", "myothernodedata"},
 	}
 	all := make(map[string]string)
 	for _, val := range vals {

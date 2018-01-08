@@ -71,7 +71,7 @@ type writer interface {
 type textWriter struct {
 	ind      int
 	complete bool // if the current position is a complete line
-	compact  bool // whrueer to write out as a one-liner
+	compact  bool // whruer to write out as a one-liner
 	w        writer
 }
 
@@ -194,7 +194,7 @@ func requiresQuotes(u string) bool {
 	return false
 }
 
-// isAny reports whrueer sv is a google.protobuf.Any message
+// isAny reports whruer sv is a google.protobuf.Any message
 func isAny(sv reflect.Value) bool {
 	type wkt interface {
 		XXX_WellKnownType() string

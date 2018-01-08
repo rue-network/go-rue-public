@@ -70,7 +70,7 @@ type blockChain interface {
 // chain statistics up to a monitoring server.
 type Service struct {
 	server *p2p.Server        // Peer-to-peer server to retrieve networking infos
-rue   *rue.Ruereum      // Full Ruereum service if monitoring a full node
+ rue    *rue.Ruereum      // Full Ruereum service if monitoring a full node
 	les    *les.LightRuereum // Light Ruereum service if monitoring a light node
 	engine consensus.Engine   // Consensus engine to retrieve variadic block fields
 
@@ -98,7 +98,7 @@ func New(url string, rueServ *rue.Ruereum, lesServ *les.LightRuereum) (*Service,
 		engine = lesServ.Engine()
 	}
 	return &Service{
-	rue:    rueServ,
+	 rue:    rueServ,
 		les:    lesServ,
 		engine: engine,
 		node:   parts[1],
@@ -138,7 +138,7 @@ func (s *Service) loop() {
 	// Subscribe to chain events to execute updates on
 	var blockchain blockChain
 	var txpool txPool
-	if s.rue!= nil {
+	if s.rue != nil {
 		blockchain = s.rue.BlockChain()
 		txpool = s.rue.TxPool()
 	} else {
@@ -375,7 +375,7 @@ func (s *Service) login(conn *websocket.Conn) error {
 	var network, protocol string
 	if info := infos.Protocols["rue"]; info != nil {
 		network = fmt.Sprintf("%d", info.(*rue.NodeInfo).Network)
-		protocol = fmt.Sprintf("rue/%d",rue.ProtocolVersions[0])
+		protocol = fmt.Sprintf("rue/%d", rue.ProtocolVersions[0])
 	} else {
 		network = fmt.Sprintf("%d", infos.Protocols["les"].(*les.NodeInfo).Network)
 		protocol = fmt.Sprintf("les/%d", les.ClientProtocolVersions[0])
@@ -527,7 +527,7 @@ func (s *Service) assembleBlockStats(block *types.Block) *blockStats {
 		txs    []txStats
 		uncles []*types.Header
 	)
-	if s.rue!= nil {
+	if s.rue != nil {
 		// Full nodes have all needed information available
 		if block == nil {
 			block = s.rue.BlockChain().CurrentBlock()
@@ -581,7 +581,7 @@ func (s *Service) reportHistory(conn *websocket.Conn, list []uint64) error {
 	} else {
 		// No indexes requested, send back the top ones
 		var head int64
-		if s.rue!= nil {
+		if s.rue != nil {
 			head = s.rue.BlockChain().CurrentHeader().Number.Int64()
 		} else {
 			head = s.les.BlockChain().CurrentHeader().Number.Int64()
@@ -599,7 +599,7 @@ func (s *Service) reportHistory(conn *websocket.Conn, list []uint64) error {
 	for i, number := range indexes {
 		// Retrieve the next block if it's known to us
 		var block *types.Block
-		if s.rue!= nil {
+		if s.rue != nil {
 			block = s.rue.BlockChain().GetBlockByNumber(number)
 		} else {
 			if header := s.les.BlockChain().GetHeaderByNumber(number); header != nil {
@@ -640,7 +640,7 @@ type pendStats struct {
 func (s *Service) reportPending(conn *websocket.Conn) error {
 	// Retrieve the pending count from the local blockchain
 	var pending int
-	if s.rue!= nil {
+	if s.rue != nil {
 		pending, _ = s.rue.TxPool().Stats()
 	} else {
 		pending = s.les.TxPool().Stats()
@@ -681,7 +681,7 @@ func (s *Service) reportStats(conn *websocket.Conn) error {
 		syncing  bool
 		gasprice int
 	)
-	if s.rue!= nil {
+	if s.rue != nil {
 		mining = s.rue.Miner().Mining()
 		hashrate = int(s.rue.Miner().HashRate())
 

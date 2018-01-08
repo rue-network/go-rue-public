@@ -41,7 +41,7 @@ type BasicReleaser struct {
 	released bool
 }
 
-// Released returns whrueer Release method already called.
+// Released returns whruer Release method already called.
 func (r *BasicReleaser) Released() bool {
 	return r.released
 }

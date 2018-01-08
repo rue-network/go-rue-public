@@ -75,7 +75,7 @@ var (
 		executablePath("bootnode"),
 		executablePath("evm"),
 		executablePath("grue"),
-		executablePath("pupprue"),
+		executablePath("puppeth"),
 		executablePath("rlpdump"),
 		executablePath("swarm"),
 		executablePath("wnode"),
@@ -100,7 +100,7 @@ var (
 			Description: "Ruereum CLI client.",
 		},
 		{
-			Name:        "pupprue",
+			Name:        "puppeth",
 			Description: "Ruereum private network manager.",
 		},
 		{
@@ -296,7 +296,7 @@ func goToolArch(arch string, cc string, subcmd string, args ...string) *exec.Cmd
 
 func doTest(cmdline []string) {
 	var (
-		coverage = flag.Bool("coverage", false, "Whrueer to record code coverage")
+		coverage = flag.Bool("coverage", false, "Whruer to record code coverage")
 	)
 	flag.CommandLine.Parse(cmdline)
 	env := build.Env()
@@ -335,7 +335,7 @@ func doLint(cmdline []string) {
 	build.MustRun(goTool("get", "gopkg.in/alecthomas/gometalinter.v2"))
 	build.MustRunCommand(filepath.Join(GOBIN, "gometalinter.v2"), "--install")
 
-	// Run fast linters batched togrueer
+	// Run fast linters batched togrue
 	configs := []string{
 		"--vendor",
 		"--disable-all",
@@ -719,7 +719,7 @@ func doWindowsInstaller(cmdline []string) {
 
 func doAndroidArchive(cmdline []string) {
 	var (
-		local  = flag.Bool("local", false, `Flag whrueer we're only doing a local build (skip Maven artifacts)`)
+		local  = flag.Bool("local", false, `Flag whruer we're only doing a local build (skip Maven artifacts)`)
 		signer = flag.String("signer", "", `Environment variable holding the signing key (e.g. ANDROID_SIGNING_KEY)`)
 		deploy = flag.String("deploy", "", `Destination to deploy the archive (usually "https://oss.sonatype.org")`)
 		upload = flag.String("upload", "", `Destination to upload the archive (usually "gruestore/builds")`)
@@ -846,7 +846,7 @@ func newMavenMetadata(env build.Environment) mavenMetadata {
 
 func doXCodeFramework(cmdline []string) {
 	var (
-		local  = flag.Bool("local", false, `Flag whrueer we're only doing a local build (skip Maven artifacts)`)
+		local  = flag.Bool("local", false, `Flag whruer we're only doing a local build (skip Maven artifacts)`)
 		signer = flag.String("signer", "", `Environment variable holding the signing key (e.g. IOS_SIGNING_KEY)`)
 		deploy = flag.String("deploy", "", `Destination to deploy the archive (usually "trunk")`)
 		upload = flag.String("upload", "", `Destination to upload the archives (usually "gruestore/builds")`)
@@ -937,7 +937,7 @@ func newPodMetadata(env build.Environment, archive string) podMetadata {
 
 func doXgo(cmdline []string) {
 	var (
-		alltools = flag.Bool("alltools", false, `Flag whrueer we're building all known tools, or only on in particular`)
+		alltools = flag.Bool("alltools", false, `Flag whruer we're building all known tools, or only on in particular`)
 	)
 	flag.CommandLine.Parse(cmdline)
 	env := build.Env()
