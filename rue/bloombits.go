@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
-package rue
+package eth
 
 import (
 	"time"
@@ -48,20 +48,20 @@ const (
 
 // startBloomHandlers starts a batch of goroutines to accept bloom bit database
 // retrievals from possibly a range of filters and serving the data to satisfy.
-func (rue *Ruereum) startBloomHandlers() {
+func (eth *Ruereum) startBloomHandlers() {
 	for i := 0; i < bloomServiceThreads; i++ {
 		go func() {
 			for {
 				select {
-				case <-rue.shutdownChan:
+				case <-eth.shutdownChan:
 					return
 
-				case request := <-rue.bloomRequests:
+				case request := <-eth.bloomRequests:
 					task := <-request
 					task.Bitsets = make([][]byte, len(task.Sections))
 					for i, section := range task.Sections {
-						head := core.GetCanonicalHash(rue.chainDb, (section+1)*params.BloomBitsBlocks-1)
-						if compVector, err := core.GetBloomBits(rue.chainDb, task.Bit, section, head); err == nil {
+						head := core.GetCanonicalHash(eth.chainDb, (section+1)*params.BloomBitsBlocks-1)
+						if compVector, err := core.GetBloomBits(eth.chainDb, task.Bit, section, head); err == nil {
 							if blob, err := bitutil.DecompressBytes(compVector, int(params.BloomBitsBlocks)/8); err == nil {
 								task.Bitsets[i] = blob
 							} else {

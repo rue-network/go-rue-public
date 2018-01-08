@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
-package rue
+package eth
 
 import (
 	"math/rand"
@@ -65,7 +65,7 @@ func (pm *ProtocolManager) syncTransactions(p *peer) {
 func (pm *ProtocolManager) txsyncLoop() {
 	var (
 		pending = make(map[discover.NodeID]*txsync)
-		sending = false               // whruer a send is active
+		sending = false               // whether a send is active
 		pack    = new(txsync)         // the pack that is being sent
 		done    = make(chan error, 1) // result of the send
 	)

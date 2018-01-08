@@ -23,7 +23,7 @@ import (
 	"github.com/Rue-Foundation/go-rue/crypto"
 )
 
-// Method represents a callable given a `Name` and whruer the method is a constant.
+// Method represents a callable given a `Name` and whether the method is a constant.
 // If the method is `Const` no transaction needs to be created for this
 // particular Method call. It can easily be simulated using a local VM.
 // For example a `Balance()` method only needs to retrieve something

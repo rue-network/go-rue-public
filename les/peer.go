@@ -102,8 +102,8 @@ func (p *peer) queueSend(f func()) {
 }
 
 // Info gathers and returns a collection of metadata known about a peer.
-func (p *peer) Info() *rue.PeerInfo {
-	return &rue.PeerInfo{
+func (p *peer) Info() *eth.PeerInfo {
+	return &eth.PeerInfo{
 		Version:    p.version,
 		Difficulty: p.Td(),
 		Head:       fmt.Sprintf("%x", p.Head()),

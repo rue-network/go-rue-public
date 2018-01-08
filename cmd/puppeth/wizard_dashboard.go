@@ -133,7 +133,7 @@ func (w *wizard) deployDashboard() {
 			infos.faucet = page
 		}
 	}
-	// If we have ruestats running, ask whruer to make the secret public or not
+	// If we have ruestats running, ask whether to make the secret public or not
 	if w.conf.ruestats != "" {
 		fmt.Println()
 		fmt.Println("Include ruestats secret on dashboard (y/n)? (default = yes)")

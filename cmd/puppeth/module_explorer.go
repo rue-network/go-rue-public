@@ -30,14 +30,14 @@ import (
 
 // explorerDockerfile is the Dockerfile required to run a block explorer.
 var explorerDockerfile = `
-FROM pupprue/explorer:latest
+FROM puppeth/explorer:latest
 
 ADD ruestats.json /ruestats.json
 ADD chain.json /chain.json
 
 RUN \
   echo '(cd ../eth-net-intelligence-api && pm2 start /ruestats.json)' >  explorer.sh && \
-	echo '(cd ../ruerchain-light && npm start &)'                      >> explorer.sh && \
+	echo '(cd ../etherchain-light && npm start &)'                      >> explorer.sh && \
 	echo '/parity/parity --chain=/chain.json --port={{.NodePort}} --tracing=on --fat-db=on --pruning=archive' >> explorer.sh
 
 ENTRYPOINT ["/bin/sh", "explorer.sh"]
@@ -169,7 +169,7 @@ func (info *explorerInfos) Report() map[string]string {
 }
 
 // checkExplorer does a health-check against an block explorer server to verify
-// whruer it's running, and if yes, whruer it's responsive.
+// whether it's running, and if yes, whether it's responsive.
 func checkExplorer(client *sshClient, network string) (*explorerInfos, error) {
 	// Inspect a possible block explorer container on the host
 	infos, err := inspectContainer(client, fmt.Sprintf("%s_explorer_1", network))

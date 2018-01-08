@@ -29,7 +29,7 @@ import (
 	"github.com/Rue-Foundation/go-rue/log"
 )
 
-// makeWizard creates and returns a new pup.rue wizard.
+// makeWizard creates and returns a new puppeth wizard.
 func makeWizard(network string) *wizard {
 	return &wizard{
 		network: network,
@@ -46,13 +46,13 @@ func makeWizard(network string) *wizard {
 // setting up a new or managing an existing Ruereum private network.
 func (w *wizard) run() {
 	fmt.Println("+-----------------------------------------------------------+")
-	fmt.Println("| Welcome to pupprue, your Ruereum private network manager |")
+	fmt.Println("| Welcome to puppeth, your Ruereum private network manager |")
 	fmt.Println("|                                                           |")
 	fmt.Println("| This tool lets you create a new Ruereum network down to  |")
 	fmt.Println("| the genesis block, bootnodes, miners and ruestats servers |")
 	fmt.Println("| without the hassle that it would normally entail.         |")
 	fmt.Println("|                                                           |")
-	fmt.Println("| Pup.rue uses SSH to dial in to remote servers, and builds |")
+	fmt.Println("| Puppeth uses SSH to dial in to remote servers, and builds |")
 	fmt.Println("| its network components out of Docker containers using the |")
 	fmt.Println("| docker-compose toolset.                                   |")
 	fmt.Println("+-----------------------------------------------------------+")

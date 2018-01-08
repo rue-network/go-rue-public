@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
-package rue
+package eth
 
 import (
 	"math"
@@ -314,11 +314,11 @@ func testGetNodeData(t *testing.T, protocol int) {
 	generator := func(i int, block *core.BlockGen) {
 		switch i {
 		case 0:
-			// In block 1, the test bank sends account #1 some ruer.
+			// In block 1, the test bank sends account #1 some ether.
 			tx, _ := types.SignTx(types.NewTransaction(block.TxNonce(testBank), acc1Addr, big.NewInt(10000), bigTxGas, nil, nil), signer, testBankKey)
 			block.AddTx(tx)
 		case 1:
-			// In block 2, the test bank sends some more ruer to account #1.
+			// In block 2, the test bank sends some more ether to account #1.
 			// acc1Addr passes it on to account #2.
 			tx1, _ := types.SignTx(types.NewTransaction(block.TxNonce(testBank), acc1Addr, big.NewInt(1000), bigTxGas, nil, nil), signer, testBankKey)
 			tx2, _ := types.SignTx(types.NewTransaction(block.TxNonce(acc1Addr), acc2Addr, big.NewInt(1000), bigTxGas, nil, nil), signer, acc1Key)
@@ -406,11 +406,11 @@ func testGetReceipt(t *testing.T, protocol int) {
 	generator := func(i int, block *core.BlockGen) {
 		switch i {
 		case 0:
-			// In block 1, the test bank sends account #1 some ruer.
+			// In block 1, the test bank sends account #1 some ether.
 			tx, _ := types.SignTx(types.NewTransaction(block.TxNonce(testBank), acc1Addr, big.NewInt(10000), bigTxGas, nil, nil), signer, testBankKey)
 			block.AddTx(tx)
 		case 1:
-			// In block 2, the test bank sends some more ruer to account #1.
+			// In block 2, the test bank sends some more ether to account #1.
 			// acc1Addr passes it on to account #2.
 			tx1, _ := types.SignTx(types.NewTransaction(block.TxNonce(testBank), acc1Addr, big.NewInt(1000), bigTxGas, nil, nil), signer, testBankKey)
 			tx2, _ := types.SignTx(types.NewTransaction(block.TxNonce(acc1Addr), acc2Addr, big.NewInt(1000), bigTxGas, nil, nil), signer, acc1Key)
@@ -450,7 +450,7 @@ func testGetReceipt(t *testing.T, protocol int) {
 	}
 }
 
-// Tests that post rue protocol handshake, DAO fork-enabled clients also execute
+// Tests that post eth protocol handshake, DAO fork-enabled clients also execute
 // a DAO "challenge" verifying each others' DAO fork headers to ensure they're on
 // compatible chains.
 func TestDAOChallengeNoVsNo(t *testing.T)       { testDAOChallenge(t, false, false, false) }
@@ -484,7 +484,7 @@ func testDAOChallenge(t *testing.T, localForked, remoteForked bool, timeout bool
 	defer pm.Stop()
 
 	// Connect a new peer and check that we receive the DAO challenge
-	peer, _ := newTestPeer("peer", rue63, pm, true)
+	peer, _ := newTestPeer("peer", eth63, pm, true)
 	defer peer.close()
 
 	challenge := &getBlockHeadersData{

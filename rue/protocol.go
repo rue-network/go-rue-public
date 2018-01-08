@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
-package rue
+package eth
 
 import (
 	"fmt"
@@ -30,24 +30,24 @@ import (
 
 // Constants to match up protocol versions and messages
 const (
-	rue62 = 62
-	rue63 = 63
+	eth62 = 62
+	eth63 = 63
 )
 
 // Official short name of the protocol used during capability negotiation.
-var ProtocolName = "rue"
+var ProtocolName = "eth"
 
-// Supported versions of the rue protocol (first is primary).
-var ProtocolVersions = []uint{rue63, rue62}
+// Supported versions of the eth protocol (first is primary).
+var ProtocolVersions = []uint{eth63, eth62}
 
 // Number of implemented message corresponding to different protocol versions.
 var ProtocolLengths = []uint64{17, 8}
 
 const ProtocolMaxMsgSize = 10 * 1024 * 1024 // Maximum cap on the size of a protocol message
 
-// rue protocol message codes
+// eth protocol message codes
 const (
-	// Protocol messages belonging to rue/62
+	// Protocol messages belonging to eth/62
 	StatusMsg          = 0x00
 	NewBlockHashesMsg  = 0x01
 	TxMsg              = 0x02
@@ -57,7 +57,7 @@ const (
 	BlockBodiesMsg     = 0x06
 	NewBlockMsg        = 0x07
 
-	// Protocol messages belonging to rue/63
+	// Protocol messages belonging to eth/63
 	GetNodeDataMsg = 0x0d
 	NodeDataMsg    = 0x0e
 	GetReceiptsMsg = 0x0f

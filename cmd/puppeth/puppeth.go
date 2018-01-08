@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with go-ruereum. If not, see <http://www.gnu.org/licenses/>.
 
-// pup.rue is a command to assemble and maintain private networks.
+// puppeth is a command to assemble and maintain private networks.
 package main
 
 import (

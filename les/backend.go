@@ -77,8 +77,8 @@ type LightRuereum struct {
 	wg sync.WaitGroup
 }
 
-func New(ctx *node.ServiceContext, config *rue.Config) (*LightRuereum, error) {
-	chainDb, err := rue.CreateDB(ctx, config, "lightchaindata")
+func New(ctx *node.ServiceContext, config *eth.Config) (*LightRuereum, error) {
+	chainDb, err := eth.CreateDB(ctx, config, "lightchaindata")
 	if err != nil {
 		return nil, err
 	}
@@ -91,48 +91,48 @@ func New(ctx *node.ServiceContext, config *rue.Config) (*LightRuereum, error) {
 	peers := newPeerSet()
 	quitSync := make(chan struct{})
 
-	lrue := &LightRuereum{
+	leth := &LightRuereum{
 		chainConfig:      chainConfig,
 		chainDb:          chainDb,
 		eventMux:         ctx.EventMux,
 		peers:            peers,
 		reqDist:          newRequestDistributor(peers, quitSync),
 		accountManager:   ctx.AccountManager,
-		engine:           rue.CreateConsensusEngine(ctx, &config.Ruehash, chainConfig, chainDb),
+		engine:           eth.CreateConsensusEngine(ctx, &config.Ruehash, chainConfig, chainDb),
 		shutdownChan:     make(chan bool),
 		networkId:        config.NetworkId,
 		bloomRequests:    make(chan chan *bloombits.Retrieval),
-		bloomIndexer:     rue.NewBloomIndexer(chainDb, light.BloomTrieFrequency),
+		bloomIndexer:     eth.NewBloomIndexer(chainDb, light.BloomTrieFrequency),
 		chtIndexer:       light.NewChtIndexer(chainDb, true),
 		bloomTrieIndexer: light.NewBloomTrieIndexer(chainDb, true),
 	}
 
-	lrue.relay = NewLesTxRelay(peers, lrue.reqDist)
-	lrue.serverPool = newServerPool(chainDb, quitSync, &lrue.wg)
-	lrue.retriever = newRetrieveManager(peers, lrue.reqDist, lrue.serverPool)
-	lrue.odr = NewLesOdr(chainDb, lrue.chtIndexer, lrue.bloomTrieIndexer, lrue.bloomIndexer, lrue.retriever)
-	if lrue.blockchain, err = light.NewLightChain(lrue.odr, lrue.chainConfig, lrue.engine); err != nil {
+	leth.relay = NewLesTxRelay(peers, leth.reqDist)
+	leth.serverPool = newServerPool(chainDb, quitSync, &leth.wg)
+	leth.retriever = newRetrieveManager(peers, leth.reqDist, leth.serverPool)
+	leth.odr = NewLesOdr(chainDb, leth.chtIndexer, leth.bloomTrieIndexer, leth.bloomIndexer, leth.retriever)
+	if leth.blockchain, err = light.NewLightChain(leth.odr, leth.chainConfig, leth.engine); err != nil {
 		return nil, err
 	}
-	lrue.bloomIndexer.Start(lrue.blockchain)
+	leth.bloomIndexer.Start(leth.blockchain)
 	// Rewind the chain in case of an incompatible config upgrade.
 	if compat, ok := genesisErr.(*params.ConfigCompatError); ok {
 		log.Warn("Rewinding chain to upgrade configuration", "err", compat)
-		lrue.blockchain.SetHead(compat.RewindTo)
+		leth.blockchain.SetHead(compat.RewindTo)
 		core.WriteChainConfig(chainDb, genesisHash, chainConfig)
 	}
 
-	lrue.txPool = light.NewTxPool(lrue.chainConfig, lrue.blockchain, lrue.relay)
-	if lrue.protocolManager, err = NewProtocolManager(lrue.chainConfig, true, ClientProtocolVersions, config.NetworkId, lrue.eventMux, lrue.engine, lrue.peers, lrue.blockchain, nil, chainDb, lrue.odr, lrue.relay, quitSync, &lrue.wg); err != nil {
+	leth.txPool = light.NewTxPool(leth.chainConfig, leth.blockchain, leth.relay)
+	if leth.protocolManager, err = NewProtocolManager(leth.chainConfig, true, ClientProtocolVersions, config.NetworkId, leth.eventMux, leth.engine, leth.peers, leth.blockchain, nil, chainDb, leth.odr, leth.relay, quitSync, &leth.wg); err != nil {
 		return nil, err
 	}
-	lrue.ApiBackend = &LesApiBackend{lrue, nil}
+	leth.ApiBackend = &LesApiBackend{leth, nil}
 	gpoParams := config.GPO
 	if gpoParams.Default == nil {
 		gpoParams.Default = config.GasPrice
 	}
-	lrue.ApiBackend.gpo = gasprice.NewOracle(lrue.ApiBackend, gpoParams)
-	return lrue, nil
+	leth.ApiBackend.gpo = gasprice.NewOracle(leth.ApiBackend, gpoParams)
+	return leth, nil
 }
 
 func lesTopic(genesisHash common.Hash, protocolVersion uint) discv5.Topic {
@@ -150,12 +150,12 @@ func lesTopic(genesisHash common.Hash, protocolVersion uint) discv5.Topic {
 
 type LightDummyAPI struct{}
 
-// Ruebase is the address that mining rewards will be send to
-func (s *LightDummyAPI) Ruebase() (common.Address, error) {
+// Etherbase is the address that mining rewards will be send to
+func (s *LightDummyAPI) Etherbase() (common.Address, error) {
 	return common.Address{}, fmt.Errorf("not supported")
 }
 
-// Coinbase is the address that mining rewards will be send to (alias for Ruebase)
+// Coinbase is the address that mining rewards will be send to (alias for Etherbase)
 func (s *LightDummyAPI) Coinbase() (common.Address, error) {
 	return common.Address{}, fmt.Errorf("not supported")
 }
@@ -175,17 +175,17 @@ func (s *LightDummyAPI) Mining() bool {
 func (s *LightRuereum) APIs() []rpc.API {
 	return append(rueapi.GetAPIs(s.ApiBackend), []rpc.API{
 		{
-			Namespace: "rue",
+			Namespace: "eth",
 			Version:   "1.0",
 			Service:   &LightDummyAPI{},
 			Public:    true,
 		}, {
-			Namespace: "rue",
+			Namespace: "eth",
 			Version:   "1.0",
 			Service:   downloader.NewPublicDownloaderAPI(s.protocolManager.downloader, s.eventMux),
 			Public:    true,
 		}, {
-			Namespace: "rue",
+			Namespace: "eth",
 			Version:   "1.0",
 			Service:   filters.NewPublicFilterAPI(s.ApiBackend, true),
 			Public:    true,

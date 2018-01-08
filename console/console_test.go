@@ -75,7 +75,7 @@ func (p *hookedPrompter) SetWordCompleter(completer WordCompleter) {}
 type tester struct {
 	workspace string
 	stack     *node.Node
-	ruereum  *rue.Ruereum
+	ruereum  *eth.Ruereum
 	console   *Console
 	input     *hookedPrompter
 	output    *bytes.Buffer
@@ -83,7 +83,7 @@ type tester struct {
 
 // newTester creates a test environment based on which the console can operate.
 // Please ensure you call Close() on the returned tester to avoid leaks.
-func newTester(t *testing.T, confOverride func(*rue.Config)) *tester {
+func newTester(t *testing.T, confOverride func(*eth.Config)) *tester {
 	// Create a temporary storage for the node keys and initialize it
 	workspace, err := ioutil.TempDir("", "console-tester-")
 	if err != nil {
@@ -95,17 +95,17 @@ func newTester(t *testing.T, confOverride func(*rue.Config)) *tester {
 	if err != nil {
 		t.Fatalf("failed to create node: %v", err)
 	}
-	rueConf := &rue.Config{
+	ethConf := &eth.Config{
 		Genesis:   core.DeveloperGenesisBlock(15, common.Address{}),
-		Ruebase: common.HexToAddress(testAddress),
+		Etherbase: common.HexToAddress(testAddress),
 		Ruehash: ruehash.Config{
 			PowMode: ruehash.ModeTest,
 		},
 	}
 	if confOverride != nil {
-		confOverride(rueConf)
+		confOverride(ethConf)
 	}
-	if err = stack.Register(func(ctx *node.ServiceContext) (node.Service, error) { return rue.New(ctx, rueConf) }); err != nil {
+	if err = stack.Register(func(ctx *node.ServiceContext) (node.Service, error) { return eth.New(ctx, ethConf) }); err != nil {
 		t.Fatalf("failed to register Ruereum protocol: %v", err)
 	}
 	// Start the node and assemble the JavaScript console around it
@@ -131,7 +131,7 @@ func newTester(t *testing.T, confOverride func(*rue.Config)) *tester {
 		t.Fatalf("failed to create JavaScript console: %v", err)
 	}
 	// Create the final tester and return
-	var ruereum *rue.Ruereum
+	var ruereum *eth.Ruereum
 	stack.Service(&ruereum)
 
 	return &tester{

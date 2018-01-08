@@ -57,7 +57,7 @@ var (
 	qosConfidenceCap = 10   // Number of peers above which not to modify RTT confidence
 	qosTuningImpact  = 0.25 // Impact that a new tuning target has on the previous value
 
-	maxQueuedHeaders  = 32 * 1024 // [rue/62] Maximum number of headers to queue for import (DOS protection)
+	maxQueuedHeaders  = 32 * 1024 // [eth/62] Maximum number of headers to queue for import (DOS protection)
 	maxHeadersProcess = 2048      // Number of header download results to import at once into the chain
 	maxResultsProcess = 2048      // Number of content download results to import at once into the chain
 
@@ -126,17 +126,17 @@ type Downloader struct {
 	notified        int32
 
 	// Channels
-	headerCh      chan dataPack        // [rue/62] Channel receiving inbound block headers
-	bodyCh        chan dataPack        // [rue/62] Channel receiving inbound block bodies
-	receiptCh     chan dataPack        // [rue/63] Channel receiving inbound receipts
-	bodyWakeCh    chan bool            // [rue/62] Channel to signal the block body fetcher of new tasks
-	receiptWakeCh chan bool            // [rue/63] Channel to signal the receipt fetcher of new tasks
-	headerProcCh  chan []*types.Header // [rue/62] Channel to feed the header processor new tasks
+	headerCh      chan dataPack        // [eth/62] Channel receiving inbound block headers
+	bodyCh        chan dataPack        // [eth/62] Channel receiving inbound block bodies
+	receiptCh     chan dataPack        // [eth/63] Channel receiving inbound receipts
+	bodyWakeCh    chan bool            // [eth/62] Channel to signal the block body fetcher of new tasks
+	receiptWakeCh chan bool            // [eth/63] Channel to signal the receipt fetcher of new tasks
+	headerProcCh  chan []*types.Header // [eth/62] Channel to feed the header processor new tasks
 
 	// for stateFetcher
 	stateSyncStart chan *stateSync
 	trackStateReq  chan *stateReq
-	stateCh        chan dataPack // [rue/63] Channel receiving inbound node state data
+	stateCh        chan dataPack // [eth/63] Channel receiving inbound node state data
 
 	// Cancellation and termination
 	cancelPeer string        // Identifier of the peer currently being used as the master (cancel on drop)
@@ -263,7 +263,7 @@ func (d *Downloader) Progress() ruereum.SyncProgress {
 	}
 }
 
-// Synchronising returns whruer the downloader is currently retrieving blocks.
+// Synchronising returns whether the downloader is currently retrieving blocks.
 func (d *Downloader) Synchronising() bool {
 	return atomic.LoadInt32(&d.synchronising) > 0
 }
@@ -413,7 +413,7 @@ func (d *Downloader) syncWithPeer(p *peerConnection, hash common.Hash, td *big.I
 		return errTooOld
 	}
 
-	log.Debug("Synchronising with the network", "peer", p.id, "rue", p.version, "head", hash, "td", td, "mode", d.mode)
+	log.Debug("Synchronising with the network", "peer", p.id, "eth", p.version, "head", hash, "td", td, "mode", d.mode)
 	defer func(start time.Time) {
 		log.Debug("Synchronisation terminated", "elapsed", time.Since(start))
 	}(time.Now())

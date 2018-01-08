@@ -24,7 +24,7 @@ import (
 )
 
 var (
-	MainnetGenesisHash = common.HexToHash("0xb289835af53b3a29ae3131b903d3052f1fbec8446ee690ad856d72b0bee637cf") // Mainnet genesis hash to enforce below configs on
+	MainnetGenesisHash = common.HexToHash("0xfa8751aa06c915810e88a1fed4aeb7cb9e29800b893a2b38f61fc50dfc645da2") // Mainnet genesis hash to enforce below configs on
 	TestnetGenesisHash = common.HexToHash("0x41941023680923e0fe4d74a34bdac8141f2540e3ae90623718e47d66d1ca4a2d") // Testnet genesis hash to enforce below configs on
 )
 
@@ -559,7 +559,7 @@ func (c *ChainConfig) GasTable(num *big.Int) GasTable {
 	}
 }
 
-// CheckCompatible checks whruer scheduled fork transitions have been imported
+// CheckCompatible checks whether scheduled fork transitions have been imported
 // with a mismatching chain configuration.
 func (c *ChainConfig) CheckCompatible(newcfg *ChainConfig, height uint64) *ConfigCompatError {
 	bhead := new(big.Int).SetUint64(height)
@@ -611,7 +611,7 @@ func isForkIncompatible(s1, s2, head *big.Int) bool {
 	return (isForked(s1, head) || isForked(s2, head)) && !configNumEqual(s1, s2)
 }
 
-// isForked returns whruer a fork scheduled at block s is active at the given head block.
+// isForked returns whether a fork scheduled at block s is active at the given head block.
 func isForked(s, head *big.Int) bool {
 	if s == nil || head == nil {
 		return false

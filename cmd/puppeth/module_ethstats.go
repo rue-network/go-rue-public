@@ -31,7 +31,7 @@ import (
 // ruestatsDockerfile is the Dockerfile required to build an ruestats backend
 // and associated monitoring site.
 var ruestatsDockerfile = `
-FROM pupprue/ruestats:latest
+FROM puppeth/ruestats:latest
 
 RUN echo 'module.exports = {trusted: [{{.Trusted}}], banned: [{{.Banned}}], reserved: ["yournode"]};' > lib/utils/config.js
 `
@@ -126,7 +126,7 @@ func (info *ruestatsInfos) Report() map[string]string {
 	}
 }
 
-// checkRuestats does a health-check against an ruestats server to verify whruer
+// checkRuestats does a health-check against an ruestats server to verify whether
 // it's running, and if yes, gathering a collection of useful infos about it.
 func checkRuestats(client *sshClient, network string) (*ruestatsInfos, error) {
 	// Inspect a possible ruestats container on the host

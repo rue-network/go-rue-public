@@ -46,7 +46,7 @@ const (
 	tcpKeepAliveInterval = 30 * time.Second
 	defaultDialTimeout   = 10 * time.Second // used when dialing if the context has no deadline
 	defaultWriteTimeout  = 10 * time.Second // used for calls if the context has no deadline
-	subscribeTimeout     = 5 * time.Second  // overall timeout rue_subscribe, rpc_modules calls
+	subscribeTimeout     = 5 * time.Second  // overall timeout eth_subscribe, rpc_modules calls
 )
 
 const (
@@ -131,7 +131,7 @@ type requestOp struct {
 	ids  []json.RawMessage
 	err  error
 	resp chan *jsonrpcMessage // receives up to len(ids) responses
-	sub  *ClientSubscription  // only set for RueSubscribe requests
+	sub  *ClientSubscription  // only set for EthSubscribe requests
 }
 
 func (op *requestOp) wait(ctx context.Context) (*jsonrpcMessage, error) {
@@ -349,9 +349,9 @@ func (c *Client) BatchCallContext(ctx context.Context, b []BatchElem) error {
 	return err
 }
 
-// RueSubscribe registers a subscripion under the "rue" namespace.
-func (c *Client) RueSubscribe(ctx context.Context, channel interface{}, args ...interface{}) (*ClientSubscription, error) {
-	return c.Subscribe(ctx, "rue", channel, args...)
+// EthSubscribe registers a subscripion under the "eth" namespace.
+func (c *Client) EthSubscribe(ctx context.Context, channel interface{}, args ...interface{}) (*ClientSubscription, error) {
+	return c.Subscribe(ctx, "eth", channel, args...)
 }
 
 // ShhSubscribe registers a subscripion under the "shh" namespace.
@@ -616,7 +616,7 @@ func (c *Client) handleResponse(msg *jsonrpcMessage) {
 		return
 	}
 	// For subscription responses, start the subscription if the server
-	// indicates success. RueSubscribe gets unblocked in either case through
+	// indicates success. EthSubscribe gets unblocked in either case through
 	// the op.resp channel.
 	defer close(op.resp)
 	if msg.Error != nil {
@@ -662,7 +662,7 @@ func (c *Client) read(conn net.Conn) error {
 
 // Subscriptions.
 
-// A ClientSubscription represents a subscription established through RueSubscribe.
+// A ClientSubscription represents a subscription established through EthSubscribe.
 type ClientSubscription struct {
 	client    *Client
 	etype     reflect.Type

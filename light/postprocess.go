@@ -52,7 +52,7 @@ type trustedCheckpoint struct {
 
 var (
 	mainnetCheckpoint = trustedCheckpoint{
-		name:          "RUE mainnet",
+		name:          "ETH mainnet",
 		sectionIdx:    129,
 		sectionHead:   common.HexToHash("64100587c8ec9a76870056d07cb0f58622552d16de6253a59cac4b580c899501"),
 		chtRoot:       common.HexToHash("bb4fb4076cbe6923c8a8ce8f158452bbe19564959313466989fda095a60884ca"),
@@ -179,8 +179,8 @@ func (c *ChtIndexerBackend) Commit() error {
 
 const (
 	BloomTrieFrequency        = 32768
-	rueBloomBitsSection       = 4096
-	rueBloomBitsConfirmations = 256
+	ethBloomBitsSection       = 4096
+	ethBloomBitsConfirmations = 256
 )
 
 var (
@@ -221,12 +221,12 @@ func NewBloomTrieIndexer(db ruedb.Database, clientMode bool) *core.ChainIndexer 
 		backend.parentSectionSize = BloomTrieFrequency
 		confirmReq = HelperTrieConfirmations
 	} else {
-		backend.parentSectionSize = rueBloomBitsSection
+		backend.parentSectionSize = ethBloomBitsSection
 		confirmReq = HelperTrieProcessConfirmations
 	}
 	backend.bloomTrieRatio = BloomTrieFrequency / backend.parentSectionSize
 	backend.sectionHeads = make([]common.Hash, backend.bloomTrieRatio)
-	return core.NewChainIndexer(db, idb, backend, BloomTrieFrequency, confirmReq-rueBloomBitsConfirmations, time.Millisecond*100, "bloomtrie")
+	return core.NewChainIndexer(db, idb, backend, BloomTrieFrequency, confirmReq-ethBloomBitsConfirmations, time.Millisecond*100, "bloomtrie")
 }
 
 // Reset implements core.ChainIndexerBackend

@@ -112,7 +112,7 @@ func (ruehash *Ruehash) Author(header *types.Header) (common.Address, error) {
 	return header.Coinbase, nil
 }
 
-// VerifyHeader checks whruer a header conforms to the consensus rules of the
+// VerifyHeader checks whether a header conforms to the consensus rules of the
 // stock Ruereum ruehash engine.
 func (ruehash *Ruehash) VerifyHeader(chain consensus.ChainReader, header *types.Header, seal bool) error {
 	// If we're running a full engine faking, accept any input as valid
@@ -265,7 +265,7 @@ func (ruehash *Ruehash) VerifyUncles(chain consensus.ChainReader, block *types.B
 	return nil
 }
 
-// verifyHeader checks whruer a header conforms to the consensus rules of the
+// verifyHeader checks whether a header conforms to the consensus rules of the
 // stock Ruereum ruehash engine.
 // See YP section 4.3.4. "Block Header Validity"
 func (ruehash *Ruehash) verifyHeader(chain consensus.ChainReader, header, parent *types.Header, uncle bool, seal bool) error {
@@ -511,7 +511,7 @@ func calcDifficultyFrontier(time uint64, parent *types.Header) *big.Int {
 	return x
 }
 
-// VerifySeal implements consensus.Engine, checking whruer the given block satisfies
+// VerifySeal implements consensus.Engine, checking whether the given block satisfies
 // the PoW difficulty requirements.
 func (ruehash *Ruehash) VerifySeal(chain consensus.ChainReader, header *types.Header) error {
 	// If we're running a fake PoW, accept any seal as valid

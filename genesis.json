@@ -58,8 +58,8 @@
     "gasLimit": "3141592",
     "alloc": {
         "0xf27B5643c4dC5686CfFF7475aDeBbbc868543e84": { "balance": "1000000000" },
-        "0xd0271ec0fb3334Ef8581313FfBD511eA069da4E6": { "balance": "5000000000" },
-        "0x7bD3d330cE1085E3D69690e67BF10D51F33C6f21": { "balance": "37500000000" }
+        "0xd0271ec0fb3334Ef8581313FfBD511eA069da4E6": { "balance": "3000000000" },
+        "0x7bD3d330cE1085E3D69690e67BF10D51F33C6f21": { "balance": "2500000000" }
     },
     "coinbase": "0x0000000000000000000000000000000000000000"
 }

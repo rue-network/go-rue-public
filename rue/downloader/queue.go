@@ -42,9 +42,9 @@ var (
 // fetchRequest is a currently running data retrieval operation.
 type fetchRequest struct {
 	Peer    *peerConnection     // Peer to which the request was sent
-	From    uint64              // [rue/62] Requested chain element index (used for skeleton fills only)
-	Hashes  map[common.Hash]int // [rue/61] Requested hashes with their insertion index (priority)
-	Headers []*types.Header     // [rue/62] Requested headers, sorted by request order
+	From    uint64              // [eth/62] Requested chain element index (used for skeleton fills only)
+	Hashes  map[common.Hash]int // [eth/61] Requested hashes with their insertion index (priority)
+	Headers []*types.Header     // [eth/62] Requested headers, sorted by request order
 	Time    time.Time           // Time when the request was made
 }
 
@@ -64,28 +64,28 @@ type queue struct {
 	mode          SyncMode // Synchronisation mode to decide on the block parts to schedule for fetching
 	fastSyncPivot uint64   // Block number where the fast sync pivots into archive synchronisation mode
 
-	headerHead common.Hash // [rue/62] Hash of the last queued header to verify order
+	headerHead common.Hash // [eth/62] Hash of the last queued header to verify order
 
 	// Headers are "special", they download in batches, supported by a skeleton chain
-	headerTaskPool  map[uint64]*types.Header       // [rue/62] Pending header retrieval tasks, mapping starting indexes to skeleton headers
-	headerTaskQueue *prque.Prque                   // [rue/62] Priority queue of the skeleton indexes to fetch the filling headers for
-	headerPeerMiss  map[string]map[uint64]struct{} // [rue/62] Set of per-peer header batches known to be unavailable
-	headerPendPool  map[string]*fetchRequest       // [rue/62] Currently pending header retrieval operations
-	headerResults   []*types.Header                // [rue/62] Result cache accumulating the completed headers
-	headerProced    int                            // [rue/62] Number of headers already processed from the results
-	headerOffset    uint64                         // [rue/62] Number of the first header in the result cache
-	headerContCh    chan bool                      // [rue/62] Channel to notify when header download finishes
+	headerTaskPool  map[uint64]*types.Header       // [eth/62] Pending header retrieval tasks, mapping starting indexes to skeleton headers
+	headerTaskQueue *prque.Prque                   // [eth/62] Priority queue of the skeleton indexes to fetch the filling headers for
+	headerPeerMiss  map[string]map[uint64]struct{} // [eth/62] Set of per-peer header batches known to be unavailable
+	headerPendPool  map[string]*fetchRequest       // [eth/62] Currently pending header retrieval operations
+	headerResults   []*types.Header                // [eth/62] Result cache accumulating the completed headers
+	headerProced    int                            // [eth/62] Number of headers already processed from the results
+	headerOffset    uint64                         // [eth/62] Number of the first header in the result cache
+	headerContCh    chan bool                      // [eth/62] Channel to notify when header download finishes
 
 	// All data retrievals below are based on an already assembles header chain
-	blockTaskPool  map[common.Hash]*types.Header // [rue/62] Pending block (body) retrieval tasks, mapping hashes to headers
-	blockTaskQueue *prque.Prque                  // [rue/62] Priority queue of the headers to fetch the blocks (bodies) for
-	blockPendPool  map[string]*fetchRequest      // [rue/62] Currently pending block (body) retrieval operations
-	blockDonePool  map[common.Hash]struct{}      // [rue/62] Set of the completed block (body) fetches
+	blockTaskPool  map[common.Hash]*types.Header // [eth/62] Pending block (body) retrieval tasks, mapping hashes to headers
+	blockTaskQueue *prque.Prque                  // [eth/62] Priority queue of the headers to fetch the blocks (bodies) for
+	blockPendPool  map[string]*fetchRequest      // [eth/62] Currently pending block (body) retrieval operations
+	blockDonePool  map[common.Hash]struct{}      // [eth/62] Set of the completed block (body) fetches
 
-	receiptTaskPool  map[common.Hash]*types.Header // [rue/63] Pending receipt retrieval tasks, mapping hashes to headers
-	receiptTaskQueue *prque.Prque                  // [rue/63] Priority queue of the headers to fetch the receipts for
-	receiptPendPool  map[string]*fetchRequest      // [rue/63] Currently pending receipt retrieval operations
-	receiptDonePool  map[common.Hash]struct{}      // [rue/63] Set of the completed receipt fetches
+	receiptTaskPool  map[common.Hash]*types.Header // [eth/63] Pending receipt retrieval tasks, mapping hashes to headers
+	receiptTaskQueue *prque.Prque                  // [eth/63] Priority queue of the headers to fetch the receipts for
+	receiptPendPool  map[string]*fetchRequest      // [eth/63] Currently pending receipt retrieval operations
+	receiptDonePool  map[common.Hash]struct{}      // [eth/63] Set of the completed receipt fetches
 
 	resultCache  []*fetchResult // Downloaded but not yet delivered fetch results
 	resultOffset uint64         // Offset of the first cached fetch result in the block chain
@@ -175,7 +175,7 @@ func (q *queue) PendingReceipts() int {
 	return q.receiptTaskQueue.Size()
 }
 
-// InFlightHeaders retrieves whruer there are header fetch requests currently
+// InFlightHeaders retrieves whether there are header fetch requests currently
 // in flight.
 func (q *queue) InFlightHeaders() bool {
 	q.lock.Lock()
@@ -184,7 +184,7 @@ func (q *queue) InFlightHeaders() bool {
 	return len(q.headerPendPool) > 0
 }
 
-// InFlightBlocks retrieves whruer there are block fetch requests currently in
+// InFlightBlocks retrieves whether there are block fetch requests currently in
 // flight.
 func (q *queue) InFlightBlocks() bool {
 	q.lock.Lock()
@@ -193,7 +193,7 @@ func (q *queue) InFlightBlocks() bool {
 	return len(q.blockPendPool) > 0
 }
 
-// InFlightReceipts retrieves whruer there are receipt fetch requests currently
+// InFlightReceipts retrieves whether there are receipt fetch requests currently
 // in flight.
 func (q *queue) InFlightReceipts() bool {
 	q.lock.Lock()
@@ -431,7 +431,7 @@ func (q *queue) ReserveHeaders(p *peerConnection, count int) *fetchRequest {
 
 // ReserveBodies reserves a set of body fetches for the given peer, skipping any
 // previously failed downloads. Beside the next batch of needed fetches, it also
-// returns a flag whruer empty blocks were queued requiring processing.
+// returns a flag whether empty blocks were queued requiring processing.
 func (q *queue) ReserveBodies(p *peerConnection, count int) (*fetchRequest, bool, error) {
 	isNoop := func(header *types.Header) bool {
 		return header.TxHash == types.EmptyRootHash && header.UncleHash == types.EmptyUncleHash
@@ -444,7 +444,7 @@ func (q *queue) ReserveBodies(p *peerConnection, count int) (*fetchRequest, bool
 
 // ReserveReceipts reserves a set of receipt fetches for the given peer, skipping
 // any previously failed downloads. Beside the next batch of needed fetches, it
-// also returns a flag whruer empty receipts were queued requiring importing.
+// also returns a flag whether empty receipts were queued requiring importing.
 func (q *queue) ReserveReceipts(p *peerConnection, count int) (*fetchRequest, bool, error) {
 	isNoop := func(header *types.Header) bool {
 		return header.ReceiptHash == types.EmptyRootHash

@@ -410,7 +410,7 @@ func (s *DbStore) Put(chunk *Chunk) {
 	}
 
 	data := encodeData(chunk)
-	//data := rueutil.Encode([]interface{}{entry})
+	//data := ethutil.Encode([]interface{}{entry})
 
 	if s.entryCnt >= s.capacity {
 		s.collectGarbage(gcArrayFreeRatio)

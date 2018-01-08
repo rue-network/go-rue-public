@@ -42,7 +42,7 @@ ADD genesis.json /genesis.json
 RUN \
   echo 'grue --cache 512 init /genesis.json' > grue.sh && \{{if .Unlock}}
 	echo 'mkdir -p /root/.ruereum/keystore/ && cp /signer.json /root/.ruereum/keystore/' >> grue.sh && \{{end}}
-	echo $'grue --networkid {{.NetworkID}} --cache 512 --port {{.Port}} --maxpeers {{.Peers}} {{.LightFlag}} --ruestats \'{{.Ruestats}}\' {{if .BootV4}}--bootnodesv4 {{.BootV4}}{{end}} {{if .BootV5}}--bootnodesv5 {{.BootV5}}{{end}} {{if .Ruebase}}--ruebase {{.Ruebase}} --mine --minerthreads 1{{end}} {{if .Unlock}}--unlock 0 --password /signer.pass --mine{{end}} --targetgaslimit {{.GasTarget}} --gasprice {{.GasPrice}}' >> grue.sh
+	echo $'grue --networkid {{.NetworkID}} --cache 512 --port {{.Port}} --maxpeers {{.Peers}} {{.LightFlag}} --ruestats \'{{.Ruestats}}\' {{if .BootV4}}--bootnodesv4 {{.BootV4}}{{end}} {{if .BootV5}}--bootnodesv5 {{.BootV5}}{{end}} {{if .Etherbase}}--etherbase {{.Etherbase}} --mine --minerthreads 1{{end}} {{if .Unlock}}--unlock 0 --password /signer.pass --mine{{end}} --targetgaslimit {{.GasTarget}} --gasprice {{.GasPrice}}' >> grue.sh
 
 ENTRYPOINT ["/bin/sh", "grue.sh"]
 `
@@ -68,7 +68,7 @@ services:
       - TOTAL_PEERS={{.TotalPeers}}
       - LIGHT_PEERS={{.LightPeers}}
       - STATS_NAME={{.Ruestats}}
-      - MINER_NAME={{.Ruebase}}
+      - MINER_NAME={{.Etherbase}}
       - GAS_TARGET={{.GasTarget}}
       - GAS_PRICE={{.GasPrice}}
     logging:
@@ -84,7 +84,7 @@ services:
 // already exists there, it will be overwritten!
 func deployNode(client *sshClient, network string, bootv4, bootv5 []string, config *nodeInfos, nocache bool) ([]byte, error) {
 	kind := "sealnode"
-	if config.keyJSON == "" && config.ruebase == "" {
+	if config.keyJSON == "" && config.etherbase == "" {
 		kind = "bootnode"
 		bootv4 = make([]string, 0)
 		bootv5 = make([]string, 0)
@@ -106,7 +106,7 @@ func deployNode(client *sshClient, network string, bootv4, bootv5 []string, conf
 		"BootV4":    strings.Join(bootv4, ","),
 		"BootV5":    strings.Join(bootv5, ","),
 		"Ruestats":  config.ruestats,
-		"Ruebase": config.ruebase,
+		"Etherbase": config.etherbase,
 		"GasTarget": uint64(1000000 * config.gasTarget),
 		"GasPrice":  uint64(1000000000 * config.gasPrice),
 		"Unlock":    config.keyJSON != "",
@@ -125,7 +125,7 @@ func deployNode(client *sshClient, network string, bootv4, bootv5 []string, conf
 		"LightPort":  config.portFull + 1,
 		"LightPeers": config.peersLight,
 		"Ruestats":   config.ruestats[:strings.Index(config.ruestats, ":")],
-		"Ruebase":  config.ruebase,
+		"Etherbase":  config.etherbase,
 		"GasTarget":  config.gasTarget,
 		"GasPrice":   config.gasPrice,
 	})
@@ -163,7 +163,7 @@ type nodeInfos struct {
 	enodeLight string
 	peersTotal int
 	peersLight int
-	ruebase  string
+	etherbase  string
 	keyJSON    string
 	keyPass    string
 	gasTarget  float64
@@ -189,10 +189,10 @@ func (info *nodeInfos) Report() map[string]string {
 		report["Gas limit (baseline target)"] = fmt.Sprintf("%0.3f MGas", info.gasTarget)
 		report["Gas price (minimum accepted)"] = fmt.Sprintf("%0.3f GWei", info.gasPrice)
 
-		if info.ruebase != "" {
+		if info.etherbase != "" {
 			// Ruehash proof-of-work miner
 			report["Ruehash directory"] = info.ruehashdir
-			report["Miner account"] = info.ruebase
+			report["Miner account"] = info.etherbase
 		}
 		if info.keyJSON != "" {
 			// Clique proof-of-authority signer
@@ -210,7 +210,7 @@ func (info *nodeInfos) Report() map[string]string {
 }
 
 // checkNode does a health-check against an boot or seal node server to verify
-// whruer it's running, and if yes, whruer it's responsive.
+// whether it's running, and if yes, whether it's responsive.
 func checkNode(client *sshClient, network string, boot bool) (*nodeInfos, error) {
 	kind := "bootnode"
 	if !boot {
@@ -264,7 +264,7 @@ func checkNode(client *sshClient, network string, boot bool) (*nodeInfos, error)
 		peersTotal: totalPeers,
 		peersLight: lightPeers,
 		ruestats:   infos.envvars["STATS_NAME"],
-		ruebase:  infos.envvars["MINER_NAME"],
+		etherbase:  infos.envvars["MINER_NAME"],
 		keyJSON:    keyJSON,
 		keyPass:    keyPass,
 		gasTarget:  gasTarget,

@@ -62,7 +62,7 @@ type ReleaseService struct {
 func NewReleaseService(ctx *node.ServiceContext, config Config) (node.Service, error) {
 	// Retrieve the Ruereum service dependency to access the blockchain
 	var apiBackend rueapi.Backend
-	var ruereum *rue.Ruereum
+	var ruereum *eth.Ruereum
 	if err := ctx.Service(&ruereum); err == nil {
 		apiBackend = ruereum.ApiBackend
 	} else {
@@ -74,7 +74,7 @@ func NewReleaseService(ctx *node.ServiceContext, config Config) (node.Service, e
 		}
 	}
 	// Construct the release service
-	contract, err := NewReleaseOracle(config.Oracle, rue.NewContractBackend(apiBackend))
+	contract, err := NewReleaseOracle(config.Oracle, eth.NewContractBackend(apiBackend))
 	if err != nil {
 		return nil, err
 	}

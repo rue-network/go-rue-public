@@ -49,24 +49,24 @@ type LesServer struct {
 	chtIndexer, bloomTrieIndexer *core.ChainIndexer
 }
 
-func NewLesServer(rue *rue.Ruereum, config *rue.Config) (*LesServer, error) {
+func NewLesServer(eth *eth.Ruereum, config *eth.Config) (*LesServer, error) {
 	quitSync := make(chan struct{})
-	pm, err := NewProtocolManager(rue.BlockChain().Config(), false, ServerProtocolVersions, config.NetworkId, rue.EventMux(), rue.Engine(), newPeerSet(), rue.BlockChain(), rue.TxPool(), rue.ChainDb(), nil, nil, quitSync, new(sync.WaitGroup))
+	pm, err := NewProtocolManager(eth.BlockChain().Config(), false, ServerProtocolVersions, config.NetworkId, eth.EventMux(), eth.Engine(), newPeerSet(), eth.BlockChain(), eth.TxPool(), eth.ChainDb(), nil, nil, quitSync, new(sync.WaitGroup))
 	if err != nil {
 		return nil, err
 	}
 
 	lesTopics := make([]discv5.Topic, len(ServerProtocolVersions))
 	for i, pv := range ServerProtocolVersions {
-		lesTopics[i] = lesTopic(rue.BlockChain().Genesis().Hash(), pv)
+		lesTopics[i] = lesTopic(eth.BlockChain().Genesis().Hash(), pv)
 	}
 
 	srv := &LesServer{
 		protocolManager:  pm,
 		quitSync:         quitSync,
 		lesTopics:        lesTopics,
-		chtIndexer:       light.NewChtIndexer(rue.ChainDb(), false),
-		bloomTrieIndexer: light.NewBloomTrieIndexer(rue.ChainDb(), false),
+		chtIndexer:       light.NewChtIndexer(eth.ChainDb(), false),
+		bloomTrieIndexer: light.NewBloomTrieIndexer(eth.ChainDb(), false),
 	}
 	logger := log.New()
 
@@ -90,7 +90,7 @@ func NewLesServer(rue *rue.Ruereum, config *rue.Config) (*LesServer, error) {
 		logger.Info("BloomTrie", "section", bloomTrieLastSection, "sectionHead", fmt.Sprintf("%064x", bloomTrieSectionHead), "root", fmt.Sprintf("%064x", bloomTrieRoot))
 	}
 
-	srv.chtIndexer.Start(rue.BlockChain())
+	srv.chtIndexer.Start(eth.BlockChain())
 	pm.server = srv
 
 	srv.defParams = &flowcontrol.ServerParams{
@@ -98,7 +98,7 @@ func NewLesServer(rue *rue.Ruereum, config *rue.Config) (*LesServer, error) {
 		MinRecharge: 50000,
 	}
 	srv.fcManager = flowcontrol.NewClientManager(uint64(config.LightServ), 10, 1000000000)
-	srv.fcCostStats = newCostStats(rue.ChainDb())
+	srv.fcCostStats = newCostStats(eth.ChainDb())
 	return srv, nil
 }
 

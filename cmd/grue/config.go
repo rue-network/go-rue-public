@@ -77,7 +77,7 @@ type ruestatsConfig struct {
 }
 
 type grueConfig struct {
-	Rue       rue.Config
+	Eth       eth.Config
 	Shh       whisper.Config
 	Node      node.Config
 	Ruestats  ruestatsConfig
@@ -103,8 +103,8 @@ func defaultNodeConfig() node.Config {
 	cfg := node.DefaultConfig
 	cfg.Name = clientIdentifier
 	cfg.Version = params.VersionWithCommit(gitCommit)
-	cfg.HTTPModules = append(cfg.HTTPModules, "rue", "shh")
-	cfg.WSModules = append(cfg.WSModules, "rue", "shh")
+	cfg.HTTPModules = append(cfg.HTTPModules, "eth", "shh")
+	cfg.WSModules = append(cfg.WSModules, "eth", "shh")
 	cfg.IPCPath = "grue.ipc"
 	return cfg
 }
@@ -112,7 +112,7 @@ func defaultNodeConfig() node.Config {
 func makeConfigNode(ctx *cli.Context) (*node.Node, grueConfig) {
 	// Load defaults.
 	cfg := grueConfig{
-		Rue:       rue.DefaultConfig,
+		Eth:       eth.DefaultConfig,
 		Shh:       whisper.DefaultConfig,
 		Node:      defaultNodeConfig(),
 		Dashboard: dashboard.DefaultConfig,
@@ -131,9 +131,9 @@ func makeConfigNode(ctx *cli.Context) (*node.Node, grueConfig) {
 	if err != nil {
 		utils.Fatalf("Failed to create the protocol stack: %v", err)
 	}
-	utils.SetRueConfig(ctx, stack, &cfg.Rue)
-	if ctx.GlobalIsSet(utils.RueStatsURLFlag.Name) {
-		cfg.Ruestats.URL = ctx.GlobalString(utils.RueStatsURLFlag.Name)
+	utils.SetRueConfig(ctx, stack, &cfg.Eth)
+	if ctx.GlobalIsSet(utils.EthStatsURLFlag.Name) {
+		cfg.Ruestats.URL = ctx.GlobalString(utils.EthStatsURLFlag.Name)
 	}
 
 	utils.SetShhConfig(ctx, stack, &cfg.Shh)
@@ -155,7 +155,7 @@ func enableWhisper(ctx *cli.Context) bool {
 func makeFullNode(ctx *cli.Context) *node.Node {
 	stack, cfg := makeConfigNode(ctx)
 
-	utils.RegisterRueService(stack, &cfg.Rue)
+	utils.RegisterEthService(stack, &cfg.Eth)
 
 	if ctx.GlobalBool(utils.DashboardEnabledFlag.Name) {
 		utils.RegisterDashboardService(stack, &cfg.Dashboard)
@@ -175,7 +175,7 @@ func makeFullNode(ctx *cli.Context) *node.Node {
 
 	// Add the Ruereum Stats daemon if requested.
 	if cfg.Ruestats.URL != "" {
-		utils.RegisterRueStatsService(stack, cfg.Ruestats.URL)
+		utils.RegisterEthStatsService(stack, cfg.Ruestats.URL)
 	}
 
 	// Add the release oracle service so it boots along with node.
@@ -200,8 +200,8 @@ func dumpConfig(ctx *cli.Context) error {
 	_, cfg := makeConfigNode(ctx)
 	comment := ""
 
-	if cfg.Rue.Genesis != nil {
-		cfg.Rue.Genesis = nil
+	if cfg.Eth.Genesis != nil {
+		cfg.Eth.Genesis = nil
 		comment += "# Note: this config doesn't contain the genesis block.\n\n"
 	}
 

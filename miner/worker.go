@@ -106,7 +106,7 @@ type worker struct {
 	agents map[Agent]struct{}
 	recv   chan *Result
 
- rue     Backend
+	eth     Backend
 	chain   *core.BlockChain
 	proc    core.Validator
 	chainDb ruedb.Database
@@ -127,29 +127,29 @@ type worker struct {
 	atWork int32
 }
 
-func newWorker(config *params.ChainConfig, engine consensus.Engine, coinbase common.Address, rue Backend, mux *event.TypeMux) *worker {
+func newWorker(config *params.ChainConfig, engine consensus.Engine, coinbase common.Address, eth Backend, mux *event.TypeMux) *worker {
 	worker := &worker{
 		config:         config,
 		engine:         engine,
-	 rue:            rue,
+		eth:            eth,
 		mux:            mux,
 		txCh:           make(chan core.TxPreEvent, txChanSize),
 		chainHeadCh:    make(chan core.ChainHeadEvent, chainHeadChanSize),
 		chainSideCh:    make(chan core.ChainSideEvent, chainSideChanSize),
-		chainDb:        rue.ChainDb(),
+		chainDb:        eth.ChainDb(),
 		recv:           make(chan *Result, resultQueueSize),
-		chain:          rue.BlockChain(),
-		proc:           rue.BlockChain().Validator(),
+		chain:          eth.BlockChain(),
+		proc:           eth.BlockChain().Validator(),
 		possibleUncles: make(map[common.Hash]*types.Block),
 		coinbase:       coinbase,
 		agents:         make(map[Agent]struct{}),
-		unconfirmed:    newUnconfirmedBlocks(rue.BlockChain(), miningLogAtDepth),
+		unconfirmed:    newUnconfirmedBlocks(eth.BlockChain(), miningLogAtDepth),
 	}
 	// Subscribe TxPreEvent for tx pool
-	worker.txSub = rue.TxPool().SubscribeTxPreEvent(worker.txCh)
+	worker.txSub = eth.TxPool().SubscribeTxPreEvent(worker.txCh)
 	// Subscribe events for blockchain
-	worker.chainHeadSub = rue.BlockChain().SubscribeChainHeadEvent(worker.chainHeadCh)
-	worker.chainSideSub = rue.BlockChain().SubscribeChainSideEvent(worker.chainSideCh)
+	worker.chainHeadSub = eth.BlockChain().SubscribeChainHeadEvent(worker.chainHeadCh)
+	worker.chainSideSub = eth.BlockChain().SubscribeChainSideEvent(worker.chainSideCh)
 	go worker.update()
 
 	go worker.wait()
@@ -158,7 +158,7 @@ func newWorker(config *params.ChainConfig, engine consensus.Engine, coinbase com
 	return worker
 }
 
-func (self *worker) setRuebase(addr common.Address) {
+func (self *worker) setEtherbase(addr common.Address) {
 	self.mu.Lock()
 	defer self.mu.Unlock()
 	self.coinbase = addr
@@ -425,12 +425,12 @@ func (self *worker) commitNewWork() {
 		log.Error("Failed to prepare header for mining", "err", err)
 		return
 	}
-	// If we are care about TheDAO hard-fork check whruer to override the extra-data or not
+	// If we are care about TheDAO hard-fork check whether to override the extra-data or not
 	if daoBlock := self.config.DAOForkBlock; daoBlock != nil {
-		// Check whruer the block is among the fork extra-override range
+		// Check whether the block is among the fork extra-override range
 		limit := new(big.Int).Add(daoBlock, params.DAOForkExtraRange)
 		if header.Number.Cmp(daoBlock) >= 0 && header.Number.Cmp(limit) < 0 {
-			// Depending whruer we support or oppose the fork, override differently
+			// Depending whether we support or oppose the fork, override differently
 			if self.config.DAOForkSupport {
 				header.Extra = common.CopyBytes(params.DAOForkBlockExtra)
 			} else if bytes.Equal(header.Extra, params.DAOForkBlockExtra) {
@@ -449,7 +449,7 @@ func (self *worker) commitNewWork() {
 	if self.config.DAOForkSupport && self.config.DAOForkBlock != nil && self.config.DAOForkBlock.Cmp(header.Number) == 0 {
 		misc.ApplyDAOHardFork(work.state)
 	}
-	pending, err := self.rue.TxPool().Pending()
+	pending, err := self.eth.TxPool().Pending()
 	if err != nil {
 		log.Error("Failed to fetch pending transactions", "err", err)
 		return
@@ -523,7 +523,7 @@ func (env *Work) commitTransactions(mux *event.TypeMux, txs *types.TransactionsB
 		//
 		// We use the eip155 signer regardless of the current hf.
 		from, _ := types.Sender(env.signer, tx)
-		// Check whruer the tx is replay protected. If we're not in the EIP155 hf
+		// Check whether the tx is replay protected. If we're not in the EIP155 hf
 		// phase, start ignoring the sender until we do.
 		if tx.Protected() && !env.config.IsEIP155(env.header.Number) {
 			log.Trace("Ignoring reply protected transaction", "hash", tx.Hash(), "eip155", env.config.EIP155Block)

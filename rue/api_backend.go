@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
-package rue
+package eth
 
 import (
 	"context"
@@ -38,53 +38,53 @@ import (
 
 // RueApiBackend implements rueapi.Backend for full nodes
 type RueApiBackend struct {
- 	rue *Ruereum
+	eth *Ruereum
 	gpo *gasprice.Oracle
 }
 
 func (b *RueApiBackend) ChainConfig() *params.ChainConfig {
-	return b.rue.chainConfig
+	return b.eth.chainConfig
 }
 
 func (b *RueApiBackend) CurrentBlock() *types.Block {
-	return b.rue.blockchain.CurrentBlock()
+	return b.eth.blockchain.CurrentBlock()
 }
 
 func (b *RueApiBackend) SetHead(number uint64) {
-	b.rue.protocolManager.downloader.Cancel()
-	b.rue.blockchain.SetHead(number)
+	b.eth.protocolManager.downloader.Cancel()
+	b.eth.blockchain.SetHead(number)
 }
 
 func (b *RueApiBackend) HeaderByNumber(ctx context.Context, blockNr rpc.BlockNumber) (*types.Header, error) {
 	// Pending block is only known by the miner
 	if blockNr == rpc.PendingBlockNumber {
-		block := b.rue.miner.PendingBlock()
+		block := b.eth.miner.PendingBlock()
 		return block.Header(), nil
 	}
 	// Otherwise resolve and return the block
 	if blockNr == rpc.LatestBlockNumber {
-		return b.rue.blockchain.CurrentBlock().Header(), nil
+		return b.eth.blockchain.CurrentBlock().Header(), nil
 	}
-	return b.rue.blockchain.GetHeaderByNumber(uint64(blockNr)), nil
+	return b.eth.blockchain.GetHeaderByNumber(uint64(blockNr)), nil
 }
 
 func (b *RueApiBackend) BlockByNumber(ctx context.Context, blockNr rpc.BlockNumber) (*types.Block, error) {
 	// Pending block is only known by the miner
 	if blockNr == rpc.PendingBlockNumber {
-		block := b.rue.miner.PendingBlock()
+		block := b.eth.miner.PendingBlock()
 		return block, nil
 	}
 	// Otherwise resolve and return the block
 	if blockNr == rpc.LatestBlockNumber {
-		return b.rue.blockchain.CurrentBlock(), nil
+		return b.eth.blockchain.CurrentBlock(), nil
 	}
-	return b.rue.blockchain.GetBlockByNumber(uint64(blockNr)), nil
+	return b.eth.blockchain.GetBlockByNumber(uint64(blockNr)), nil
 }
 
 func (b *RueApiBackend) StateAndHeaderByNumber(ctx context.Context, blockNr rpc.BlockNumber) (*state.StateDB, *types.Header, error) {
 	// Pending state is only known by the miner
 	if blockNr == rpc.PendingBlockNumber {
-		block, state := b.rue.miner.Pending()
+		block, state := b.eth.miner.Pending()
 		return state, block.Header(), nil
 	}
 	// Otherwise resolve the block number and return its state
@@ -92,56 +92,56 @@ func (b *RueApiBackend) StateAndHeaderByNumber(ctx context.Context, blockNr rpc.
 	if header == nil || err != nil {
 		return nil, nil, err
 	}
-	stateDb, err := b.rue.BlockChain().StateAt(header.Root)
+	stateDb, err := b.eth.BlockChain().StateAt(header.Root)
 	return stateDb, header, err
 }
 
 func (b *RueApiBackend) GetBlock(ctx context.Context, blockHash common.Hash) (*types.Block, error) {
-	return b.rue.blockchain.GetBlockByHash(blockHash), nil
+	return b.eth.blockchain.GetBlockByHash(blockHash), nil
 }
 
 func (b *RueApiBackend) GetReceipts(ctx context.Context, blockHash common.Hash) (types.Receipts, error) {
-	return core.GetBlockReceipts(b.rue.chainDb, blockHash, core.GetBlockNumber(b.rue.chainDb, blockHash)), nil
+	return core.GetBlockReceipts(b.eth.chainDb, blockHash, core.GetBlockNumber(b.eth.chainDb, blockHash)), nil
 }
 
 func (b *RueApiBackend) GetTd(blockHash common.Hash) *big.Int {
-	return b.rue.blockchain.GetTdByHash(blockHash)
+	return b.eth.blockchain.GetTdByHash(blockHash)
 }
 
 func (b *RueApiBackend) GetEVM(ctx context.Context, msg core.Message, state *state.StateDB, header *types.Header, vmCfg vm.Config) (*vm.EVM, func() error, error) {
 	state.SetBalance(msg.From(), math.MaxBig256)
 	vmError := func() error { return nil }
 
-	context := core.NewEVMContext(msg, header, b.rue.BlockChain(), nil)
-	return vm.NewEVM(context, state, b.rue.chainConfig, vmCfg), vmError, nil
+	context := core.NewEVMContext(msg, header, b.eth.BlockChain(), nil)
+	return vm.NewEVM(context, state, b.eth.chainConfig, vmCfg), vmError, nil
 }
 
 func (b *RueApiBackend) SubscribeRemovedLogsEvent(ch chan<- core.RemovedLogsEvent) event.Subscription {
-	return b.rue.BlockChain().SubscribeRemovedLogsEvent(ch)
+	return b.eth.BlockChain().SubscribeRemovedLogsEvent(ch)
 }
 
 func (b *RueApiBackend) SubscribeChainEvent(ch chan<- core.ChainEvent) event.Subscription {
-	return b.rue.BlockChain().SubscribeChainEvent(ch)
+	return b.eth.BlockChain().SubscribeChainEvent(ch)
 }
 
 func (b *RueApiBackend) SubscribeChainHeadEvent(ch chan<- core.ChainHeadEvent) event.Subscription {
-	return b.rue.BlockChain().SubscribeChainHeadEvent(ch)
+	return b.eth.BlockChain().SubscribeChainHeadEvent(ch)
 }
 
 func (b *RueApiBackend) SubscribeChainSideEvent(ch chan<- core.ChainSideEvent) event.Subscription {
-	return b.rue.BlockChain().SubscribeChainSideEvent(ch)
+	return b.eth.BlockChain().SubscribeChainSideEvent(ch)
 }
 
 func (b *RueApiBackend) SubscribeLogsEvent(ch chan<- []*types.Log) event.Subscription {
-	return b.rue.BlockChain().SubscribeLogsEvent(ch)
+	return b.eth.BlockChain().SubscribeLogsEvent(ch)
 }
 
 func (b *RueApiBackend) SendTx(ctx context.Context, signedTx *types.Transaction) error {
-	return b.rue.txPool.AddLocal(signedTx)
+	return b.eth.txPool.AddLocal(signedTx)
 }
 
 func (b *RueApiBackend) GetPoolTransactions() (types.Transactions, error) {
-	pending, err := b.rue.txPool.Pending()
+	pending, err := b.eth.txPool.Pending()
 	if err != nil {
 		return nil, err
 	}
@@ -153,31 +153,31 @@ func (b *RueApiBackend) GetPoolTransactions() (types.Transactions, error) {
 }
 
 func (b *RueApiBackend) GetPoolTransaction(hash common.Hash) *types.Transaction {
-	return b.rue.txPool.Get(hash)
+	return b.eth.txPool.Get(hash)
 }
 
 func (b *RueApiBackend) GetPoolNonce(ctx context.Context, addr common.Address) (uint64, error) {
-	return b.rue.txPool.State().GetNonce(addr), nil
+	return b.eth.txPool.State().GetNonce(addr), nil
 }
 
 func (b *RueApiBackend) Stats() (pending int, queued int) {
-	return b.rue.txPool.Stats()
+	return b.eth.txPool.Stats()
 }
 
 func (b *RueApiBackend) TxPoolContent() (map[common.Address]types.Transactions, map[common.Address]types.Transactions) {
-	return b.rue.TxPool().Content()
+	return b.eth.TxPool().Content()
 }
 
 func (b *RueApiBackend) SubscribeTxPreEvent(ch chan<- core.TxPreEvent) event.Subscription {
-	return b.rue.TxPool().SubscribeTxPreEvent(ch)
+	return b.eth.TxPool().SubscribeTxPreEvent(ch)
 }
 
 func (b *RueApiBackend) Downloader() *downloader.Downloader {
-	return b.rue.Downloader()
+	return b.eth.Downloader()
 }
 
 func (b *RueApiBackend) ProtocolVersion() int {
-	return b.rue.RueVersion()
+	return b.eth.EthVersion()
 }
 
 func (b *RueApiBackend) SuggestPrice(ctx context.Context) (*big.Int, error) {
@@ -185,24 +185,24 @@ func (b *RueApiBackend) SuggestPrice(ctx context.Context) (*big.Int, error) {
 }
 
 func (b *RueApiBackend) ChainDb() ruedb.Database {
-	return b.rue.ChainDb()
+	return b.eth.ChainDb()
 }
 
 func (b *RueApiBackend) EventMux() *event.TypeMux {
-	return b.rue.EventMux()
+	return b.eth.EventMux()
 }
 
 func (b *RueApiBackend) AccountManager() *accounts.Manager {
-	return b.rue.AccountManager()
+	return b.eth.AccountManager()
 }
 
 func (b *RueApiBackend) BloomStatus() (uint64, uint64) {
-	sections, _, _ := b.rue.bloomIndexer.Sections()
+	sections, _, _ := b.eth.bloomIndexer.Sections()
 	return params.BloomBitsBlocks, sections
 }
 
 func (b *RueApiBackend) ServiceFilter(ctx context.Context, session *bloombits.MatcherSession) {
 	for i := 0; i < bloomFilterThreads; i++ {
-		go session.Multiplex(bloomRetrievalBatch, bloomRetrievalWait, b.rue.bloomRequests)
+		go session.Multiplex(bloomRetrievalBatch, bloomRetrievalWait, b.eth.bloomRequests)
 	}
 }

@@ -128,7 +128,7 @@ var (
 	NetworkIdFlag = cli.Uint64Flag{
 		Name:  "networkid",
 		Usage: "Network identifier (integer, 1=Frontier, 2=Morden (disused), 3=Ropsten, 4=Rinkeby)",
-		Value: rue.DefaultConfig.NetworkId,
+		Value: eth.DefaultConfig.NetworkId,
 	}
 	TestnetFlag = cli.BoolFlag{
 		Name:  "testnet",
@@ -163,7 +163,7 @@ var (
 		Name:  "light",
 		Usage: "Enable light client mode",
 	}
-	defaultSyncMode = rue.DefaultConfig.SyncMode
+	defaultSyncMode = eth.DefaultConfig.SyncMode
 	SyncModeFlag    = TextMarshalerFlag{
 		Name:  "syncmode",
 		Usage: `Blockchain sync mode ("fast", "full", or "light")`,
@@ -217,27 +217,27 @@ var (
 	RuehashCachesInMemoryFlag = cli.IntFlag{
 		Name:  "ruehash.cachesinmem",
 		Usage: "Number of recent ruehash caches to keep in memory (16MB each)",
-		Value: rue.DefaultConfig.Ruehash.CachesInMem,
+		Value: eth.DefaultConfig.Ruehash.CachesInMem,
 	}
 	RuehashCachesOnDiskFlag = cli.IntFlag{
 		Name:  "ruehash.cachesondisk",
 		Usage: "Number of recent ruehash caches to keep on disk (16MB each)",
-		Value: rue.DefaultConfig.Ruehash.CachesOnDisk,
+		Value: eth.DefaultConfig.Ruehash.CachesOnDisk,
 	}
 	RuehashDatasetDirFlag = DirectoryFlag{
 		Name:  "ruehash.dagdir",
 		Usage: "Directory to store the ruehash mining DAGs (default = inside home folder)",
-		Value: DirectoryString{rue.DefaultConfig.Ruehash.DatasetDir},
+		Value: DirectoryString{eth.DefaultConfig.Ruehash.DatasetDir},
 	}
 	RuehashDatasetsInMemoryFlag = cli.IntFlag{
 		Name:  "ruehash.dagsinmem",
 		Usage: "Number of recent ruehash mining DAGs to keep in memory (1+GB each)",
-		Value: rue.DefaultConfig.Ruehash.DatasetsInMem,
+		Value: eth.DefaultConfig.Ruehash.DatasetsInMem,
 	}
 	RuehashDatasetsOnDiskFlag = cli.IntFlag{
 		Name:  "ruehash.dagsondisk",
 		Usage: "Number of recent ruehash mining DAGs to keep on disk (1+GB each)",
-		Value: rue.DefaultConfig.Ruehash.DatasetsOnDisk,
+		Value: eth.DefaultConfig.Ruehash.DatasetsOnDisk,
 	}
 	// Transaction pool settings
 	TxPoolNoLocalsFlag = cli.BoolFlag{
@@ -257,37 +257,37 @@ var (
 	TxPoolPriceLimitFlag = cli.Uint64Flag{
 		Name:  "txpool.pricelimit",
 		Usage: "Minimum gas price limit to enforce for acceptance into the pool",
-		Value: rue.DefaultConfig.TxPool.PriceLimit,
+		Value: eth.DefaultConfig.TxPool.PriceLimit,
 	}
 	TxPoolPriceBumpFlag = cli.Uint64Flag{
 		Name:  "txpool.pricebump",
 		Usage: "Price bump percentage to replace an already existing transaction",
-		Value: rue.DefaultConfig.TxPool.PriceBump,
+		Value: eth.DefaultConfig.TxPool.PriceBump,
 	}
 	TxPoolAccountSlotsFlag = cli.Uint64Flag{
 		Name:  "txpool.accountslots",
 		Usage: "Minimum number of executable transaction slots guaranteed per account",
-		Value: rue.DefaultConfig.TxPool.AccountSlots,
+		Value: eth.DefaultConfig.TxPool.AccountSlots,
 	}
 	TxPoolGlobalSlotsFlag = cli.Uint64Flag{
 		Name:  "txpool.globalslots",
 		Usage: "Maximum number of executable transaction slots for all accounts",
-		Value: rue.DefaultConfig.TxPool.GlobalSlots,
+		Value: eth.DefaultConfig.TxPool.GlobalSlots,
 	}
 	TxPoolAccountQueueFlag = cli.Uint64Flag{
 		Name:  "txpool.accountqueue",
 		Usage: "Maximum number of non-executable transaction slots permitted per account",
-		Value: rue.DefaultConfig.TxPool.AccountQueue,
+		Value: eth.DefaultConfig.TxPool.AccountQueue,
 	}
 	TxPoolGlobalQueueFlag = cli.Uint64Flag{
 		Name:  "txpool.globalqueue",
 		Usage: "Maximum number of non-executable transaction slots for all accounts",
-		Value: rue.DefaultConfig.TxPool.GlobalQueue,
+		Value: eth.DefaultConfig.TxPool.GlobalQueue,
 	}
 	TxPoolLifetimeFlag = cli.DurationFlag{
 		Name:  "txpool.lifetime",
 		Usage: "Maximum amount of time non-executable transaction are queued",
-		Value: rue.DefaultConfig.TxPool.Lifetime,
+		Value: eth.DefaultConfig.TxPool.Lifetime,
 	}
 	// Performance tuning settings
 	CacheFlag = cli.IntFlag{
@@ -315,15 +315,15 @@ var (
 		Usage: "Target gas limit sets the artificial target gas floor for the blocks to mine",
 		Value: params.GenesisGasLimit.Uint64(),
 	}
-	RuebaseFlag = cli.StringFlag{
-		Name:  "ruebase",
+	EtherbaseFlag = cli.StringFlag{
+		Name:  "etherbase",
 		Usage: "Public address for block mining rewards (default = first account created)",
 		Value: "0",
 	}
 	GasPriceFlag = BigFlag{
 		Name:  "gasprice",
 		Usage: "Minimal gas price to accept for mining a transactions",
-		Value: rue.DefaultConfig.GasPrice,
+		Value: eth.DefaultConfig.GasPrice,
 	}
 	ExtraDataFlag = cli.StringFlag{
 		Name:  "extradata",
@@ -346,7 +346,7 @@ var (
 		Usage: "Record information useful for VM and contract debugging",
 	}
 	// Logging and debug settings
-	RueStatsURLFlag = cli.StringFlag{
+	EthStatsURLFlag = cli.StringFlag{
 		Name:  "ruestats",
 		Usage: "Reporting URL of a ruestats service (nodename:secret@host:port)",
 	}
@@ -496,12 +496,12 @@ var (
 	GpoBlocksFlag = cli.IntFlag{
 		Name:  "gpoblocks",
 		Usage: "Number of recent blocks to check for gas prices",
-		Value: rue.DefaultConfig.GPO.Blocks,
+		Value: eth.DefaultConfig.GPO.Blocks,
 	}
 	GpoPercentileFlag = cli.IntFlag{
 		Name:  "gpopercentile",
 		Usage: "Suggested gas price is the given percentile of a set of recent transaction gas prices",
-		Value: rue.DefaultConfig.GPO.Percentile,
+		Value: eth.DefaultConfig.GPO.Percentile,
 	}
 	WhisperEnabledFlag = cli.BoolFlag{
 		Name:  "shh",
@@ -759,15 +759,15 @@ func MakeAddress(ks *keystore.KeyStore, account string) (accounts.Account, error
 	return accs[index], nil
 }
 
-// setRuebase retrieves the ruebase either from the directly specified
+// setEtherbase retrieves the etherbase either from the directly specified
 // command line flags or from the keystore if CLI indexed.
-func setRuebase(ctx *cli.Context, ks *keystore.KeyStore, cfg *rue.Config) {
-	if ctx.GlobalIsSet(RuebaseFlag.Name) {
-		account, err := MakeAddress(ks, ctx.GlobalString(RuebaseFlag.Name))
+func setEtherbase(ctx *cli.Context, ks *keystore.KeyStore, cfg *eth.Config) {
+	if ctx.GlobalIsSet(EtherbaseFlag.Name) {
+		account, err := MakeAddress(ks, ctx.GlobalString(EtherbaseFlag.Name))
 		if err != nil {
-			Fatalf("Option %q: %v", RuebaseFlag.Name, err)
+			Fatalf("Option %q: %v", EtherbaseFlag.Name, err)
 		}
-		cfg.Ruebase = account.Address
+		cfg.Etherbase = account.Address
 	}
 }
 
@@ -907,7 +907,7 @@ func setTxPool(ctx *cli.Context, cfg *core.TxPoolConfig) {
 	}
 }
 
-func setRuehash(ctx *cli.Context, cfg *rue.Config) {
+func setRuehash(ctx *cli.Context, cfg *eth.Config) {
 	if ctx.GlobalIsSet(RuehashCacheDirFlag.Name) {
 		cfg.Ruehash.CacheDir = ctx.GlobalString(RuehashCacheDirFlag.Name)
 	}
@@ -977,7 +977,7 @@ func SetShhConfig(ctx *cli.Context, stack *node.Node, cfg *whisper.Config) {
 }
 
 // SetRueConfig applies eth-related command line flags to the config.
-func SetRueConfig(ctx *cli.Context, stack *node.Node, cfg *rue.Config) {
+func SetRueConfig(ctx *cli.Context, stack *node.Node, cfg *eth.Config) {
 	// Avoid conflicting network flags
 	checkExclusive(ctx, DeveloperFlag, TestnetFlag, RinkebyFlag)
 	checkExclusive(ctx, FastSyncFlag, LightModeFlag, SyncModeFlag)
@@ -985,7 +985,7 @@ func SetRueConfig(ctx *cli.Context, stack *node.Node, cfg *rue.Config) {
 	checkExclusive(ctx, LightServFlag, SyncModeFlag, "light")
 
 	ks := stack.AccountManager().Backends(keystore.KeyStoreType)[0].(*keystore.KeyStore)
-	setRuebase(ctx, ks, cfg)
+	setEtherbase(ctx, ks, cfg)
 	setGPO(ctx, &cfg.GPO)
 	setTxPool(ctx, &cfg.TxPool)
 	setRuehash(ctx, cfg)
@@ -1080,8 +1080,8 @@ func SetDashboardConfig(ctx *cli.Context, cfg *dashboard.Config) {
 	cfg.Assets = ctx.GlobalString(DashboardAssetsFlag.Name)
 }
 
-// RegisterRueService adds an Ruereum client to the stack.
-func RegisterRueService(stack *node.Node, cfg *rue.Config) {
+// RegisterEthService adds an Ruereum client to the stack.
+func RegisterEthService(stack *node.Node, cfg *eth.Config) {
 	var err error
 	if cfg.SyncMode == downloader.LightSync {
 		err = stack.Register(func(ctx *node.ServiceContext) (node.Service, error) {
@@ -1089,7 +1089,7 @@ func RegisterRueService(stack *node.Node, cfg *rue.Config) {
 		})
 	} else {
 		err = stack.Register(func(ctx *node.ServiceContext) (node.Service, error) {
-			fullNode, err := rue.New(ctx, cfg)
+			fullNode, err := eth.New(ctx, cfg)
 			if fullNode != nil && cfg.LightServ > 0 {
 				ls, _ := les.NewLesServer(fullNode, cfg)
 				fullNode.AddLesServer(ls)
@@ -1118,18 +1118,18 @@ func RegisterShhService(stack *node.Node, cfg *whisper.Config) {
 	}
 }
 
-// RegisterRueStatsService configures the Ruereum Stats daemon and adds it to
+// RegisterEthStatsService configures the Ruereum Stats daemon and adds it to
 // th egiven node.
-func RegisterRueStatsService(stack *node.Node, url string) {
+func RegisterEthStatsService(stack *node.Node, url string) {
 	if err := stack.Register(func(ctx *node.ServiceContext) (node.Service, error) {
-		// Retrieve both rue and les services
-		var rueServ *rue.Ruereum
-		ctx.Service(&rueServ)
+		// Retrieve both eth and les services
+		var ethServ *eth.Ruereum
+		ctx.Service(&ethServ)
 
 		var lesServ *les.LightRuereum
 		ctx.Service(&lesServ)
 
-		return ruestats.New(url, rueServ, lesServ)
+		return ruestats.New(url, ethServ, lesServ)
 	}); err != nil {
 		Fatalf("Failed to register the Ruereum Stats service: %v", err)
 	}
@@ -1187,12 +1187,12 @@ func MakeChain(ctx *cli.Context, stack *node.Node) (chain *core.BlockChain, chai
 		engine = ruehash.NewFaker()
 		if !ctx.GlobalBool(FakePoWFlag.Name) {
 			engine = ruehash.New(ruehash.Config{
-				CacheDir:       stack.ResolvePath(rue.DefaultConfig.Ruehash.CacheDir),
-				CachesInMem:    rue.DefaultConfig.Ruehash.CachesInMem,
-				CachesOnDisk:   rue.DefaultConfig.Ruehash.CachesOnDisk,
-				DatasetDir:     stack.ResolvePath(rue.DefaultConfig.Ruehash.DatasetDir),
-				DatasetsInMem:  rue.DefaultConfig.Ruehash.DatasetsInMem,
-				DatasetsOnDisk: rue.DefaultConfig.Ruehash.DatasetsOnDisk,
+				CacheDir:       stack.ResolvePath(eth.DefaultConfig.Ruehash.CacheDir),
+				CachesInMem:    eth.DefaultConfig.Ruehash.CachesInMem,
+				CachesOnDisk:   eth.DefaultConfig.Ruehash.CachesOnDisk,
+				DatasetDir:     stack.ResolvePath(eth.DefaultConfig.Ruehash.DatasetDir),
+				DatasetsInMem:  eth.DefaultConfig.Ruehash.DatasetsInMem,
+				DatasetsOnDisk: eth.DefaultConfig.Ruehash.DatasetsOnDisk,
 			})
 		}
 	}

@@ -31,8 +31,8 @@ import (
 )
 
 const (
-	ipcAPIs  = "admin:1.0 debug:1.0 rue:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 shh:1.0 txpool:1.0 web3:1.0"
-	httpAPIs = "rue:1.0 net:1.0 rpc:1.0 web3:1.0"
+	ipcAPIs  = "admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 shh:1.0 txpool:1.0 web3:1.0"
+	httpAPIs = "eth:1.0 net:1.0 rpc:1.0 web3:1.0"
 )
 
 // Tests that a node embedded within a console can be started up properly and
@@ -43,7 +43,7 @@ func TestConsoleWelcome(t *testing.T) {
 	// Start a grue console, make sure it's cleaned up and terminate the console
 	grue := runGrue(t,
 		"--port", "0", "--maxpeers", "0", "--nodiscover", "--nat", "none",
-		"--ruebase", coinbase, "--shh",
+		"--etherbase", coinbase, "--shh",
 		"console")
 
 	// Gather all the infos the welcome message needs to contain
@@ -59,7 +59,7 @@ func TestConsoleWelcome(t *testing.T) {
 Welcome to the Grue JavaScript console!
 
 instance: Grue/v{{gruever}}/{{goos}}-{{goarch}}/{{gover}}
-coinbase: {{.Ruebase}}
+coinbase: {{.Etherbase}}
 at block: 0 ({{niltime}})
  datadir: {{.Datadir}}
  modules: {{apis}}
@@ -85,7 +85,7 @@ func TestIPCAttachWelcome(t *testing.T) {
 	// list of ipc modules and shh is included there.
 	grue := runGrue(t,
 		"--port", "0", "--maxpeers", "0", "--nodiscover", "--nat", "none",
-		"--ruebase", coinbase, "--shh", "--ipcpath", ipc)
+		"--etherbase", coinbase, "--shh", "--ipcpath", ipc)
 
 	time.Sleep(2 * time.Second) // Simple way to wait for the RPC endpoint to open
 	testAttachWelcome(t, grue, "ipc:"+ipc, ipcAPIs)
@@ -99,7 +99,7 @@ func TestHTTPAttachWelcome(t *testing.T) {
 	port := strconv.Itoa(trulyRandInt(1024, 65536)) // Yeah, sometimes this will fail, sorry :P
 	grue := runGrue(t,
 		"--port", "0", "--maxpeers", "0", "--nodiscover", "--nat", "none",
-		"--ruebase", coinbase, "--rpc", "--rpcport", port)
+		"--etherbase", coinbase, "--rpc", "--rpcport", port)
 
 	time.Sleep(2 * time.Second) // Simple way to wait for the RPC endpoint to open
 	testAttachWelcome(t, grue, "http://localhost:"+port, httpAPIs)
@@ -114,7 +114,7 @@ func TestWSAttachWelcome(t *testing.T) {
 
 	grue := runGrue(t,
 		"--port", "0", "--maxpeers", "0", "--nodiscover", "--nat", "none",
-		"--ruebase", coinbase, "--ws", "--wsport", port)
+		"--etherbase", coinbase, "--ws", "--wsport", port)
 
 	time.Sleep(2 * time.Second) // Simple way to wait for the RPC endpoint to open
 	testAttachWelcome(t, grue, "ws://localhost:"+port, httpAPIs)
@@ -134,7 +134,7 @@ func testAttachWelcome(t *testing.T, grue *testgrue, endpoint, apis string) {
 	attach.SetTemplateFunc("goarch", func() string { return runtime.GOARCH })
 	attach.SetTemplateFunc("gover", runtime.Version)
 	attach.SetTemplateFunc("gruever", func() string { return params.Version })
-	attach.SetTemplateFunc("ruebase", func() string { return grue.Ruebase })
+	attach.SetTemplateFunc("etherbase", func() string { return grue.Etherbase })
 	attach.SetTemplateFunc("niltime", func() string { return time.Unix(0, 0).Format(time.RFC1123) })
 	attach.SetTemplateFunc("ipc", func() bool { return strings.HasPrefix(endpoint, "ipc") })
 	attach.SetTemplateFunc("datadir", func() string { return grue.Datadir })
@@ -145,7 +145,7 @@ func testAttachWelcome(t *testing.T, grue *testgrue, endpoint, apis string) {
 Welcome to the Grue JavaScript console!
 
 instance: Grue/v{{gruever}}/{{goos}}-{{goarch}}/{{gover}}
-coinbase: {{ruebase}}
+coinbase: {{etherbase}}
 at block: 0 ({{niltime}}){{if ipc}}
  datadir: {{datadir}}{{end}}
  modules: {{apis}}

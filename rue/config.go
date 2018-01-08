@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
-package rue
+package eth
 
 import (
 	"math/big"
@@ -89,7 +89,7 @@ type Config struct {
 	DatabaseCache      int
 
 	// Mining-related options
-	Ruebase    common.Address `toml:",omitempty"`
+	Etherbase    common.Address `toml:",omitempty"`
 	MinerThreads int            `toml:",omitempty"`
 	ExtraData    []byte         `toml:",omitempty"`
 	GasPrice     *big.Int

@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ruereum library. If not, see <http://www.gnu.org/licenses/>.
 
-// Package rue implements the Ruereum protocol.
-package rue
+// Package eth implements the Ruereum protocol.
+package eth
 
 import (
 	"errors"
@@ -86,12 +86,12 @@ type Ruereum struct {
 
 	miner     *miner.Miner
 	gasPrice  *big.Int
-	ruebase common.Address
+	etherbase common.Address
 
 	networkId     uint64
 	netRPCService *rueapi.PublicNetAPI
 
-	lock sync.RWMutex // Protects the variadic fields (e.g. gas price and ruebase)
+	lock sync.RWMutex // Protects the variadic fields (e.g. gas price and etherbase)
 }
 
 func (s *Ruereum) AddLesServer(ls LesServer) {
@@ -103,7 +103,7 @@ func (s *Ruereum) AddLesServer(ls LesServer) {
 // initialisation of the common Ruereum object)
 func New(ctx *node.ServiceContext, config *Config) (*Ruereum, error) {
 	if config.SyncMode == downloader.LightSync {
-		return nil, errors.New("can't run rue.Ruereum in light sync mode, use les.LightRuereum")
+		return nil, errors.New("can't run eth.Ruereum in light sync mode, use les.LightRuereum")
 	}
 	if !config.SyncMode.IsValid() {
 		return nil, fmt.Errorf("invalid sync mode %d", config.SyncMode)
@@ -119,7 +119,7 @@ func New(ctx *node.ServiceContext, config *Config) (*Ruereum, error) {
 	}
 	log.Info("Initialised chain configuration", "config", chainConfig)
 
- rue := &Ruereum{
+	eth := &Ruereum{
 		config:         config,
 		chainDb:        chainDb,
 		chainConfig:    chainConfig,
@@ -130,7 +130,7 @@ func New(ctx *node.ServiceContext, config *Config) (*Ruereum, error) {
 		stopDbUpgrade:  stopDbUpgrade,
 		networkId:      config.NetworkId,
 		gasPrice:       config.GasPrice,
-		ruebase:      config.Ruebase,
+		etherbase:      config.Etherbase,
 		bloomRequests:  make(chan chan *bloombits.Retrieval),
 		bloomIndexer:   NewBloomIndexer(chainDb, params.BloomBitsBlocks),
 	}
@@ -146,37 +146,37 @@ func New(ctx *node.ServiceContext, config *Config) (*Ruereum, error) {
 	}
 
 	vmConfig := vm.Config{EnablePreimageRecording: config.EnablePreimageRecording}
- rue.blockchain, err = core.NewBlockChain(chainDb, rue.chainConfig, rue.engine, vmConfig)
+	eth.blockchain, err = core.NewBlockChain(chainDb, eth.chainConfig, eth.engine, vmConfig)
 	if err != nil {
 		return nil, err
 	}
 	// Rewind the chain in case of an incompatible config upgrade.
 	if compat, ok := genesisErr.(*params.ConfigCompatError); ok {
 		log.Warn("Rewinding chain to upgrade configuration", "err", compat)
-	 rue.blockchain.SetHead(compat.RewindTo)
+		eth.blockchain.SetHead(compat.RewindTo)
 		core.WriteChainConfig(chainDb, genesisHash, chainConfig)
 	}
- rue.bloomIndexer.Start(rue.blockchain)
+	eth.bloomIndexer.Start(eth.blockchain)
 
 	if config.TxPool.Journal != "" {
 		config.TxPool.Journal = ctx.ResolvePath(config.TxPool.Journal)
 	}
- rue.txPool = core.NewTxPool(config.TxPool, rue.chainConfig, rue.blockchain)
+	eth.txPool = core.NewTxPool(config.TxPool, eth.chainConfig, eth.blockchain)
 
-	if rue.protocolManager, err = NewProtocolManager(rue.chainConfig, config.SyncMode, config.NetworkId, rue.eventMux, rue.txPool, rue.engine, rue.blockchain, chainDb); err != nil {
+	if eth.protocolManager, err = NewProtocolManager(eth.chainConfig, config.SyncMode, config.NetworkId, eth.eventMux, eth.txPool, eth.engine, eth.blockchain, chainDb); err != nil {
 		return nil, err
 	}
- rue.miner = miner.New(rue, rue.chainConfig, rue.EventMux(), rue.engine)
- rue.miner.SetExtra(makeExtraData(config.ExtraData))
+	eth.miner = miner.New(eth, eth.chainConfig, eth.EventMux(), eth.engine)
+	eth.miner.SetExtra(makeExtraData(config.ExtraData))
 
- rue.ApiBackend = &RueApiBackend{rue, nil}
+	eth.ApiBackend = &RueApiBackend{eth, nil}
 	gpoParams := config.GPO
 	if gpoParams.Default == nil {
 		gpoParams.Default = config.GasPrice
 	}
- rue.ApiBackend.gpo = gasprice.NewOracle(rue.ApiBackend, gpoParams)
+	eth.ApiBackend.gpo = gasprice.NewOracle(eth.ApiBackend, gpoParams)
 
-	return rue, nil
+	return eth, nil
 }
 
 func makeExtraData(extra []byte) []byte {
@@ -203,7 +203,7 @@ func CreateDB(ctx *node.ServiceContext, config *Config, name string) (ruedb.Data
 		return nil, err
 	}
 	if db, ok := db.(*ruedb.LDBDatabase); ok {
-		db.Meter("rue/db/chaindata/")
+		db.Meter("eth/db/chaindata/")
 	}
 	return db, nil
 }
@@ -250,17 +250,17 @@ func (s *Ruereum) APIs() []rpc.API {
 	// Append all the local APIs and return
 	return append(apis, []rpc.API{
 		{
-			Namespace: "rue",
+			Namespace: "eth",
 			Version:   "1.0",
 			Service:   NewPublicRuereumAPI(s),
 			Public:    true,
 		}, {
-			Namespace: "rue",
+			Namespace: "eth",
 			Version:   "1.0",
 			Service:   NewPublicMinerAPI(s),
 			Public:    true,
 		}, {
-			Namespace: "rue",
+			Namespace: "eth",
 			Version:   "1.0",
 			Service:   downloader.NewPublicDownloaderAPI(s.protocolManager.downloader, s.eventMux),
 			Public:    true,
@@ -270,7 +270,7 @@ func (s *Ruereum) APIs() []rpc.API {
 			Service:   NewPrivateMinerAPI(s),
 			Public:    false,
 		}, {
-			Namespace: "rue",
+			Namespace: "eth",
 			Version:   "1.0",
 			Service:   filters.NewPublicFilterAPI(s.ApiBackend, false),
 			Public:    true,
@@ -300,48 +300,48 @@ func (s *Ruereum) ResetWithGenesisBlock(gb *types.Block) {
 	s.blockchain.ResetWithGenesisBlock(gb)
 }
 
-func (s *Ruereum) Ruebase() (eb common.Address, err error) {
+func (s *Ruereum) Etherbase() (eb common.Address, err error) {
 	s.lock.RLock()
-	ruebase := s.ruebase
+	etherbase := s.etherbase
 	s.lock.RUnlock()
 
-	if ruebase != (common.Address{}) {
-		return ruebase, nil
+	if etherbase != (common.Address{}) {
+		return etherbase, nil
 	}
 	if wallets := s.AccountManager().Wallets(); len(wallets) > 0 {
 		if accounts := wallets[0].Accounts(); len(accounts) > 0 {
-			ruebase := accounts[0].Address
+			etherbase := accounts[0].Address
 
 			s.lock.Lock()
-			s.ruebase = ruebase
+			s.etherbase = etherbase
 			s.lock.Unlock()
 
-			log.Info("Ruebase automatically configured", "address", ruebase)
-			return ruebase, nil
+			log.Info("Etherbase automatically configured", "address", etherbase)
+			return etherbase, nil
 		}
 	}
-	return common.Address{}, fmt.Errorf("ruebase must be explicitly specified")
+	return common.Address{}, fmt.Errorf("etherbase must be explicitly specified")
 }
 
 // set in js console via admin interface or wrapper from cli flags
-func (self *Ruereum) SetRuebase(ruebase common.Address) {
+func (self *Ruereum) SetEtherbase(etherbase common.Address) {
 	self.lock.Lock()
-	self.ruebase = ruebase
+	self.etherbase = etherbase
 	self.lock.Unlock()
 
-	self.miner.SetRuebase(ruebase)
+	self.miner.SetEtherbase(etherbase)
 }
 
 func (s *Ruereum) StartMining(local bool) error {
-	eb, err := s.Ruebase()
+	eb, err := s.Etherbase()
 	if err != nil {
-		log.Error("Cannot start mining without ruebase", "err", err)
-		return fmt.Errorf("ruebase missing: %v", err)
+		log.Error("Cannot start mining without etherbase", "err", err)
+		return fmt.Errorf("etherbase missing: %v", err)
 	}
 	if clique, ok := s.engine.(*clique.Clique); ok {
 		wallet, err := s.accountManager.Find(accounts.Account{Address: eb})
 		if wallet == nil || err != nil {
-			log.Error("Ruebase account unavailable locally", "err", err)
+			log.Error("Etherbase account unavailable locally", "err", err)
 			return fmt.Errorf("signer missing: %v", err)
 		}
 		clique.Authorize(eb, wallet.SignHash)
@@ -368,7 +368,7 @@ func (s *Ruereum) EventMux() *event.TypeMux           { return s.eventMux }
 func (s *Ruereum) Engine() consensus.Engine           { return s.engine }
 func (s *Ruereum) ChainDb() ruedb.Database            { return s.chainDb }
 func (s *Ruereum) IsListening() bool                  { return true } // Always listening
-func (s *Ruereum) RueVersion() int                    { return int(s.protocolManager.SubProtocols[0].Version) }
+func (s *Ruereum) EthVersion() int                    { return int(s.protocolManager.SubProtocols[0].Version) }
 func (s *Ruereum) NetVersion() uint64                 { return s.networkId }
 func (s *Ruereum) Downloader() *downloader.Downloader { return s.protocolManager.downloader }
 

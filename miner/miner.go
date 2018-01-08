@@ -50,22 +50,22 @@ type Miner struct {
 
 	coinbase common.Address
 	mining   int32
-    rue      Backend
+	eth      Backend
 	engine   consensus.Engine
 
-	canStart    int32 // can start indicates whruer we can start the mining operation
-	shouldStart int32 // should start indicates whruer we should start after sync
+	canStart    int32 // can start indicates whether we can start the mining operation
+	shouldStart int32 // should start indicates whether we should start after sync
 }
 
-func New(rue Backend, config *params.ChainConfig, mux *event.TypeMux, engine consensus.Engine) *Miner {
+func New(eth Backend, config *params.ChainConfig, mux *event.TypeMux, engine consensus.Engine) *Miner {
 	miner := &Miner{
-	 	rue:	  rue,
+		eth:      eth,
 		mux:      mux,
 		engine:   engine,
-		worker:   newWorker(config, engine, common.Address{}, rue, mux),
+		worker:   newWorker(config, engine, common.Address{}, eth, mux),
 		canStart: 1,
 	}
-	miner.Register(NewCpuAgent(rue.BlockChain(), engine))
+	miner.Register(NewCpuAgent(eth.BlockChain(), engine))
 	go miner.update()
 
 	return miner
@@ -105,7 +105,7 @@ out:
 
 func (self *Miner) Start(coinbase common.Address) {
 	atomic.StoreInt32(&self.shouldStart, 1)
-	self.worker.setRuebase(coinbase)
+	self.worker.setEtherbase(coinbase)
 	self.coinbase = coinbase
 
 	if atomic.LoadInt32(&self.canStart) == 0 {
@@ -177,7 +177,7 @@ func (self *Miner) PendingBlock() *types.Block {
 	return self.worker.pendingBlock()
 }
 
-func (self *Miner) SetRuebase(addr common.Address) {
+func (self *Miner) SetEtherbase(addr common.Address) {
 	self.coinbase = addr
-	self.worker.setRuebase(addr)
+	self.worker.setEtherbase(addr)
 }

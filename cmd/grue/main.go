@@ -93,7 +93,7 @@ var (
 		utils.ListenPortFlag,
 		utils.MaxPeersFlag,
 		utils.MaxPendingPeersFlag,
-		utils.RuebaseFlag,
+		utils.EtherbaseFlag,
 		utils.GasPriceFlag,
 		utils.MinerThreadsFlag,
 		utils.MiningEnabledFlag,
@@ -111,7 +111,7 @@ var (
 		utils.VMEnableDebugFlag,
 		utils.NetworkIdFlag,
 		utils.RPCCORSDomainFlag,
-		utils.RueStatsURLFlag,
+		utils.EthStatsURLFlag,
 		utils.MetricsEnabledFlag,
 		utils.FakePoWFlag,
 		utils.NoCompactionFlag,
@@ -278,7 +278,7 @@ func startNode(ctx *cli.Context, stack *node.Node) {
 	// Start auxiliary services if enabled
 	if ctx.GlobalBool(utils.MiningEnabledFlag.Name) || ctx.GlobalBool(utils.DeveloperFlag.Name) {
 		// Mining only makes sense if a full Ruereum node is running
-		var ruereum *rue.Ruereum
+		var ruereum *eth.Ruereum
 		if err := stack.Service(&ruereum); err != nil {
 			utils.Fatalf("ruereum service not running: %v", err)
 		}
